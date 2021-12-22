@@ -9,6 +9,7 @@ import 'package:lu_cse_community/provider/authentication.dart';
 import 'package:lu_cse_community/provider/sign_up_provider.dart';
 import 'package:lu_cse_community/view/Home/home.dart';
 import 'package:lu_cse_community/view/sign_in_sign_up/onboarding.dart';
+import 'package:lu_cse_community/view/sign_in_sign_up/reset_password.dart';
 import 'package:lu_cse_community/view/sign_in_sign_up/sign_in.dart';
 import 'package:lu_cse_community/view/sign_in_sign_up/sign_up.dart';
 import 'package:lu_cse_community/view/sign_in_sign_up/varification.dart';
@@ -68,6 +69,7 @@ class MyApp extends StatelessWidget {
             "SignUp": (ctx) => const SignUp(),
             "OnBoarding": (ctx) => const OnBoarding(),
             "MiddleOfHomeAndSignIn": (ctx) => const MiddleOfHomeAndSignIn(),
+            "ResetPassword": (ctx) => ResetPassword(),
           },
         ),
       ),
@@ -102,8 +104,8 @@ class _MiddleOfHomeAndSignInState extends State<MiddleOfHomeAndSignIn> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<User?>(
-      stream: Provider.of<Authentication>(context, listen: false)
-          .authStateChange,
+      stream:
+          Provider.of<Authentication>(context, listen: false).authStateChange,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(

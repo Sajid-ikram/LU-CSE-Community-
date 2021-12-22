@@ -71,7 +71,6 @@ class Authentication with ChangeNotifier {
               "role": "student"
             },
           );
-
         },
       );
 
@@ -92,7 +91,7 @@ class Authentication with ChangeNotifier {
           return "An undefined Error happened.";
       }
     } catch (e) {
-      print("++++++++++++++++++++++++++++++++++++++++xxxxxxxxxxxxx");
+
       Navigator.of(context, rootNavigator: true).pop();
       return "An Error occur";
     }
@@ -102,10 +101,23 @@ class Authentication with ChangeNotifier {
     await _firebaseAuth.signOut();
   }
 
+  Future<String> resetPassword(String email,BuildContext context) async {
+    try {
+      await _firebaseAuth.sendPasswordResetEmail(email: email);
+      Navigator.of(context, rootNavigator: true).pop();
+      return "Success";
+    } catch (e) {
+      return "Error";
+    }
+  }
+
   Future deleteUser() async {
     final User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      await FirebaseFirestore.instance.collection("users").doc(user.uid).delete();
+      await FirebaseFirestore.instance
+          .collection("users")
+          .doc(user.uid)
+          .delete();
       user.delete();
     }
   }

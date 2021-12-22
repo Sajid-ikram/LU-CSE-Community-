@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lu_cse_community/constant/constant.dart';
 import 'package:lu_cse_community/provider/authentication.dart';
 import 'package:provider/provider.dart';
 
@@ -27,5 +28,17 @@ Widget top(BuildContext context,String page){
         child: Image.asset("assets/top_deco.png"),
       ),
     ],
+  );
+}
+
+buildShowDialog(BuildContext context) {
+  return showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) {
+      return const Center(
+        child: CircularProgressIndicator(color: mainColor),
+      );
+    },
   );
 }

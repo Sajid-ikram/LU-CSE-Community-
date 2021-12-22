@@ -52,7 +52,7 @@ Row switchPageButton(String text1, String text2,BuildContext context) {
     children: [
       Text(
         text1,
-        style: GoogleFonts.rubik(
+        style: GoogleFonts.inter(
           fontSize: 15.sp,
           color: mainColor.withOpacity(0.8),
         ),
@@ -67,7 +67,7 @@ Row switchPageButton(String text1, String text2,BuildContext context) {
         },
         child: Text(
           text2,
-          style: GoogleFonts.rubik(
+          style: GoogleFonts.inter(
             fontSize: 15.sp,
             fontWeight: FontWeight.w700,
             color: mainColor.withOpacity(0.8),

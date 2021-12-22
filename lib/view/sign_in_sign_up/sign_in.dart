@@ -46,28 +46,16 @@ class _SignInState extends State<SignIn> {
     }
   }
 
-  buildShowDialog(BuildContext context) {
-    return showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return const Center(
-          child: CircularProgressIndicator(color: mainColor),
-        );
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
     final double statusBarHeight = MediaQuery.of(context).padding.top;
     return SafeArea(
       child: Scaffold(
-        body: Stack(
-          children: [
-            SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              child: SizedBox(
+        body: SingleChildScrollView(
+          child: Stack(
+            children: [
+              SizedBox(
                 width: 414.w,
                 height: 837.h - statusBarHeight,
                 child: Column(
@@ -75,7 +63,7 @@ class _SignInState extends State<SignIn> {
                     SizedBox(height: 100.h),
                     Text(
                       "Welcome Back!",
-                      style: GoogleFonts.rubik(
+                      style: GoogleFonts.inter(
                         fontSize: 35.sp,
                         color: mainColor,
                         fontWeight: FontWeight.w800,
@@ -110,7 +98,9 @@ class _SignInState extends State<SignIn> {
                       child: Padding(
                         padding: EdgeInsets.only(right: 37.w, top: 8.h),
                         child: InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.of(context).pushNamed("ResetPassword");
+                          },
                           child: Text(
                             "Forgot Password?",
                             style: GoogleFonts.inter(
@@ -134,9 +124,9 @@ class _SignInState extends State<SignIn> {
                   ],
                 ),
               ),
-            ),
-            top(context,"OnBoarding"),
-          ],
+              top(context,"OnBoarding"),
+            ],
+          ),
         ),
       ),
     );

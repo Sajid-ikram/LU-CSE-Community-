@@ -112,7 +112,7 @@ class _VerificationAndHomeScreenState extends State<VerificationAndHomeScreen> {
                     SizedBox(height: 22.h),
                     Text(
                       "Check your email",
-                      style: GoogleFonts.rubik(
+                      style: GoogleFonts.inter(
                         fontSize: 25.sp,
                         color: mainColor,
                         fontWeight: FontWeight.w600,
@@ -123,7 +123,7 @@ class _VerificationAndHomeScreenState extends State<VerificationAndHomeScreen> {
                       width: 300.w,
                       child: Text(
                         "We have sent a password recover instructions to your email",
-                        style: GoogleFonts.rubik(
+                        style: GoogleFonts.inter(
                           fontSize: 14.sp,
                           color: mainColor,
                           fontWeight: FontWeight.w400,
@@ -145,7 +145,7 @@ class _VerificationAndHomeScreenState extends State<VerificationAndHomeScreen> {
                       },
                       child: Text(
                         "Resend code",
-                        style: GoogleFonts.rubik(
+                        style: GoogleFonts.inter(
                           fontSize: 15.sp,
                           color: mainColor,
                           fontWeight: FontWeight.w400,
@@ -167,7 +167,7 @@ class _VerificationAndHomeScreenState extends State<VerificationAndHomeScreen> {
                   children: [
                     Text(
                       "Did not receive the email? Check your spam filter,",
-                      style: GoogleFonts.rubik(
+                      style: GoogleFonts.inter(
                         fontSize: 15.sp,
                         color: mainColor,
                         fontWeight: FontWeight.w400,
@@ -186,7 +186,7 @@ class _VerificationAndHomeScreenState extends State<VerificationAndHomeScreen> {
                           },
                           child: Text(
                             "Try another email address",
-                            style: GoogleFonts.rubik(
+                            style: GoogleFonts.inter(
                               fontSize: 15.sp,
                               color: mainColor,
                               fontWeight: FontWeight.w600,

@@ -64,17 +64,7 @@ class _SignUpState extends State<SignUp> {
     }
   }
 
-  buildShowDialog(BuildContext context) {
-    return showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return const Center(
-          child: CircularProgressIndicator(color: mainColor),
-        );
-      },
-    );
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -82,11 +72,11 @@ class _SignUpState extends State<SignUp> {
     var pro = Provider.of<SignUpProvider>(context, listen: false);
     return SafeArea(
       child: Scaffold(
-        body: Stack(
-          children: [
-            SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              child: SizedBox(
+        body: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Stack(
+            children: [
+              SizedBox(
                 width: 414.w,
                 height: 837.h - statusBarHeight,
                 child: Column(
@@ -94,7 +84,7 @@ class _SignUpState extends State<SignUp> {
                     SizedBox(height: 100.h),
                     Text(
                       "Welcome!",
-                      style: GoogleFonts.rubik(
+                      style: GoogleFonts.inter(
                         fontSize: 45.sp,
                         color: mainColor,
                         fontWeight: FontWeight.w800,
@@ -109,7 +99,7 @@ class _SignUpState extends State<SignUp> {
                         alignment: Alignment.centerLeft,
                         child: Text(
                           "* Please Provide Valid Information",
-                          style: GoogleFonts.rubik(
+                          style: GoogleFonts.inter(
                             fontSize: 13.sp,
                             color: mainColor,
                           ),
@@ -154,7 +144,7 @@ class _SignUpState extends State<SignUp> {
                         ),
                         Text(
                           "I agree to the Terms and Conditions",
-                          style: GoogleFonts.rubik(
+                          style: GoogleFonts.inter(
                             fontSize: 14.sp,
                             color: mainColor.withOpacity(0.8),
                           ),
@@ -178,9 +168,9 @@ class _SignUpState extends State<SignUp> {
                   ],
                 ),
               ),
-            ),
-            top(context,"OnBoarding"),
-          ],
+              top(context,"OnBoarding"),
+            ],
+          ),
         ),
       ),
     );
