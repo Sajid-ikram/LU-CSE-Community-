@@ -6,7 +6,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lu_cse_community/constant/constant.dart';
 import 'package:lu_cse_community/provider/authentication.dart';
+import 'package:lu_cse_community/provider/individual_contest_provider.dart';
+import 'package:lu_cse_community/provider/notification_services.dart';
 import 'package:lu_cse_community/provider/sign_up_provider.dart';
+import 'package:lu_cse_community/view/Contest/widgets/SubPage/individual_contest_page.dart';
+import 'package:lu_cse_community/view/bottom_nav_bar.dart';
 import 'package:lu_cse_community/view/Home/home.dart';
 import 'package:lu_cse_community/view/sign_in_sign_up/onboarding.dart';
 import 'package:lu_cse_community/view/sign_in_sign_up/reset_password.dart';
@@ -17,6 +21,7 @@ import 'package:provider/provider.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  NotificationService().initNotification();
   runApp(MyApp());
 }
 
@@ -29,11 +34,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
+
+
     ));
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => SignUpProvider()),
         ChangeNotifierProvider(create: (_) => Authentication()),
+        ChangeNotifierProvider(create: (_) => ContestProvider()),
+        ChangeNotifierProvider(create: (_) => NotificationService()),
       ],
       child: ScreenUtilInit(
         designSize: const Size(414, 837),
@@ -70,6 +79,7 @@ class MyApp extends StatelessWidget {
             "OnBoarding": (ctx) => const OnBoarding(),
             "MiddleOfHomeAndSignIn": (ctx) => const MiddleOfHomeAndSignIn(),
             "ResetPassword": (ctx) => ResetPassword(),
+
           },
         ),
       ),
@@ -113,7 +123,7 @@ class _MiddleOfHomeAndSignInState extends State<MiddleOfHomeAndSignIn> {
           );
         }
         if (snapshot.data != null && snapshot.data!.emailVerified) {
-          return const Home();
+          return const CustomNavigationBar();
         }
         return snapshot.data == null
             ? const OnBoarding()
