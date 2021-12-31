@@ -4,7 +4,9 @@ import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.da
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lu_cse_community/constant/constant.dart';
+import 'package:lu_cse_community/view/settings/settings.dart';
 
+import 'Chat/chat.dart';
 import 'Contest/contest.dart';
 import 'Home/home.dart';
 
@@ -32,11 +34,10 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
   }
 
   List<Widget> pageList = [
-    //const Home(),
-    const Contest(),
-    const Contest(),
     const Home(),
-    const Home(),
+    const Contest(),
+    const Chat(),
+    const Settings(),
     //const StoriesHorizontal()
   ];
 

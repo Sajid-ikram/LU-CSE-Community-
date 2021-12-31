@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
 import 'package:lu_cse_community/Models/individual_contest_model.dart';
-import 'package:lu_cse_community/view/Contest/widgets/SubPage/SubWidgets/error_dialoge.dart';
+import 'package:lu_cse_community/view/Contest/SubPage/SubWidgets/error_dialoge.dart';
 
 class ContestProvider with ChangeNotifier {
   List<IndividualModel> individualContestList = [];
@@ -26,6 +26,7 @@ class ContestProvider with ChangeNotifier {
           site: "Toph",
         ),
       );*/
+
       if (text == "All future contest") {
         var jsonResponse = convert.jsonDecode(response.body);
 

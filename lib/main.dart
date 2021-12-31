@@ -9,7 +9,7 @@ import 'package:lu_cse_community/provider/authentication.dart';
 import 'package:lu_cse_community/provider/individual_contest_provider.dart';
 import 'package:lu_cse_community/provider/notification_services.dart';
 import 'package:lu_cse_community/provider/sign_up_provider.dart';
-import 'package:lu_cse_community/view/Contest/widgets/SubPage/individual_contest_page.dart';
+import 'package:lu_cse_community/view/Home/SubPage/add_new_post_page.dart';
 import 'package:lu_cse_community/view/bottom_nav_bar.dart';
 import 'package:lu_cse_community/view/Home/home.dart';
 import 'package:lu_cse_community/view/sign_in_sign_up/onboarding.dart';
@@ -79,6 +79,7 @@ class MyApp extends StatelessWidget {
             "OnBoarding": (ctx) => const OnBoarding(),
             "MiddleOfHomeAndSignIn": (ctx) => const MiddleOfHomeAndSignIn(),
             "ResetPassword": (ctx) => ResetPassword(),
+            "AddNewPostPage": (ctx) => AddNewPostPage(),
 
           },
         ),

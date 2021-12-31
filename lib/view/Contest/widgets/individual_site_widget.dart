@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lu_cse_community/constant/constant.dart';
+import 'package:lu_cse_community/view/Contest/SubPage/individual_contest_page.dart';
 
-import 'SubPage/individual_contest_page.dart';
 
 Container individualSiteWidget() {
   return Container(

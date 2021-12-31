@@ -73,6 +73,8 @@ class _VerificationAndHomeScreenState extends State<VerificationAndHomeScreen> {
 
   @override
   void initState() {
+    final User? user = FirebaseAuth.instance.currentUser;
+    user!.sendEmailVerification();
     super.initState();
   }
 
