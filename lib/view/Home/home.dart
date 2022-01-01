@@ -76,10 +76,12 @@ class Home extends StatelessWidget {
                             buildText("400"),
                             buildReactButton("Share"),
                             const Spacer(),
-                            const Icon(Icons.more_horiz,color: Colors.grey,)
+                            const Icon(
+                              Icons.more_horiz,
+                              color: Colors.grey,
+                            )
                           ],
                         ),
-
                       ],
                     ),
                   );
