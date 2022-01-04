@@ -160,7 +160,7 @@ class _SignUpState extends State<SignUp> {
                           snackBar(context, "You have to agree to continue");
                         }
                       },
-                      child: buildButton("Sign Up",350,20),
+                      child: buildButton("Sign Up",350,20,56),
                     ),
                     SizedBox(height: 15.h),
                     switchPageButton(

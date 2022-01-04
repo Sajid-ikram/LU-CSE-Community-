@@ -10,6 +10,15 @@ Container individualSiteWidget() {
   return Container(
     margin: EdgeInsets.only(left: 10.w, right: 10.w, top: 20.h),
     height: 750.h,
+    decoration: BoxDecoration(
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black.withOpacity(0.04),
+          spreadRadius: 3,
+          blurRadius: 15,
+        )
+      ],
+    ),
     child: ListView.builder(
       physics: const NeverScrollableScrollPhysics(),
       padding: EdgeInsets.zero,

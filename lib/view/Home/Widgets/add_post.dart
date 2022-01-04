@@ -2,23 +2,30 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lu_cse_community/constant/constant.dart';
+import 'package:lu_cse_community/provider/profile_provider.dart';
+import 'package:provider/provider.dart';
 
 Padding addPost(BuildContext context) {
   return Padding(
     padding: EdgeInsets.fromLTRB(32.w, 20.h, 32.w, 10.h),
     child: Row(
       children: [
-        SizedBox(
-          height: 45.h,
-          width: 45.h,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(100),
-            child: Image.asset(
-              "assets/verification.png",
-              fit: BoxFit.fill,
-            ),
-          ),
+        Consumer<ProfileProvider>(
+          builder: (context, provider, child) {
+            return provider.profileUrl != ""
+                ? CircleAvatar(
+                    backgroundColor: Colors.grey,
+                    radius: 21,
+                    backgroundImage: NetworkImage(
+                      provider.profileUrl,
+                    ),
+                  )
+                : const CircleAvatar(
+                    backgroundColor: Colors.grey,
+                    radius: 21,
+                    backgroundImage: AssetImage("assets/profile.jpg"),
+                  );
+          },
         ),
         Expanded(
           child: GestureDetector(

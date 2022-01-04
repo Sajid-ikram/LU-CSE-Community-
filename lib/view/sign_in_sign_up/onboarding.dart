@@ -74,7 +74,7 @@ class OnBoarding extends StatelessWidget {
                       onTap: () {
                         Navigator.of(context).pushReplacementNamed("SignUp");
                       },
-                      child: buildButton("Sign Up",350,20),
+                      child: buildButton("Sign Up",350,20,56),
                     ),
                     SizedBox(height: 10.h),
                     InkWell(

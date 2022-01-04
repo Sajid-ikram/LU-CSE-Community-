@@ -5,13 +5,18 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lu_cse_community/constant/constant.dart';
+import 'package:lu_cse_community/provider/all_users_provider.dart';
 import 'package:lu_cse_community/provider/authentication.dart';
 import 'package:lu_cse_community/provider/individual_contest_provider.dart';
 import 'package:lu_cse_community/provider/notification_services.dart';
+import 'package:lu_cse_community/provider/post_provider.dart';
+import 'package:lu_cse_community/provider/profile_provider.dart';
+import 'package:lu_cse_community/provider/search_provider.dart';
 import 'package:lu_cse_community/provider/sign_up_provider.dart';
 import 'package:lu_cse_community/view/Home/SubPage/add_new_post_page.dart';
 import 'package:lu_cse_community/view/bottom_nav_bar.dart';
 import 'package:lu_cse_community/view/Home/home.dart';
+import 'package:lu_cse_community/view/dashboard/AllUsers/all_users.dart';
 import 'package:lu_cse_community/view/sign_in_sign_up/onboarding.dart';
 import 'package:lu_cse_community/view/sign_in_sign_up/reset_password.dart';
 import 'package:lu_cse_community/view/sign_in_sign_up/sign_in.dart';
@@ -34,8 +39,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
-
-
     ));
     return MultiProvider(
       providers: [
@@ -43,6 +46,10 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => Authentication()),
         ChangeNotifierProvider(create: (_) => ContestProvider()),
         ChangeNotifierProvider(create: (_) => NotificationService()),
+        ChangeNotifierProvider(create: (_) => ProfileProvider()),
+        ChangeNotifierProvider(create: (_) => PostProvider()),
+        ChangeNotifierProvider(create: (_) => AllUserProvider()),
+        ChangeNotifierProvider(create: (_) => SearchProvider()),
       ],
       child: ScreenUtilInit(
         designSize: const Size(414, 837),
@@ -79,7 +86,9 @@ class MyApp extends StatelessWidget {
             "OnBoarding": (ctx) => const OnBoarding(),
             "MiddleOfHomeAndSignIn": (ctx) => const MiddleOfHomeAndSignIn(),
             "ResetPassword": (ctx) => ResetPassword(),
-            "AddNewPostPage": (ctx) => AddNewPostPage(),
+            "AddNewPostPage": (ctx) => const AddNewPostPage(),
+            "AllUsers": (ctx) => const AllUsers(),
+
 
           },
         ),

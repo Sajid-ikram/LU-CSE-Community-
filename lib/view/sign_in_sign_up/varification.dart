@@ -10,6 +10,8 @@ import 'package:lu_cse_community/view/sign_in_sign_up/widgets/custom_button.dart
 import 'package:lu_cse_community/view/sign_in_sign_up/widgets/top.dart';
 import 'package:provider/provider.dart';
 
+import '../bottom_nav_bar.dart';
+
 class VerificationAndHomeScreen extends StatefulWidget {
   const VerificationAndHomeScreen({
     Key? key,
@@ -80,7 +82,6 @@ class _VerificationAndHomeScreenState extends State<VerificationAndHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final User? user = FirebaseAuth.instance.currentUser;
     return isLoading
         ? const Scaffold(
             body: Center(
@@ -88,7 +89,7 @@ class _VerificationAndHomeScreenState extends State<VerificationAndHomeScreen> {
             ),
           )
         : isVerified
-            ? const Home()
+            ? const CustomNavigationBar()
             : _buildScaffold();
   }
 
@@ -138,7 +139,7 @@ class _VerificationAndHomeScreenState extends State<VerificationAndHomeScreen> {
                       onTap: () {
                         checkVerification();
                       },
-                      child: buildButton("Check Verification", 270, 17),
+                      child: buildButton("Check Verification", 270, 17,56),
                     ),
                     SizedBox(height: 15.h),
                     InkWell(

@@ -116,7 +116,7 @@ class _SignInState extends State<SignIn> {
                       onTap: () {
                         validate();
                       },
-                      child: buildButton("Sign In",350,20),
+                      child: buildButton("Sign In",350,20,56),
                     ),
                     SizedBox(height: 15.h),
                     switchPageButton(
@@ -133,6 +133,4 @@ class _SignInState extends State<SignIn> {
   }
 }
 
-Color getColor(Set<MaterialState> states) {
-  return mainColor;
-}
+

@@ -105,7 +105,7 @@ class ResetPassword extends StatelessWidget {
                       onTap: () {
                         validate(context);
                       },
-                      child: buildButton("Send Instruction", 340, 18),
+                      child: buildButton("Send Instruction", 340, 18,56),
                     ),
                   ],
                 ),

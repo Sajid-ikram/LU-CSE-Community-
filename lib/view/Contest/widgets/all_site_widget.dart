@@ -9,6 +9,15 @@ Container allSitesWidget() {
   return Container(
     margin: EdgeInsets.only(left: 10.w),
     height: 180.h,
+    decoration: BoxDecoration(
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black.withOpacity(0.03),
+          spreadRadius: 3,
+          blurRadius: 15,
+        )
+      ],
+    ),
     child: ListView.builder(
       physics: const BouncingScrollPhysics(),
       scrollDirection: Axis.horizontal,

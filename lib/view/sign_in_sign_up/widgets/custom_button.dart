@@ -3,9 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lu_cse_community/constant/constant.dart';
 
-Container buildButton(String text,double width,double size) {
+Container buildButton(String text,double width,double size,double height) {
   return Container(
-    height: 56.h,
+    height: height.h,
     width: width.w,
     decoration: BoxDecoration(
       color: mainColor,
@@ -14,7 +14,7 @@ Container buildButton(String text,double width,double size) {
     child: Center(
       child: Text(
         text,
-        style: TextStyle(
+        style: GoogleFonts.inter(
           fontSize: size.sp,
           color: Colors.white,
           fontWeight: FontWeight.w700,

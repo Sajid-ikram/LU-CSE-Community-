@@ -15,7 +15,6 @@ class Contest extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: insideScaffoldColor,
       body: SingleChildScrollView(
         child: Column(
           children: [

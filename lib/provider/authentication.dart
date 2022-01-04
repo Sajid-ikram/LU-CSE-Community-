@@ -68,7 +68,7 @@ class Authentication with ChangeNotifier {
               "batch": batch,
               "section": section,
               "url": "",
-              "role": "student"
+              "role": "Student"
             },
           );
         },

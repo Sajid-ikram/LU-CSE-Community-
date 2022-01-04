@@ -52,24 +52,30 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       body: pageList[_bottomNavIndex],
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: Container(
-          height: 45.h,
-          width: 45.h,
-          decoration: BoxDecoration(
-            border: Border.all(color: secondColor, width: 2),
-            shape: BoxShape.circle,
+      floatingActionButton: Visibility(
+        visible: MediaQuery.of(context).viewInsets.bottom == 0.0,
+        child: FloatingActionButton(
+          onPressed: () {
+            Navigator.of(context).pushNamed("AllUsers");
+          },
+          child: Container(
+            height: 45.h,
+            width: 45.h,
+            decoration: BoxDecoration(
+              border: Border.all(color: secondColor, width: 2),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(
+              Icons.dashboard_rounded,
+              color: nevColor,
+              size: 21.sp,
+            ),
           ),
-          child: Icon(
-            Icons.dashboard_rounded,
-            color: nevColor,
-            size: 21.sp,
-          ),
+          elevation: 11,
+          backgroundColor: Colors.white,
         ),
-        elevation: 11,
-        backgroundColor: Colors.white,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       backgroundColor: Colors.white,
