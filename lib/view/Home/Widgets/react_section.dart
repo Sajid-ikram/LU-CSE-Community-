@@ -4,10 +4,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lu_cse_community/provider/post_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
+
+import 'add_new_comment.dart';
 
 class ReactSection extends StatefulWidget {
   ReactSection({Key? key, required this.documentSnapshot}) : super(key: key);
@@ -90,7 +93,7 @@ class _ReactSectionState extends State<ReactSection> {
         return Padding(
           padding: EdgeInsets.only(right: 8.w),
           child: InkWell(
-            onTap: () {
+            onTap: () async {
               if (!provider.isLoading) {
                 if (name == "Like" && data != null) {
                   isLiked = !isLiked;
@@ -101,20 +104,31 @@ class _ReactSectionState extends State<ReactSection> {
                     context: context,
                   );
                 }
+                else if (name == "Comment" && data != null) {
+                  await addNewComment(context: context,postId: data.id,commentNumber: data["comments"]);
+                }
               }
             },
             child: SizedBox(
               height: 20.h,
               width: 20.h,
-              child: SvgPicture.asset(
-                "assets/svg/$name.svg",
-                semanticsLabel: 'A red up arrow',
-                color: name != "Like"
-                    ? Colors.grey
-                    : isLiked
-                        ? Colors.red
-                        : Colors.grey,
-              ),
+              child: name == "Like"
+                  ? Icon(
+                      isLiked
+                          ? FontAwesomeIcons.solidThumbsUp
+                          : FontAwesomeIcons.thumbsUp,
+                      size: 17.sp,
+                      color: isLiked ? Colors.blue : Colors.grey,
+                    )
+                  : SvgPicture.asset(
+                      "assets/svg/$name.svg",
+                      semanticsLabel: 'A red up arrow',
+                      color: name != "Like"
+                          ? Colors.grey
+                          : isLiked
+                              ? Colors.blue
+                              : Colors.grey,
+                    ),
             ),
           ),
         );

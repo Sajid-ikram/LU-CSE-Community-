@@ -141,7 +141,8 @@ class _AllUsersState extends State<AllUsers> {
               ],
             ),
             SizedBox(height: 15.h),
-            const Divider(thickness: 1),
+            const Divider(thickness: 1,height: 0,),
+            SizedBox(height: 12.h),
             const Expanded(child: UserList())
           ],
         ),

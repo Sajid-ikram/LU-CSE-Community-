@@ -17,6 +17,7 @@ import 'package:lu_cse_community/view/Home/SubPage/add_new_post_page.dart';
 import 'package:lu_cse_community/view/bottom_nav_bar.dart';
 import 'package:lu_cse_community/view/Home/home.dart';
 import 'package:lu_cse_community/view/dashboard/AllUsers/all_users.dart';
+import 'package:lu_cse_community/view/dashboard/dashboard.dart';
 import 'package:lu_cse_community/view/sign_in_sign_up/onboarding.dart';
 import 'package:lu_cse_community/view/sign_in_sign_up/reset_password.dart';
 import 'package:lu_cse_community/view/sign_in_sign_up/sign_in.dart';
@@ -39,6 +40,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.dark,
     ));
     return MultiProvider(
       providers: [
@@ -88,8 +90,7 @@ class MyApp extends StatelessWidget {
             "ResetPassword": (ctx) => ResetPassword(),
             "AddNewPostPage": (ctx) => const AddNewPostPage(),
             "AllUsers": (ctx) => const AllUsers(),
-
-
+            "Dashboard": (ctx) => const Dashboard(),
           },
         ),
       ),

@@ -63,7 +63,7 @@ class _UserListState extends State<UserList> {
                                     backgroundImage:
                                         AssetImage("assets/profile.jpg"),
                                   ),
-                            SizedBox(width: 15.w),
+                            SizedBox(width: 12.w),
                             Text(
                               data?.docs[index]["name"],
                               style: GoogleFonts.inter(
@@ -99,7 +99,7 @@ class _UserListState extends State<UserList> {
                           ],
                         ),
                       ),
-                      const Divider()
+                      const Divider(thickness: 1,)
                     ],
                   );
                 }

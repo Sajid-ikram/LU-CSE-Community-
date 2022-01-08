@@ -37,14 +37,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-      statusBarBrightness: Brightness.dark,
-      statusBarIconBrightness: Brightness.dark,
-    ));
     return Scaffold(
-
-
       body: Stack(
         children: [
           Align(
@@ -74,67 +67,76 @@ class _HomeState extends State<Home> {
                       builder: (context, provider, child) {
                         return ListView.builder(
                           physics: const BouncingScrollPhysics(),
-                          itemBuilder: (context, index) {
 
+                          itemBuilder: (context, index) {
                             if (index == 0) {
                               return addPost(context);
                             }
                             String name = data?.docs[index - 1]["userName"];
-                            if(name.toLowerCase().contains(provider.searchText.toLowerCase())) {
+                            if (name
+                                .toLowerCase()
+                                .contains(provider.searchText.toLowerCase())) {
                               return Container(
-                              width: 350.w,
-                              margin:
-                                  EdgeInsets.fromLTRB(32.w, 20.h, 32.w, 10.h),
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 25.h, horizontal: 21.w),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.03),
-                                    spreadRadius: 5,
-                                    blurRadius: 10,
-                                  )
-                                ],
-                              ),
-                              child: Column(
-                                children: [
-                                  UserInfoOfAPost(
-                                    uid: data?.docs[index - 1]["ownerUid"],
-                                    time: data?.docs[index - 1]["dateTime"],
-                                  ),
-                                  SizedBox(height: 18.h),
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      data?.docs[index - 1]["postText"],
-                                      style: GoogleFonts.inter(fontSize: 15.sp),
+                                width: 350.w,
+                                margin:
+                                    EdgeInsets.fromLTRB(32.w, index == 1  ? 15.h : 10.h, 32.w, 10.h),
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 25.h, horizontal: 21.w),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(
+                                      color: const Color(0xffE3E3E3), width: 1),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.08),
+                                      spreadRadius: 0,
+                                      blurRadius: 15,
+                                    )
+                                  ],
+                                ),
+                                child: Column(
+                                  children: [
+                                    UserInfoOfAPost(
+                                      uid: data?.docs[index - 1]["ownerUid"],
+                                      time: data?.docs[index - 1]["dateTime"],
+                                      pageName: "home",
                                     ),
-                                  ),
-                                  SizedBox(height: 15.h),
-                                  if (data?.docs[index - 1]["imageUrl"] != "")
-                                    Container(
-                                      width: 308.w,
-                                      height: 226.h,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(20),
+                                    SizedBox(height: 18.h),
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        data?.docs[index - 1]["postText"],
+                                        style: GoogleFonts.inter(
+                                            fontSize: 15.sp, height: 1.4),
                                       ),
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(20),
-                                        child: Image.network(
-                                          data?.docs[index - 1]["imageUrl"],
-                                          //fit: BoxFit.fill,
+                                    ),
+                                    SizedBox(height: 15.h),
+                                    if (data?.docs[index - 1]["imageUrl"] != "")
+                                      Container(
+                                        width: 308.w,
+                                        height: 226.h,
+                                        margin: EdgeInsets.only(bottom: 13.h),
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                        ),
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          child: Image.network(
+                                            data?.docs[index - 1]["imageUrl"],
+                                            fit: BoxFit.cover,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  SizedBox(height: 20.h),
-                                  ReactSection(
-                                    documentSnapshot: data?.docs[index - 1],
-                                  )
-                                ],
-                              ),
-                            );
+                                    SizedBox(height: 10.h),
+                                    ReactSection(
+                                      documentSnapshot: data?.docs[index - 1],
+                                    )
+                                  ],
+                                ),
+                              );
                             }
                             return const SizedBox();
                           },

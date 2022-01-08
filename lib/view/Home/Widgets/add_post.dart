@@ -46,7 +46,7 @@ Padding addPost(BuildContext context) {
                   "What's on your mind, User Name?",
                   textAlign: TextAlign.start,
                   style: GoogleFonts.inter(
-                    fontSize: 12.sp,
+                    fontSize: 14.sp,
                     fontWeight: FontWeight.w400,
                     color: Colors.grey,
                   ),

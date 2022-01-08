@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -8,8 +7,10 @@ import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
 class UserInfoOfAPost extends StatefulWidget {
-  const UserInfoOfAPost({Key? key, required this.uid, required this.time})
+  const UserInfoOfAPost(
+      {Key? key, required this.uid, required this.time, required this.pageName})
       : super(key: key);
+  final String pageName;
   final String uid;
   final String time;
 
@@ -39,20 +40,16 @@ class _UserInfoOfAPostState extends State<UserInfoOfAPost> {
   }
 
   String daysBetween(DateTime from, DateTime to) {
-    from = DateTime(from.year, from.month, from.day, from.hour,from.minute);
-    to = DateTime(to.year, to.month, to.day, to.hour,to.minute);
+    from = DateTime(from.year, from.month, from.day, from.hour, from.minute);
+    to = DateTime(to.year, to.month, to.day, to.hour, to.minute);
     if (to.difference(from).inHours > 24) {
-      return (to.difference(from).inHours / 24).round().toString() + "d";
+      return (to.difference(from).inHours / 24).round().toString() + " day";
     } else if (to.difference(from).inMinutes < 60) {
-      return to.difference(from).inMinutes.toString() + "m";
+      return to.difference(from).inMinutes.toString() + " min";
     } else {
-      return to.difference(from).inHours.toString() + "h";
+      return to.difference(from).inHours.toString() + " hour";
     }
   }
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +59,7 @@ class _UserInfoOfAPostState extends State<UserInfoOfAPost> {
             highlightColor: Colors.grey,
             child: Row(
               children: [
-                const CircleAvatar(backgroundColor: Colors.grey, radius: 20),
+                CircleAvatar(backgroundColor: Colors.grey, radius: 20.sp),
                 SizedBox(width: 15.w),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,52 +69,83 @@ class _UserInfoOfAPostState extends State<UserInfoOfAPost> {
                   ],
                 ),
                 const Spacer(),
-                Icon(Icons.favorite, size: 20.sp, color: Colors.grey),
+                if (widget.pageName == "home")
+                  Icon(Icons.favorite, size: 20.sp, color: Colors.grey),
               ],
             ),
           )
-        : Row(
-            children: [
-              data["url"] != ""
-                  ? CircleAvatar(
-                      backgroundColor: Colors.grey,
-                      radius: 21,
-                      backgroundImage: NetworkImage(
-                        data["url"],
-                      ),
-                    )
-                  : const CircleAvatar(
-                      backgroundColor: Colors.grey,
-                      radius: 21,
-                      backgroundImage: AssetImage("assets/profile.jpg"),
-                    ),
-              SizedBox(width: 15.w),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+        : widget.pageName == "home"
+            ? Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
-                    data["name"],
-                    style: GoogleFonts.inter(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w500,
-                    ),
+                  returnImage(data),
+                  SizedBox(width: 15.w),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (widget.pageName == "comment") SizedBox(height: 5.h),
+                      buildNameText(14),
+                      SizedBox(height: 2.h),
+                      buildTimeText(),
+                    ],
                   ),
-                  Text(
-                    daysBetween(DateTime.parse(widget.time), DateTime.now()),
-                    style: GoogleFonts.inter(
-                      fontSize: 13.sp,
-                      fontWeight: FontWeight.w400,
-                    ),
+                  const Spacer(),
+                  Icon(
+                    Icons.favorite,
+                    size: 20.sp,
+                    color: Colors.red,
                   ),
                 ],
-              ),
-              const Spacer(),
-              Icon(
-                Icons.favorite,
-                size: 20.sp,
-                color: Colors.red,
-              ),
-            ],
-          );
+              )
+            : Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  returnImage(data),
+                  SizedBox(width: 12.w),
+                  buildNameText(15),
+                  SizedBox(width: 10.w),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 2),
+                    child: buildTimeText(),
+                  ),
+                ],
+              );
   }
+
+  Text buildNameText(double size) {
+    return Text(
+      data["name"],
+      style: GoogleFonts.inter(
+        fontSize: size.sp,
+        fontWeight: FontWeight.w500,
+      ),
+    );
+  }
+
+  Text buildTimeText() {
+    return Text(
+      daysBetween(DateTime.parse(widget.time), DateTime.now()),
+      style: GoogleFonts.inter(
+        color: const Color(0xff9e9ea8),
+        fontSize: 13.sp,
+        fontWeight: FontWeight.w400,
+      ),
+    );
+  }
+}
+
+Widget returnImage(DocumentSnapshot data) {
+  return data["url"] != ""
+      ? CircleAvatar(
+          backgroundColor: Colors.grey,
+          radius: 21.sp,
+          backgroundImage: NetworkImage(
+            data["url"],
+          ),
+        )
+      : CircleAvatar(
+          backgroundColor: Colors.grey,
+          radius: 21.sp,
+          backgroundImage: const AssetImage("assets/profile.jpg"),
+        );
 }

@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lu_cse_community/constant/constant.dart';
 import 'package:lu_cse_community/view/settings/settings.dart';
-
 import 'Chat/chat.dart';
 import 'Contest/contest.dart';
 import 'Home/home.dart';
@@ -51,6 +50,8 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
 
   @override
   Widget build(BuildContext context) {
+
+
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: pageList[_bottomNavIndex],
@@ -58,7 +59,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
         visible: MediaQuery.of(context).viewInsets.bottom == 0.0,
         child: FloatingActionButton(
           onPressed: () {
-            Navigator.of(context).pushNamed("AllUsers");
+            Navigator.of(context).pushNamed("Dashboard");
           },
           child: Container(
             height: 45.h,

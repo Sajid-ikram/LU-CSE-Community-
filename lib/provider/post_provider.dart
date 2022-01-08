@@ -5,7 +5,46 @@ import 'package:lu_cse_community/view/Contest/SubPage/SubWidgets/error_dialoge.d
 
 class PostProvider with ChangeNotifier {
   bool isLoading = false;
+  bool loadingComment = false;
+  String commentText = '';
 
+  changeCommentText(String text) {
+    commentText = text;
+    notifyListeners();
+  }
+
+  Future addNewComment({
+    required String postId,
+    required String uid,
+    required String comment,
+    required String dateTime,
+    required BuildContext context,
+  }) async {
+    try {
+      loadingComment = true;
+      notifyListeners();
+
+      await FirebaseFirestore.instance
+          .collection('posts')
+          .doc(postId)
+          .collection("thoseWhoComment")
+          .doc()
+          .set({
+        "commentText": commentText,
+        "dateTime": dateTime,
+        "ownerUid": uid,
+      });
+
+      await FirebaseFirestore.instance.collection("posts").doc(postId).update(
+        {"comments": (int.parse(comment) + 1).toString()},
+      );
+
+      loadingComment = false;
+      notifyListeners();
+    } catch (e) {
+      return onError(context, "Having problem connecting to the server");
+    }
+  }
 
   Future addNewPost({
     required String userName,
