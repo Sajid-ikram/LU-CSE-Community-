@@ -42,7 +42,7 @@ class _CustomDropDownState extends State<CustomDropDown> {
           underline: const SizedBox(),
           onChanged: (String? newValue) {
             if (newValue != null) {
-              confirmChange(newValue);
+              confirmChange(newValue,context,widget.uid);
             }
           },
           items: listOfRole.map<DropdownMenuItem<String>>((String value) {
@@ -61,23 +61,25 @@ class _CustomDropDownState extends State<CustomDropDown> {
     );
   }
 
-  Future confirmChange(String massage) {
-    return showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Are you sure'),
-        content: Text("Do you want to change the role to $massage"),
-        actions: <Widget>[
-          TextButton(
-            child: const Text("OK"),
-            onPressed: () async {
-              await Provider.of<ProfileProvider>(context, listen: false)
-                  .updateRole(widget.uid, massage, context);
-              Navigator.of(ctx).pop();
-            },
-          )
-        ],
-      ),
-    );
-  }
+
+}
+
+Future confirmChange(String massage,BuildContext context,String uid) {
+  return showDialog(
+    context: context,
+    builder: (ctx) => AlertDialog(
+      title: const Text('Are you sure'),
+      content: Text("Do you want to change the role to $massage"),
+      actions: <Widget>[
+        TextButton(
+          child: const Text("OK"),
+          onPressed: () async {
+            await Provider.of<ProfileProvider>(context, listen: false)
+                .updateRole(uid, massage, context);
+            Navigator.of(ctx).pop();
+          },
+        )
+      ],
+    ),
+  );
 }

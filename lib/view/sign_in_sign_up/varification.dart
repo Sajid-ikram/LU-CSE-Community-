@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lu_cse_community/constant/constant.dart';
 import 'package:lu_cse_community/provider/authentication.dart';
-import 'package:lu_cse_community/view/Home/home.dart';
 import 'package:lu_cse_community/view/sign_in_sign_up/widgets/custom_button.dart';
 import 'package:lu_cse_community/view/sign_in_sign_up/widgets/top.dart';
 import 'package:provider/provider.dart';

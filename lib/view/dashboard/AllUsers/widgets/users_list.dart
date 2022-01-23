@@ -8,6 +8,8 @@ import 'package:lu_cse_community/provider/search_provider.dart';
 import 'package:lu_cse_community/view/dashboard/AllUsers/widgets/drop_down.dart';
 import 'package:provider/provider.dart';
 
+import '../all_users.dart';
+
 class UserList extends StatefulWidget {
   const UserList({Key? key}) : super(key: key);
 
@@ -77,6 +79,21 @@ class _UserListState extends State<UserList> {
                                 if (provider.role == "Student" ||
                                     provider.role == "Moderator") {
                                   return buildNonChangeableRole(data!, index);
+                                } else if (provider.role == "Admin" &&
+                                    pro.selectedFilter == "TeacherP") {
+                                  return SizedBox(
+                                      width: 130.w,
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10),
+                                        child: InkWell(
+                                            onTap: () {
+                                              confirmChange("Teacher", context,
+                                                  data?.docs[index].id ?? "");
+                                            },
+                                            child: buildButton(
+                                                "Approve", 80, 13, 50, true)),
+                                      ));
                                 } else if (provider.role == "Admin") {
                                   return CustomDropDown(
                                     currentRole: data?.docs[index]["role"],
@@ -99,7 +116,9 @@ class _UserListState extends State<UserList> {
                           ],
                         ),
                       ),
-                      const Divider(thickness: 1,)
+                      const Divider(
+                        thickness: 1,
+                      )
                     ],
                   );
                 }

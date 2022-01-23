@@ -1,10 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lu_cse_community/constant/constant.dart';
 import 'package:lu_cse_community/provider/all_users_provider.dart';
 import 'package:lu_cse_community/provider/search_provider.dart';
-import 'package:lu_cse_community/view/Home/Widgets/search_bar.dart';
+import 'package:lu_cse_community/view/dashboard/AllUsers/widgets/teacher_pending_button.dart';
 import 'package:lu_cse_community/view/dashboard/AllUsers/widgets/users_list.dart';
 import 'package:provider/provider.dart';
 
@@ -26,17 +27,25 @@ class _AllUsersState extends State<AllUsers> {
         child: Column(
           children: [
             SizedBox(height: 60.h),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: InkWell(
-                onTap: () {
-                  Navigator.of(context).pop();
-                },
-                child: Icon(
-                  Icons.arrow_back_ios,
-                  size: 22.sp,
+            Column(
+              children: [
+                Row(
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Icon(
+                          Icons.arrow_back_ios,
+                          size: 22.sp,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
+              ],
             ),
             SizedBox(height: 30.h),
             Consumer<AllUserProvider>(
@@ -46,16 +55,24 @@ class _AllUsersState extends State<AllUsers> {
                     InkWell(
                         onTap: () {
                           provider.changeFilter("Student");
+
                         },
-                        child: _buildButton("Student", 165, 18, 60,
+                        child: buildButton("Student", 165, 18, 60,
                             provider.selectedFilter == "Student")),
                     const Spacer(),
                     InkWell(
                       onTap: () {
+                        provider.changePendingPage(false);
                         provider.changeFilter("Teacher");
                       },
-                      child: _buildButton("Teacher", 165, 18, 60,
-                          provider.selectedFilter == "Teacher"),
+                      child: buildButton(
+                        "Teacher",
+                        165,
+                        18,
+                        60,
+                        (provider.selectedFilter == "Teacher" ||
+                            provider.selectedFilter == "TeacherP"),
+                      ),
                     )
                   ],
                 );
@@ -70,20 +87,21 @@ class _AllUsersState extends State<AllUsers> {
                         onTap: () {
                           provider.changeFilter("Moderator");
                         },
-                        child: _buildButton("Moderator", 165, 18, 60,
+                        child: buildButton("Moderator", 165, 18, 60,
                             provider.selectedFilter == "Moderator")),
                     const Spacer(),
                     InkWell(
                         onTap: () {
                           provider.changeFilter("Admin");
                         },
-                        child: _buildButton("Admin", 165, 18, 60,
+                        child: buildButton("Admin", 165, 18, 60,
                             provider.selectedFilter == "Admin")),
                   ],
                 );
               },
             ),
-            SizedBox(height: 25.h),
+            SizedBox(height: 20.h),
+            const TeacherPendingButton(),
             Container(
               height: 48.h,
               width: 350.w,
@@ -137,11 +155,13 @@ class _AllUsersState extends State<AllUsers> {
                     ),
                   ),
                 ),
-
               ],
             ),
             SizedBox(height: 15.h),
-            const Divider(thickness: 1,height: 0,),
+            const Divider(
+              thickness: 1,
+              height: 0,
+            ),
             SizedBox(height: 12.h),
             const Expanded(child: UserList())
           ],
@@ -151,7 +171,7 @@ class _AllUsersState extends State<AllUsers> {
   }
 }
 
-Container _buildButton(
+Container buildButton(
     String text, double width, double size, double height, bool showBorder) {
   return Container(
     height: height.h,

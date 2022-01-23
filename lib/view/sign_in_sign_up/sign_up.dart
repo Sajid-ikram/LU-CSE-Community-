@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lu_cse_community/constant/constant.dart';
 import 'package:lu_cse_community/provider/authentication.dart';
 import 'package:lu_cse_community/provider/sign_up_provider.dart';
+import 'package:lu_cse_community/view/sign_in_sign_up/widgets/build_row_button.dart';
 import 'package:lu_cse_community/view/sign_in_sign_up/widgets/custom_button.dart';
 import 'package:lu_cse_community/view/sign_in_sign_up/widgets/custom_text_field.dart';
 import 'package:lu_cse_community/view/sign_in_sign_up/widgets/promise.dart';
@@ -25,6 +26,7 @@ class _SignUpState extends State<SignUp> {
   TextEditingController confirmPasswordController = TextEditingController();
   TextEditingController batchController = TextEditingController();
   TextEditingController sectionController = TextEditingController();
+  bool isTeacher = false;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -64,8 +66,6 @@ class _SignUpState extends State<SignUp> {
     }
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     final double statusBarHeight = MediaQuery.of(context).padding.top;
@@ -94,17 +94,30 @@ class _SignUpState extends State<SignUp> {
                     buildPromise(15),
                     SizedBox(height: 28.h),
                     Padding(
-                      padding: EdgeInsets.only(left: 37.w),
+                      padding: EdgeInsets.only(left: 37.w, bottom: 8.h),
                       child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          "* Please Provide Valid Information",
-                          style: GoogleFonts.inter(
-                            fontSize: 13.sp,
-                            color: mainColor,
-                          ),
-                        ),
-                      ),
+                          alignment: Alignment.centerLeft,
+                          child: Row(
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    isTeacher = false;
+                                  });
+                                },
+                                child: buildRowButton("Student", !isTeacher),
+                              ),
+                              SizedBox(width: 15.w),
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    isTeacher = true;
+                                  });
+                                },
+                                child: buildRowButton("Teacher", isTeacher),
+                              ),
+                            ],
+                          )),
                     ),
                     Form(
                       key: _formKey,
@@ -118,10 +131,12 @@ class _SignUpState extends State<SignUp> {
                               false, context),
                           customTextField(confirmPasswordController,
                               "Confirm Password", false, context),
-                          customTextField(
-                              batchController, "Batch", false, context),
-                          customTextField(
-                              sectionController, "Section", false, context),
+                          if (!isTeacher)
+                            customTextField(
+                                batchController, "Batch", false, context),
+                          if (!isTeacher)
+                            customTextField(
+                                sectionController, "Section", false, context),
                         ],
                       ),
                     ),
@@ -160,7 +175,7 @@ class _SignUpState extends State<SignUp> {
                           snackBar(context, "You have to agree to continue");
                         }
                       },
-                      child: buildButton("Sign Up",350,20,56),
+                      child: buildButton("Sign Up", 350, 20, 56),
                     ),
                     SizedBox(height: 15.h),
                     switchPageButton(
@@ -168,7 +183,7 @@ class _SignUpState extends State<SignUp> {
                   ],
                 ),
               ),
-              top(context,"OnBoarding"),
+              top(context, "OnBoarding"),
             ],
           ),
         ),

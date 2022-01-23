@@ -1,15 +1,10 @@
 import 'dart:ui';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart';
-import 'package:lu_cse_community/provider/post_provider.dart';
 import 'package:lu_cse_community/provider/profile_provider.dart';
 import 'package:lu_cse_community/provider/search_provider.dart';
 import 'package:provider/provider.dart';
@@ -48,6 +43,7 @@ class _HomeState extends State<Home> {
               child: StreamBuilder<QuerySnapshot>(
                   stream: FirebaseFirestore.instance
                       .collection("posts")
+                      .orderBy('dateTime', descending: true)
                       .snapshots(),
                   builder: (context, snapshot) {
                     if (snapshot.hasError) {
