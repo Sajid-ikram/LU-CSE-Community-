@@ -17,7 +17,7 @@ class CustomNavigationBar extends StatefulWidget {
 }
 
 class _CustomNavigationBarState extends State<CustomNavigationBar> {
-  var _bottomNavIndex = 0;
+  var _bottomNavIndex = 3;
 
   final List<IconData> iconList = [
     Icons.home,

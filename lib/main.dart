@@ -18,6 +18,8 @@ import 'package:lu_cse_community/view/bottom_nav_bar.dart';
 import 'package:lu_cse_community/view/Home/home.dart';
 import 'package:lu_cse_community/view/dashboard/AllUsers/all_users.dart';
 import 'package:lu_cse_community/view/dashboard/dashboard.dart';
+import 'package:lu_cse_community/view/settings/edit_profile.dart';
+import 'package:lu_cse_community/view/settings/view_profile_page.dart';
 import 'package:lu_cse_community/view/sign_in_sign_up/onboarding.dart';
 import 'package:lu_cse_community/view/sign_in_sign_up/reset_password.dart';
 import 'package:lu_cse_community/view/sign_in_sign_up/sign_in.dart';
@@ -91,6 +93,8 @@ class MyApp extends StatelessWidget {
             "AddNewPostPage": (ctx) => const AddNewPostPage(),
             "AllUsers": (ctx) => const AllUsers(),
             "Dashboard": (ctx) => const Dashboard(),
+            "ViewProfile": (ctx) => const ViewProfile(),
+            "EditProfile": (ctx) => const EditProfile(),
           },
         ),
       ),

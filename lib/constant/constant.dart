@@ -4,6 +4,7 @@ const mainColor = Color(0xff191541);
 const secondColor = Color(0xffF29263);
 const nevColor = Color(0xff181c24);
 const insideScaffoldColor = Color(0xffE5E5E5);
+const textColor= Color(0xff79838B);
 
 List<String> individualSite = [
   "AtCoder",

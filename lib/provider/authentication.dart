@@ -68,6 +68,7 @@ class Authentication with ChangeNotifier {
               "batch": batch,
               "section": section,
               "url": "",
+              "bio": "",
               "role": batch.isEmpty ? "TeacherP" :"Student"
             },
           );

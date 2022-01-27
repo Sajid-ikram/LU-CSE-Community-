@@ -117,7 +117,7 @@ class _UserInfoOfAPostState extends State<UserInfoOfAPost> {
       data["name"],
       style: GoogleFonts.inter(
         fontSize: size.sp,
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.w600,
       ),
     );
   }

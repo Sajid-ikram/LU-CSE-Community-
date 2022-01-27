@@ -38,15 +38,35 @@ Container customTextField(TextEditingController controller, String text,
           } else {
             return null;
           }
-        }else if (text == "Confirm Password") {
+        } else if (text == "Confirm Password") {
           if (value == null || value.isEmpty) {
             snackBar(context, "Enter to Confirm Password");
             return "show error";
           } else if (value.length < 6) {
             snackBar(context, "Password must be greater than 6 digit");
             return "show error";
-          }else if (value != pro.passwordController.text) {
+          } else if (value != pro.passwordController.text) {
             snackBar(context, "Password does not match");
+            return "show error";
+          } else {
+            return null;
+          }
+        }else if (text == "Batch") {
+          if (value == null || value.isEmpty) {
+            snackBar(context, "Enter your Batch");
+            return "show error";
+          } else if (value.length > 5) {
+            snackBar(context, "Batch should be less then 5 character");
+            return "show error";
+          } else {
+            return null;
+          }
+        }else if (text == "Section") {
+          if (value == null || value.isEmpty) {
+            snackBar(context, "Enter your Section");
+            return "show error";
+          } else if (value.length > 1) {
+            snackBar(context, "Section should be 1 character long");
             return "show error";
           } else {
             return null;
@@ -65,46 +85,64 @@ Container customTextField(TextEditingController controller, String text,
           : text == "Confirm Password"
               ? true
               : false,
-      decoration: InputDecoration(
-        errorStyle: const TextStyle(fontSize: 0.01),
-        suffixIcon: isPass
-            ? IconButton(
-                onPressed: () {
-                  pro.changeObscure();
-                },
-                icon: Icon(
-                  FontAwesomeIcons.solidEye,
-                  size: 16.sp,
-                  color: mainColor,
-                ),
-              )
-            : const SizedBox(),
-        contentPadding: EdgeInsets.only(left: 25.w),
-        filled: true,
-        fillColor: Colors.white,
-        enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: const BorderSide(
-              color: Colors.grey,
-            )),
-        focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: const BorderSide(
-              color: mainColor,
-            )),
-        errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: const BorderSide(
-              color: Colors.red,
-            )),
-        focusedErrorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: const BorderSide(
-              color: Colors.grey,
-            )),
-        hintText: text,
-        hintStyle: GoogleFonts.inter(color: mainColor, fontSize: 15.sp),
-      ),
+      decoration: inputDecoration(isPass, pro, text),
     ),
+  );
+}
+
+InputDecoration inputDecoration(bool isPass, SignUpProvider pro, String text) {
+  return InputDecoration(
+
+    errorStyle:  text == "Change Bio" ||
+        text == "Change name" ||
+        text == "Change Section" ||
+        text == "Change Batch"
+        ? null : const TextStyle(fontSize: 0.01),
+    suffixIcon: isPass
+        ? IconButton(
+            onPressed: () {
+              pro.changeObscure();
+            },
+            icon: Icon(
+              FontAwesomeIcons.solidEye,
+              size: 16.sp,
+              color: mainColor,
+            ),
+          )
+        : const SizedBox(),
+    contentPadding: EdgeInsets.only(
+      left: 25.w,
+      top: text == "Change Bio" ? 10 : 0,
+      bottom: text == "Change Bio" ? 10 : 0,
+    ),
+    filled: true,
+    fillColor: Colors.white,
+    enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: BorderSide(
+          color: text == "Change Bio" ||
+                  text == "Change name" ||
+                  text == "Change Section" ||
+                  text == "Change Batch"
+              ? const Color(0xffE2E2E2)
+              : Colors.grey,
+        )),
+    focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: const BorderSide(
+          color: mainColor,
+        )),
+    errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: const BorderSide(
+          color: Colors.red,
+        )),
+    focusedErrorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: const BorderSide(
+          color: Colors.grey,
+        )),
+    hintText: text,
+    hintStyle: GoogleFonts.inter(color: mainColor, fontSize: 15.sp),
   );
 }
