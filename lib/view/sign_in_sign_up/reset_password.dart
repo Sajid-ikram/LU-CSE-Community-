@@ -23,11 +23,12 @@ class ResetPassword extends StatelessWidget {
   validate(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
       try {
-        buildShowDialog(context);
+        buildLoadingIndicator(context);
         Provider.of<Authentication>(context, listen: false)
             .resetPassword(emailController.text,context)
             .then(
               (value) {
+                Navigator.of(context, rootNavigator: true).pop();
             if (value != "Success") {
               snackBar(context, "Reset password link was sent to your email");
             }
@@ -37,6 +38,7 @@ class ResetPassword extends StatelessWidget {
           },
         );
       } catch (e) {
+        Navigator.of(context, rootNavigator: true).pop();
         snackBar(context, "An error accor");
       }
     }

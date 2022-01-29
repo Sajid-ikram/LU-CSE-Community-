@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lu_cse_community/provider/authentication.dart';
 import 'package:lu_cse_community/provider/profile_provider.dart';
+import 'package:lu_cse_community/view/settings/view_profile_page.dart';
 import 'package:lu_cse_community/view/settings/widgets/build_profile_part.dart';
 import 'package:provider/provider.dart';
 
@@ -19,7 +20,13 @@ class Settings extends StatelessWidget {
             return Column(
               children: [
                 SizedBox(height: 80.h),
-                BuildProfilePart(isViewMode: false),
+                BuildProfilePart(
+                  isViewMode: false,
+                  name: "",
+                  email: "",
+                  url: "",
+                  isViewer: false,
+                ),
                 SizedBox(height: 30.h),
                 const Divider(thickness: 4, color: Color(0xffF6F6F7)),
                 Padding(
@@ -37,7 +44,22 @@ class Settings extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.of(context).pushNamed("ViewProfile");
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ViewProfile(
+                          uid: provider.currentUserUid,
+                          isViewer: false,
+                          batch: provider.batch,
+                          bio: provider.bio,
+                          email: provider.email,
+                          name: provider.profileName,
+                          role: provider.role,
+                          section: provider.section,
+                          url: provider.profileUrl,
+                        ),
+                      ),
+                    );
                   },
                   child: Container(
                     padding:
@@ -81,7 +103,12 @@ class Settings extends StatelessWidget {
                     child: buildRow("Edit Profile")),
                 const Divider(
                     thickness: 1.5, color: Color(0xffF6F6F7), height: 25),
-                buildRow("Change Password"),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushNamed("ResetPassword");
+                  },
+                  child: buildRow("Change Password"),
+                ),
                 const Divider(
                     thickness: 1.5, color: Color(0xffF6F6F7), height: 25),
                 buildRow("Post"),
@@ -156,7 +183,7 @@ class Settings extends StatelessWidget {
             TextButton(
               child: const Text('Ok'),
               onPressed: () {
-                Provider.of<Authentication>(context).signOut();
+                Provider.of<Authentication>(context,listen: false).signOut();
                 Navigator.of(context).pop();
               },
             ),

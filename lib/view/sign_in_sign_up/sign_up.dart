@@ -42,7 +42,7 @@ class _SignUpState extends State<SignUp> {
   validate() async {
     if (_formKey.currentState!.validate()) {
       try {
-        buildShowDialog(context);
+        buildLoadingIndicator(context);
         Provider.of<Authentication>(context, listen: false)
             .signUp(
           name: nameController.text,

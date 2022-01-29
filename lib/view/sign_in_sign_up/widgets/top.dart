@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:lu_cse_community/constant/constant.dart';
 import 'package:lu_cse_community/provider/authentication.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +17,7 @@ Widget top(BuildContext context,String page){
             if(page == "SignUp"){
               Provider.of<Authentication>(context, listen: false).deleteUser();
             }
-            Navigator.of(context).pushReplacementNamed(page);
+            Navigator.of(context).pop();
           },
           icon: const Icon(Icons.arrow_back_ios),
         ),
@@ -31,13 +32,23 @@ Widget top(BuildContext context,String page){
   );
 }
 
-buildShowDialog(BuildContext context) {
+buildLoadingIndicator(BuildContext context) {
   return showDialog(
     context: context,
     barrierDismissible: false,
+
     builder: (BuildContext context) {
-      return const Center(
-        child: CircularProgressIndicator(color: mainColor),
+      return  Center(
+        child: SpinKitDoubleBounce(
+          itemBuilder: (BuildContext context, int index) {
+            return DecoratedBox(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: index.isEven ? mainColor : mainColor.withOpacity(0.5),
+              ),
+            );
+          },
+        ),
       );
     },
   );

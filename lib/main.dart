@@ -7,12 +7,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lu_cse_community/constant/constant.dart';
 import 'package:lu_cse_community/provider/all_users_provider.dart';
 import 'package:lu_cse_community/provider/authentication.dart';
+import 'package:lu_cse_community/provider/chat_provider.dart';
 import 'package:lu_cse_community/provider/individual_contest_provider.dart';
 import 'package:lu_cse_community/provider/notification_services.dart';
 import 'package:lu_cse_community/provider/post_provider.dart';
 import 'package:lu_cse_community/provider/profile_provider.dart';
 import 'package:lu_cse_community/provider/search_provider.dart';
 import 'package:lu_cse_community/provider/sign_up_provider.dart';
+import 'package:lu_cse_community/view/Chat/chat.dart';
 import 'package:lu_cse_community/view/Home/SubPage/add_new_post_page.dart';
 import 'package:lu_cse_community/view/bottom_nav_bar.dart';
 import 'package:lu_cse_community/view/Home/home.dart';
@@ -54,6 +56,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => PostProvider()),
         ChangeNotifierProvider(create: (_) => AllUserProvider()),
         ChangeNotifierProvider(create: (_) => SearchProvider()),
+        ChangeNotifierProvider(create: (_) => ChatProvider()),
       ],
       child: ScreenUtilInit(
         designSize: const Size(414, 837),
@@ -93,7 +96,6 @@ class MyApp extends StatelessWidget {
             "AddNewPostPage": (ctx) => const AddNewPostPage(),
             "AllUsers": (ctx) => const AllUsers(),
             "Dashboard": (ctx) => const Dashboard(),
-            "ViewProfile": (ctx) => const ViewProfile(),
             "EditProfile": (ctx) => const EditProfile(),
           },
         ),

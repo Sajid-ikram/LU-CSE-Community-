@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lu_cse_community/constant/constant.dart';
 import 'package:lu_cse_community/view/settings/settings.dart';
-import 'Chat/chat.dart';
+import 'Chat/chat_user.dart';
 import 'Contest/contest.dart';
 import 'Home/home.dart';
 
@@ -17,7 +17,7 @@ class CustomNavigationBar extends StatefulWidget {
 }
 
 class _CustomNavigationBarState extends State<CustomNavigationBar> {
-  var _bottomNavIndex = 3;
+  var _bottomNavIndex = 2;
 
   final List<IconData> iconList = [
     Icons.home,
@@ -35,7 +35,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
   List<Widget> pageList = [
     const Home(),
     const Contest(),
-    const Chat(),
+    const ChatUser(),
     const Settings(),
     //const StoriesHorizontal()
   ];

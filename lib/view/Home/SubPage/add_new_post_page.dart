@@ -9,6 +9,7 @@ import 'package:lu_cse_community/constant/constant.dart';
 import 'package:lu_cse_community/provider/post_provider.dart';
 import 'package:lu_cse_community/provider/profile_provider.dart';
 import 'package:lu_cse_community/view/sign_in_sign_up/widgets/custom_button.dart';
+import 'package:lu_cse_community/view/sign_in_sign_up/widgets/top.dart';
 import 'package:provider/provider.dart';
 
 class AddNewPostPage extends StatefulWidget {
@@ -40,7 +41,7 @@ class _AddNewPostPageState extends State<AddNewPostPage> {
 
   Future uploadPost() async {
     try {
-      buildShowDialog(context);
+      buildLoadingIndicator(context);
       String url = "";
       if (isSelected) {
         final ref = storage.FirebaseStorage.instance
@@ -66,17 +67,7 @@ class _AddNewPostPageState extends State<AddNewPostPage> {
     }
   }
 
-  buildShowDialog(BuildContext context) {
-    return showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return const Center(
-          child: CircularProgressIndicator(color: mainColor),
-        );
-      },
-    );
-  }
+
 
   TextEditingController postController = TextEditingController();
 

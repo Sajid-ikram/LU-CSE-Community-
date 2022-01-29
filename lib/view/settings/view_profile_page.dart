@@ -1,19 +1,33 @@
-import 'dart:io';
-
-import 'package:image_cropper/image_cropper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:lu_cse_community/provider/profile_provider.dart';
+import 'package:lu_cse_community/view/Chat/chat.dart';
 import 'package:lu_cse_community/view/settings/widgets/build_profile_part.dart';
 import 'package:lu_cse_community/view/settings/widgets/build_top.dart';
-import 'package:provider/provider.dart';
 
 class ViewProfile extends StatefulWidget {
-  const ViewProfile({Key? key}) : super(key: key);
+  const ViewProfile(
+      {Key? key,
+      required this.name,
+      required this.email,
+      required this.batch,
+      required this.role,
+      required this.section,
+      required this.isViewer,
+      required this.bio,
+      required this.url, required this.uid})
+      : super(key: key);
+  final String name;
+  final String email;
+  final String role;
+  final String batch;
+  final String section;
+  final String bio;
+  final String url;
+  final String uid;
+  final bool isViewer;
 
   @override
   State<ViewProfile> createState() => _ViewProfileState();
@@ -28,7 +42,6 @@ class _ViewProfileState extends State<ViewProfile> {
     }
     return "Not available";
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -73,9 +86,19 @@ class _ViewProfileState extends State<ViewProfile> {
                     Colors.black,
                   ),
                   const Spacer(),
-                  buildSocialSites(
-                    FontAwesomeIcons.comments,
-                    Colors.black,
+                  InkWell(
+                    onTap: (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Chat(name: widget.name, url: widget.url, uid: widget.uid),
+                        ),
+                      );
+                    },
+                    child: buildSocialSites(
+                      FontAwesomeIcons.comments,
+                      Colors.black,
+                    ),
                   ),
                 ],
               ),
@@ -88,30 +111,32 @@ class _ViewProfileState extends State<ViewProfile> {
 
   SingleChildScrollView buildStackBottom() {
     return SingleChildScrollView(
-      child: Consumer<ProfileProvider>(
-        builder: (context, provider, child) {
-          return Padding(
-            padding: EdgeInsets.all(32.w),
-            child: Column(
-              children: [
-                SizedBox(height: 15.h),
-                buildTop("Profile", context),
-                SizedBox(height: 15.h),
-                BuildProfilePart(isViewMode: true),
-                SizedBox(height: 30.h),
-                _buildContainer("Name", provider.profileName),
-                if (provider.role == "Student" || provider.role == "Moderator")
-                  _buildContainer("Batch", provider.batch),
-                if (provider.role == "Student" || provider.role == "Moderator")
-                  _buildContainer("ID & Section",
-                      getIdAndSection(provider.email, provider.section)),
-                _buildContainer("Bio",
-                    provider.bio.isEmpty ? "No bio available" : provider.bio),
-                SizedBox(height: 50.h)
-              ],
+      child: Padding(
+        padding: EdgeInsets.all(32.w),
+        child: Column(
+          children: [
+            SizedBox(height: 15.h),
+            buildTop("Profile", context),
+            SizedBox(height: 15.h),
+            BuildProfilePart(
+              isViewMode: true,
+              name: widget.name,
+              email: widget.email,
+              url: widget.url,
+              isViewer: widget.isViewer,
             ),
-          );
-        },
+            SizedBox(height: 30.h),
+            _buildContainer("Name", widget.name),
+            if (widget.role == "Student" || widget.role == "Moderator")
+              _buildContainer("Batch", widget.batch),
+            if (widget.role == "Student" || widget.role == "Moderator")
+              _buildContainer("ID & Section",
+                  getIdAndSection(widget.email, widget.section)),
+            _buildContainer(
+                "Bio", widget.bio.isEmpty ? "No bio available" : widget.bio),
+            SizedBox(height: 50.h)
+          ],
+        ),
       ),
     );
   }

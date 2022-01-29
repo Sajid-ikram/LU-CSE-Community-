@@ -64,7 +64,7 @@ class ProfileProvider extends ChangeNotifier {
   Future updateProfileUrl(File _imageFile, BuildContext context) async {
     try {
       final FirebaseAuth auth = FirebaseAuth.instance;
-      buildShowDialog(context);
+      buildLoadingIndicator(context);
       final ref = storage.FirebaseStorage.instance
           .ref()
           .child("profileImage")

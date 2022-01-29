@@ -9,12 +9,14 @@ Stack buildTop(String text ,BuildContext context) {
         onTap: () {
           Navigator.of(context).pop();
         },
-        child: Icon(
-          Icons.arrow_back_ios,
-          size: 20.sp,
+        child: Align(
+          alignment: Alignment.centerLeft,
+          child: Icon(
+            Icons.arrow_back_ios,
+            size: 20.sp,
+          ),
         ),
       ),
-      SizedBox(width: 130.w),
       Align(
         alignment: Alignment.center,
         child: Text(

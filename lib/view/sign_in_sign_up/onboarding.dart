@@ -72,14 +72,14 @@ class OnBoarding extends StatelessWidget {
                     SizedBox(height: 40.h),
                     InkWell(
                       onTap: () {
-                        Navigator.of(context).pushReplacementNamed("SignUp");
+                        Navigator.of(context).pushNamed("SignUp");
                       },
                       child: buildButton("Sign Up",350,20,56),
                     ),
                     SizedBox(height: 10.h),
                     InkWell(
                       onTap: () {
-                        Navigator.of(context).pushReplacementNamed("SignIn");
+                        Navigator.of(context).pushNamed("SignIn");
                       },
                       child: buildOutlineButton("Sign In"),
                     ),

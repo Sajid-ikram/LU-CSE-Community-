@@ -15,7 +15,7 @@ Container customTextField(TextEditingController controller, String text,
     width: 340.w,
     margin: EdgeInsets.only(top: 10.h),
     child: TextFormField(
-      style: const TextStyle(color: Colors.black),
+      style:  GoogleFonts.inter(color: Colors.black),
       controller: controller,
       validator: (value) {
         if (text == "Email Address") {
@@ -97,7 +97,7 @@ InputDecoration inputDecoration(bool isPass, SignUpProvider pro, String text) {
         text == "Change name" ||
         text == "Change Section" ||
         text == "Change Batch"
-        ? null : const TextStyle(fontSize: 0.01),
+        ? null :  GoogleFonts.inter(fontSize: 0.01),
     suffixIcon: isPass
         ? IconButton(
             onPressed: () {

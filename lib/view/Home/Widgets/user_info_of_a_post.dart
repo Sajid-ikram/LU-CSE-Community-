@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lu_cse_community/provider/profile_provider.dart';
+import 'package:lu_cse_community/view/settings/view_profile_page.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -112,12 +113,32 @@ class _UserInfoOfAPostState extends State<UserInfoOfAPost> {
               );
   }
 
-  Text buildNameText(double size) {
-    return Text(
-      data["name"],
-      style: GoogleFonts.inter(
-        fontSize: size.sp,
-        fontWeight: FontWeight.w600,
+  GestureDetector buildNameText(double size) {
+    return GestureDetector(
+      onTap: (){
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ViewProfile(
+              uid: data.id,
+              isViewer: true,
+              batch: data["batch"],
+              bio: data["bio"],
+              email: data["email"],
+              name: data["name"],
+              role: data["role"],
+              section: data["section"],
+              url: data["url"],
+            ),
+          ),
+        );
+      },
+      child: Text(
+        data["name"],
+        style: GoogleFonts.inter(
+          fontSize: size.sp,
+          fontWeight: FontWeight.w600,
+        ),
       ),
     );
   }

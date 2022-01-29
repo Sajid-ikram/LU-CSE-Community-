@@ -32,7 +32,7 @@ class _SignInState extends State<SignIn> {
   validate() async {
     if (_formKey.currentState!.validate()) {
       try {
-        buildShowDialog(context);
+        buildLoadingIndicator(context);
         Provider.of<Authentication>(context, listen: false)
             .signIn(emailController.text, passwordController.text, context)
             .then(

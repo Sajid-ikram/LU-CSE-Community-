@@ -9,8 +9,19 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
 class BuildProfilePart extends StatefulWidget {
-  BuildProfilePart({Key? key, required this.isViewMode}) : super(key: key);
+  BuildProfilePart({
+    Key? key,
+    required this.isViewMode,
+    required this.name,
+    required this.email,
+    required this.isViewer,
+    required this.url,
+  }) : super(key: key);
   bool isViewMode;
+  bool isViewer;
+  String name;
+  String email;
+  String url;
 
   @override
   _BuildProfilePartState createState() => _BuildProfilePartState();
@@ -18,7 +29,6 @@ class BuildProfilePart extends StatefulWidget {
 
 class _BuildProfilePartState extends State<BuildProfilePart> {
   final picker = ImagePicker();
-
 
   Future pickImage() async {
     try {
@@ -33,12 +43,13 @@ class _BuildProfilePartState extends State<BuildProfilePart> {
             CropAspectRatioPreset.square,
           ],
           androidUiSettings: const AndroidUiSettings(
-              toolbarTitle: 'Cropper',
-              statusBarColor: nevColor,
-              toolbarColor: nevColor,
-              toolbarWidgetColor: Colors.white,
-              initAspectRatio: CropAspectRatioPreset.original,
-              lockAspectRatio: true),
+            toolbarTitle: 'Cropper',
+            statusBarColor: nevColor,
+            toolbarColor: nevColor,
+            toolbarWidgetColor: Colors.white,
+            initAspectRatio: CropAspectRatioPreset.original,
+            lockAspectRatio: true,
+          ),
         );
         if (croppedFile != null) {
           Provider.of<ProfileProvider>(context, listen: false)
@@ -50,6 +61,7 @@ class _BuildProfilePartState extends State<BuildProfilePart> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.isViewer);
     return Consumer<ProfileProvider>(
       builder: (context, provider, child) {
         return Align(
@@ -74,19 +86,32 @@ class _BuildProfilePartState extends State<BuildProfilePart> {
                       ),
                       height: widget.isViewMode ? 90.w : 110.w,
                       width: widget.isViewMode ? 90.w : 110.w,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(100),
-                        child: provider.profileUrl != ""
-                            ? FadeInImage.assetNetwork(
-                                fit: BoxFit.cover,
-                                placeholder: 'assets/profile.jpg',
-                                image: provider.profileUrl,
-                              )
-                            : Image.asset(
-                                "assets/profile.jpg",
-                                fit: BoxFit.cover,
-                              ),
-                      ),
+                      child: widget.isViewer
+                          ? ClipRRect(
+                              borderRadius: BorderRadius.circular(100),
+                              child: widget.url != ""
+                                  ? FadeInImage.assetNetwork(
+                                      fit: BoxFit.cover,
+                                      placeholder: 'assets/profile.jpg',
+                                      image: widget.url)
+                                  : Image.asset(
+                                      "assets/profile.jpg",
+                                      fit: BoxFit.cover,
+                                    ),
+                            )
+                          : ClipRRect(
+                              borderRadius: BorderRadius.circular(100),
+                              child: provider.profileUrl != ""
+                                  ? FadeInImage.assetNetwork(
+                                      fit: BoxFit.cover,
+                                      placeholder: 'assets/profile.jpg',
+                                      image: provider.profileUrl,
+                                    )
+                                  : Image.asset(
+                                      "assets/profile.jpg",
+                                      fit: BoxFit.cover,
+                                    ),
+                            ),
                     ),
                     if (!widget.isViewMode)
                       Positioned(
@@ -121,17 +146,18 @@ class _BuildProfilePartState extends State<BuildProfilePart> {
                 ),
               ),
               Text(
-                provider.profileName,
+                widget.isViewMode ? widget.name : provider.profileName,
                 style: GoogleFonts.inter(
-                    color: Colors.black,
-                    fontSize: widget.isViewMode ? 20.sp : 26.sp,
-                    fontWeight: FontWeight.w600),
+                  color: Colors.black,
+                  fontSize: widget.isViewMode ? 20.sp : 26.sp,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
               SizedBox(height: 10.h),
               Text(
-                provider.email,
+                widget.isViewMode ? widget.email : provider.email,
                 style: GoogleFonts.inter(
-                    color: Color(0xff666666),
+                    color: const Color(0xff666666),
                     fontSize: widget.isViewMode ? 12.sp : 13.sp,
                     fontWeight: FontWeight.w400),
               ),

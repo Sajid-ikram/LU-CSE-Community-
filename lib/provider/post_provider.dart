@@ -7,6 +7,7 @@ class PostProvider with ChangeNotifier {
   bool isLoading = false;
   bool loadingComment = false;
   String commentText = '';
+  bool isNewPostAdded = false;
 
   changeCommentText(String text) {
     commentText = text;
@@ -66,6 +67,7 @@ class PostProvider with ChangeNotifier {
           "comments": "0",
         },
       );
+      isNewPostAdded = !isNewPostAdded;
       notifyListeners();
     } catch (e) {
       return onError(context, "Having problem connecting to the server");

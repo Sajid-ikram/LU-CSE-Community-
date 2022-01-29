@@ -105,7 +105,7 @@ class Authentication with ChangeNotifier {
   Future<String> resetPassword(String email,BuildContext context) async {
     try {
       await _firebaseAuth.sendPasswordResetEmail(email: email);
-      Navigator.of(context, rootNavigator: true).pop();
+
       return "Success";
     } catch (e) {
       return "Error";

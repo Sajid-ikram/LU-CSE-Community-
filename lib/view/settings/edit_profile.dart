@@ -41,7 +41,7 @@ class _EditProfileState extends State<EditProfile> {
   validate() async {
     if (_formKey.currentState!.validate()) {
       try {
-        buildShowDialog(context);
+        buildLoadingIndicator(context);
         Provider.of<ProfileProvider>(context, listen: false)
             .updateProfileInfo(
           name: changeNameController.text,
