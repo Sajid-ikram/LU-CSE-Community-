@@ -3,7 +3,7 @@ import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lu_cse_community/constant/constant.dart';
-import 'package:lu_cse_community/provider/individual_contest_provider.dart';
+import 'package:lu_cse_community/provider/contest_provider.dart';
 import 'package:intl/intl.dart';
 import 'package:lu_cse_community/provider/notification_services.dart';
 import 'package:provider/provider.dart';
@@ -20,7 +20,7 @@ Container buildContestWidget({
 }) {
   return Container(
     width: 350.w,
-    margin: EdgeInsets.fromLTRB(30, index == 0 ? 20 : 10, 30, 0),
+    margin: EdgeInsets.fromLTRB(20, index == 0 ? 20 : 10,20, 0),
     decoration: BoxDecoration(
       border: Border.all(color: Colors.black12, width: 1),
       borderRadius: BorderRadius.circular(10),

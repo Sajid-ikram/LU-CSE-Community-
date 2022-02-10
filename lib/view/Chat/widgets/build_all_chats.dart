@@ -58,6 +58,7 @@ Expanded buildAllChats(ProfileProvider pro, String uid) {
 
 Padding individualChat(
     QuerySnapshot<Object?> data, int index, ProfileProvider pro) {
+
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 30),
     child: Row(
@@ -80,7 +81,7 @@ Padding individualChat(
               Padding(
                 padding: const EdgeInsets.only(bottom: 20),
                 child: Text(
-                  data.docs[index]["message"],
+                  ChatProvider.decrypt(data.docs[index]["message"]),
                   style: GoogleFonts.inter(fontSize: 14.sp, color: Colors.black,fontWeight: FontWeight.w400),
                 ),
               ),

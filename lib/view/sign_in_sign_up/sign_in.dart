@@ -10,6 +10,8 @@ import 'package:lu_cse_community/view/sign_in_sign_up/widgets/promise.dart';
 import 'package:lu_cse_community/view/sign_in_sign_up/widgets/top.dart';
 import 'package:provider/provider.dart';
 
+import '../public_widget/build_loading.dart';
+
 class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);
 
@@ -113,6 +115,8 @@ class _SignInState extends State<SignIn> {
                     ),
                     SizedBox(height: 40.h),
                     InkWell(
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
                       onTap: () {
                         validate();
                       },

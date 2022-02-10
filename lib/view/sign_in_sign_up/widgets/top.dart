@@ -32,24 +32,3 @@ Widget top(BuildContext context,String page){
   );
 }
 
-buildLoadingIndicator(BuildContext context) {
-  return showDialog(
-    context: context,
-    barrierDismissible: false,
-
-    builder: (BuildContext context) {
-      return  Center(
-        child: SpinKitDoubleBounce(
-          itemBuilder: (BuildContext context, int index) {
-            return DecoratedBox(
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: index.isEven ? mainColor : mainColor.withOpacity(0.5),
-              ),
-            );
-          },
-        ),
-      );
-    },
-  );
-}

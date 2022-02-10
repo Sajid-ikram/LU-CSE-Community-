@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lu_cse_community/constant/constant.dart';
+import 'package:lu_cse_community/provider/chat_provider.dart';
 import 'package:lu_cse_community/provider/profile_provider.dart';
 import 'package:lu_cse_community/view/Chat/widgets/chat_user_top.dart';
+import 'package:lu_cse_community/view/Chat/widgets/individual_chat_info.dart';
 import 'package:provider/provider.dart';
 
 import 'chat.dart';
@@ -74,100 +76,37 @@ class _ChatUserState extends State<ChatUser> {
   ListView buildListOfChat(QuerySnapshot<Object?> data) {
     var pro = Provider.of<ProfileProvider>(context, listen: false);
 
-
     return ListView.builder(
       physics: const BouncingScrollPhysics(),
       itemBuilder: (context, index) {
-        String name = "";
-        String url = "";
         String uid = "";
         bool show = false;
-        if(data.docs[index]["user1"] == pro.currentUserUid){
-          name = data.docs[index]["name2"];
-          url = data.docs[index]["url2"];
+        if (data.docs[index]["user1"] == pro.currentUserUid) {
           uid = data.docs[index]["user2"];
           show = true;
-        }else  if(data.docs[index]["user2"] == pro.currentUserUid){
-          name = data.docs[index]["name1"];
-          url = data.docs[index]["url1"];
+        } else if (data.docs[index]["user2"] == pro.currentUserUid) {
           uid = data.docs[index]["user1"];
           show = true;
         }
 
-        return show&&
-                data.docs[index]["lastMassage"] != ""
-            ? InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Chat(
-                          name: name, url: url, uid: uid),
-                    ),
-                  );
-                },
-                child: Container(
-                  height: 50,
-                  width: double.infinity,
-                  margin: EdgeInsets.symmetric(horizontal: 30.sp, vertical: 10),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      buildImage(url),
-                      SizedBox(width: 20.w),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            name,
-                            style: GoogleFonts.inter(
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 20.h,
-                            width: 250.w,
-                            child: Text(
-                              data.docs[index]["lastMassage"],
-                              overflow: TextOverflow.ellipsis,
-
-                              maxLines: 1,
-                              style: GoogleFonts.inter(
-                                fontSize: 14.sp,
-                                color: const Color(0xff6a6a6a),
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ),
-
-
-                        ],
-                      )
-                    ],
-                  ),
+        return show && data.docs[index]["lastMassage"] != ""
+            ? Column(
+              children: [
+                Padding(
+                  padding:  EdgeInsets.symmetric(horizontal: 32.w,vertical: 10.h),
+                  child: IndividualChatInfo(
+                      lastMs: data.docs[index]["lastMassage"], uid: uid),
                 ),
-              )
+                Divider(
+                  height: 5,
+                  indent: 32.w,
+                  endIndent: 32.w,
+                ),
+              ],
+            )
             : const SizedBox();
       },
       itemCount: size,
     );
   }
-}
-
-Widget buildImage(String url) {
-  return url.isNotEmpty
-      ? CircleAvatar(
-          backgroundColor: Colors.grey,
-          radius: 21.sp,
-          backgroundImage: NetworkImage(
-            url,
-          ),
-        )
-      : CircleAvatar(
-          backgroundColor: Colors.grey,
-          radius: 21.sp,
-          backgroundImage: const AssetImage("assets/profile.jpg"),
-        );
 }

@@ -64,7 +64,7 @@ class Settings extends StatelessWidget {
                   child: Container(
                     padding:
                         EdgeInsets.only(left: 24.w, top: 15.h, right: 24.w),
-                    height: 50.h,
+                    //height: 50.h,
                     color: Colors.transparent,
                     child: Row(
                       children: [
@@ -78,11 +78,12 @@ class Settings extends StatelessWidget {
                                   fontSize: 14.sp,
                                   fontWeight: FontWeight.w600),
                             ),
+                            SizedBox(height: 5.h),
                             Text(
                               "View your information",
                               style: GoogleFonts.inter(
                                   color: const Color(0xff666666),
-                                  fontSize: 11.sp,
+                                  fontSize: 12.sp,
                                   fontWeight: FontWeight.w400),
                             ),
                           ],

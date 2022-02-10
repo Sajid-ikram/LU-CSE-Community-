@@ -56,17 +56,10 @@ class _ViewProfileState extends State<ViewProfile> {
           Positioned(
             bottom: 20,
             left: 32.w,
-            child: Container(
+            child: SizedBox(
               width: 350.w,
               height: 50.h,
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                      blurRadius: 15,
-                      spreadRadius: 10,
-                      color: Colors.grey.withOpacity(0.3))
-                ],
-              ),
+
               child: Row(
                 children: [
                   buildSocialSites(
@@ -143,10 +136,10 @@ class _ViewProfileState extends State<ViewProfile> {
 
   Container buildSocialSites(IconData iconData, Color color) {
     return Container(
-      height: 35.w,
-      width: 35.w,
+      height: 40.w,
+      width: 40.w,
       margin: EdgeInsets.only(
-          right: iconData == FontAwesomeIcons.comments ? 0 : 10),
+          right: iconData == FontAwesomeIcons.comments ? 0 : 15),
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: Colors.white,
@@ -194,7 +187,7 @@ class _ViewProfileState extends State<ViewProfile> {
               alignment: Alignment.centerLeft,
               child: Text(
                 value,
-                textAlign: TextAlign.justify,
+                textAlign: TextAlign.left,
                 style: GoogleFonts.inter(
                     color: Colors.black,
                     fontSize: 14.sp,

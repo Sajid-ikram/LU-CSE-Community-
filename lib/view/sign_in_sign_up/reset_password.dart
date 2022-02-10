@@ -9,6 +9,8 @@ import 'package:lu_cse_community/view/sign_in_sign_up/widgets/promise.dart';
 import 'package:lu_cse_community/view/sign_in_sign_up/widgets/top.dart';
 import 'package:provider/provider.dart';
 
+import '../public_widget/build_loading.dart';
+
 class ResetPassword extends StatelessWidget {
   ResetPassword({Key? key}) : super(key: key);
 
@@ -104,6 +106,8 @@ class ResetPassword extends StatelessWidget {
                     ),
                     SizedBox(height: 15.h),
                     InkWell(
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
                       onTap: () {
                         validate(context);
                       },

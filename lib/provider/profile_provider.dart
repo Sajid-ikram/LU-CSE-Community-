@@ -1,11 +1,11 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:lu_cse_community/view/Contest/SubPage/SubWidgets/error_dialoge.dart';
-import 'package:lu_cse_community/view/sign_in_sign_up/widgets/top.dart';
 import 'package:firebase_storage/firebase_storage.dart' as storage;
+
+import '../view/public_widget/build_loading.dart';
 
 class ProfileProvider extends ChangeNotifier {
   String profileUrl = '';

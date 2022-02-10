@@ -158,7 +158,7 @@ class _BuildProfilePartState extends State<BuildProfilePart> {
                 widget.isViewMode ? widget.email : provider.email,
                 style: GoogleFonts.inter(
                     color: const Color(0xff666666),
-                    fontSize: widget.isViewMode ? 12.sp : 13.sp,
+                    fontSize:  14.sp ,
                     fontWeight: FontWeight.w400),
               ),
             ],

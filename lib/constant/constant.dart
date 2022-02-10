@@ -6,6 +6,8 @@ const nevColor = Color(0xff181c24);
 const insideScaffoldColor = Color(0xffE5E5E5);
 const textColor= Color(0xff79838B);
 
+const String kAppId = "06a15094-92a6-48ff-b72a-ff0324a54c6f";
+
 List<String> individualSite = [
   "AtCoder",
   "CodeChef",

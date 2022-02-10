@@ -17,8 +17,8 @@ class _TeacherPendingButtonState extends State<TeacherPendingButton> {
     var profilePro = Provider.of<ProfileProvider>(context, listen: false);
     return Consumer<AllUserProvider>(
       builder: (context, provider, child) {
-        return provider.selectedFilter == "Teacher" ||
-                provider.selectedFilter == "TeacherP" &&
+        return (provider.selectedFilter == "Teacher" ||
+                provider.selectedFilter == "TeacherP") &&
                     (profilePro.role == "Teacher" || profilePro.role == "Admin")
             ? Padding(
                 padding: const EdgeInsets.only(bottom: 20),

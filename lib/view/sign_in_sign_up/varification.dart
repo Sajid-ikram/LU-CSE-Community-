@@ -135,6 +135,8 @@ class _VerificationAndHomeScreenState extends State<VerificationAndHomeScreen> {
                     ),
                     SizedBox(height: 25.h),
                     InkWell(
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
                       onTap: () {
                         checkVerification();
                       },

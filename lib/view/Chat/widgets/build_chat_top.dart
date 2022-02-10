@@ -13,6 +13,8 @@ Padding buildChatTop(BuildContext context,String name,String url) {
       child: Row(
         children: [
           InkWell(
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
             onTap: () {
               Provider.of<ChatProvider>(context,listen: false).chatId = "";
               Navigator.of(context).pop();

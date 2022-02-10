@@ -71,6 +71,8 @@ class OnBoarding extends StatelessWidget {
                     ),
                     SizedBox(height: 40.h),
                     InkWell(
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
                       onTap: () {
                         Navigator.of(context).pushNamed("SignUp");
                       },

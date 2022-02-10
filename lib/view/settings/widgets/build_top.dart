@@ -6,7 +6,10 @@ Stack buildTop(String text ,BuildContext context) {
   return Stack(
     children: [
       InkWell(
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
         onTap: () {
+
           Navigator.of(context).pop();
         },
         child: Align(

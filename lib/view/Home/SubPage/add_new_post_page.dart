@@ -5,15 +5,18 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:lu_cse_community/constant/constant.dart';
 import 'package:lu_cse_community/provider/post_provider.dart';
 import 'package:lu_cse_community/provider/profile_provider.dart';
 import 'package:lu_cse_community/view/sign_in_sign_up/widgets/custom_button.dart';
-import 'package:lu_cse_community/view/sign_in_sign_up/widgets/top.dart';
 import 'package:provider/provider.dart';
 
+import '../../../provider/notice_provider.dart';
+import '../../../provider/pdf_provider.dart';
+import '../../public_widget/build_loading.dart';
+
 class AddNewPostPage extends StatefulWidget {
-  const AddNewPostPage({Key? key}) : super(key: key);
+  AddNewPostPage({Key? key, required this.page}) : super(key: key);
+  String page;
 
   @override
   _AddNewPostPageState createState() => _AddNewPostPageState();
@@ -67,7 +70,39 @@ class _AddNewPostPageState extends State<AddNewPostPage> {
     }
   }
 
+  Future uploadNotice() async {
+    try {
+      var pdfPro = Provider.of<PDFProvider>(context, listen: false);
+      buildLoadingIndicator(context);
+      String url = "";
+      if (isSelected) {
+        final ref = storage.FirebaseStorage.instance
+            .ref()
+            .child("noticeImage/${DateTime.now()}");
 
+        final result = await ref.putFile(_imageFile);
+        url = await result.ref.getDownloadURL();
+      }
+
+      Provider.of<NoticeProvider>(context, listen: false).addNewNotice(
+        postText: postController.text,
+        imageUrl: url,
+        dateTime: DateTime.now().toString(),
+        context: context,
+      ).then((value) => {
+        pdfPro.sendNotification(
+          ["fab732a6-8371-11ec-9974-d6a81ba95cb1"],
+          "There is a new notice",
+          "CSE Department",
+          "https://firebasestorage.googleapis.com/v0/b/lu-cse-community.appspot.com/o/notification%2Flu.png?alt=media&token=8ba2b183-49af-4673-a519-020fa1f3ca74",
+        )
+      });
+      Navigator.of(context, rootNavigator: true).pop();
+      Navigator.pop(context);
+    } catch (e) {
+      Navigator.of(context, rootNavigator: true).pop();
+    }
+  }
 
   TextEditingController postController = TextEditingController();
 
@@ -92,8 +127,14 @@ class _AddNewPostPageState extends State<AddNewPostPage> {
                         size: 30.sp,
                       )),
                   InkWell(
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
                       onTap: () {
-                        uploadPost();
+                        if (widget.page == "Home") {
+                          uploadPost();
+                        } else {
+                          uploadNotice();
+                        }
                       },
                       child: buildButton("Post", 85, 16, 40))
                 ],
@@ -125,7 +166,7 @@ class _AddNewPostPageState extends State<AddNewPostPage> {
                       width: 78.w,
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        border: Border.all(color:Colors.grey.withOpacity(0.4)),
+                        border: Border.all(color: Colors.grey.withOpacity(0.4)),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: const Icon(FontAwesomeIcons.cameraRetro),
@@ -154,7 +195,6 @@ class _AddNewPostPageState extends State<AddNewPostPage> {
                 ],
               ),
             )
-
           ],
         ),
       ),

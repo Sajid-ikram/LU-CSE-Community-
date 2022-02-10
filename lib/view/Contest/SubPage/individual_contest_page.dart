@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lu_cse_community/constant/constant.dart';
-import 'package:lu_cse_community/provider/individual_contest_provider.dart';
+import 'package:lu_cse_community/provider/contest_provider.dart';
 import 'package:provider/provider.dart';
+import '../../public_widget/build_loading.dart';
 import 'SubWidgets/build_contest_widget.dart';
 
 class IndividualContestPage extends StatefulWidget {
@@ -50,9 +51,7 @@ class _IndividualContestPageState extends State<IndividualContestPage> {
     var pro = Provider.of<ContestProvider>(context, listen: false);
 
     return isLoading
-        ? const Scaffold(
-            body: Center(child: CircularProgressIndicator()),
-          )
+        ?  Scaffold(body: buildLoading())
         : Scaffold(
             appBar: AppBar(
               title: Text(widget.site),
@@ -72,7 +71,7 @@ class _IndividualContestPageState extends State<IndividualContestPage> {
                     ),
                   )
                 : ListView.builder(
-                    itemBuilder: (context, index) {
+                    itemBuilder: (context, index){
                       final difference = DateTime.parse(
                               pro.individualContestList[index].startTime)
                           .difference(DateTime.now())

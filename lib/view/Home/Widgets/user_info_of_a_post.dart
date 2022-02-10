@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart';
+import 'package:lu_cse_community/constant/constant.dart';
 import 'package:lu_cse_community/provider/profile_provider.dart';
 import 'package:lu_cse_community/view/settings/view_profile_page.dart';
 import 'package:provider/provider.dart';
@@ -52,6 +56,38 @@ class _UserInfoOfAPostState extends State<UserInfoOfAPost> {
     }
   }
 
+  Future<Response> sendNotification(
+      List<String> tokenIdList, String contents, String heading) async {
+    return await post(
+      Uri.parse('https://onesignal.com/api/v1/notifications'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization':
+            'Basic \u003cZTg0NDI1YzMtNGU3Mi00MDhmLTkwMTYtMmRhYjZhYTJjNDRl\u003e'
+      },
+      body: jsonEncode(<String, dynamic>{
+        "app_id": kAppId,
+        //kAppId is the App Id that one get from the OneSignal When the application is registered.
+
+        "included_segments": ["Subscribed Users"],
+        //"include_player_ids": tokenIdList,
+        //tokenIdList Is the List of All the Token Id to to Whom notification must be sent.
+
+        // android_accent_color reprsent the color of the heading text in the notifiction
+        //"android_accent_color": "FF9976D2",
+
+        //"small_icon":"ic_stat_onesignal_default",
+
+        "large_icon":
+            "https://firebasestorage.googleapis.com/v0/b/lu-cse-community.appspot.com/o/profileImage%2FDWErXMxXmbfNTktIXXB0Gy8s57k2?alt=media&token=2745ac63-407a-4284-bd1a-755356571019",
+
+        "headings": {"en": heading},
+
+        "contents": {"en": contents},
+      }),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return isLoading
@@ -70,12 +106,12 @@ class _UserInfoOfAPostState extends State<UserInfoOfAPost> {
                   ],
                 ),
                 const Spacer(),
-                if (widget.pageName == "home")
+                if (widget.pageName == "home" && widget.pageName != "notice")
                   Icon(Icons.favorite, size: 20.sp, color: Colors.grey),
               ],
             ),
           )
-        : widget.pageName == "home"
+        : widget.pageName == "home" || widget.pageName == "notice"
             ? Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -91,11 +127,24 @@ class _UserInfoOfAPostState extends State<UserInfoOfAPost> {
                     ],
                   ),
                   const Spacer(),
-                  Icon(
-                    Icons.favorite,
-                    size: 20.sp,
-                    color: Colors.red,
-                  ),
+                  if (widget.pageName != "notice")
+                    InkWell(
+                      onTap: () async {
+                        print("******************");
+                        var a = await sendNotification(
+                            ["fab732a6-8371-11ec-9974-d6a81ba95cb1"],
+                            "Text for test",
+                            "send by ikram ");
+                        print(a.body);
+                        print(a.statusCode);
+                        print("******************2");
+                      },
+                      child: Icon(
+                        Icons.favorite,
+                        size: 20.sp,
+                        color: Colors.red,
+                      ),
+                    ),
                 ],
               )
             : Row(
@@ -115,7 +164,7 @@ class _UserInfoOfAPostState extends State<UserInfoOfAPost> {
 
   GestureDetector buildNameText(double size) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -133,12 +182,25 @@ class _UserInfoOfAPostState extends State<UserInfoOfAPost> {
           ),
         );
       },
-      child: Text(
-        data["name"],
-        style: GoogleFonts.inter(
-          fontSize: size.sp,
-          fontWeight: FontWeight.w600,
-        ),
+      child: Row(
+        children: [
+          Text(
+            data["name"],
+            style: GoogleFonts.inter(
+              fontSize: size.sp,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          if (widget.pageName == "notice")
+            Padding(
+              padding: EdgeInsets.only(left: 8.w),
+              child: Icon(
+                Icons.star,
+                color: Color(0xffFFCE31),
+                size: 20.sp,
+              ),
+            ),
+        ],
       ),
     );
   }

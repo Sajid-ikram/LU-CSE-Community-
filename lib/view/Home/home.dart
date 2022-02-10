@@ -9,6 +9,7 @@ import 'package:lu_cse_community/provider/post_provider.dart';
 import 'package:lu_cse_community/provider/profile_provider.dart';
 import 'package:lu_cse_community/provider/search_provider.dart';
 import 'package:provider/provider.dart';
+import '../public_widget/build_loading.dart';
 import 'Widgets/add_post.dart';
 import 'Widgets/react_section.dart';
 import 'Widgets/user_info_of_a_post.dart';
@@ -56,9 +57,7 @@ class _HomeState extends State<Home> {
                         }
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
+                          return buildLoading();
                         }
 
                         final data = snapshot.data;
