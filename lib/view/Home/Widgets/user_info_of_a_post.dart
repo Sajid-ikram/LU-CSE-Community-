@@ -111,7 +111,7 @@ class _UserInfoOfAPostState extends State<UserInfoOfAPost> {
               ],
             ),
           )
-        : widget.pageName == "home" || widget.pageName == "notice"
+        : widget.pageName == "home" || widget.pageName == "notice" || widget.pageName == "post"
             ? Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -127,7 +127,7 @@ class _UserInfoOfAPostState extends State<UserInfoOfAPost> {
                     ],
                   ),
                   const Spacer(),
-                  if (widget.pageName != "notice")
+                  if (widget.pageName != "notice" &&  widget.pageName != "post")
                     InkWell(
                       onTap: () async {
                         print("******************");
@@ -191,7 +191,7 @@ class _UserInfoOfAPostState extends State<UserInfoOfAPost> {
               fontWeight: FontWeight.w600,
             ),
           ),
-          if (widget.pageName == "notice")
+          if (widget.pageName == "notice" && widget.pageName != "post")
             Padding(
               padding: EdgeInsets.only(left: 8.w),
               child: Icon(

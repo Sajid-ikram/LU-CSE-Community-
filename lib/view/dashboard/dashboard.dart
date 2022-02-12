@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lu_cse_community/constant/constant.dart';
 
 import 'Bus&Routine/bus_and_routine.dart';
+import 'LUCC&ACM/lucc_and_acm.dart';
 
 class Dashboard extends StatelessWidget {
   const Dashboard({Key? key}) : super(key: key);
@@ -64,9 +65,19 @@ class Dashboard extends StatelessWidget {
                     if (index == 0) {
                       Navigator.of(context).pushNamed("Notice");
                     } else if (index == 1) {
-                      //Navigator.of(context).pushNamed("AllUsers");
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => LUCC_And_ACM(page: "LUCC"),
+                        ),
+                      );
                     } else if (index == 2) {
-                      //Navigator.of(context).pushNamed("AllUsers");
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => LUCC_And_ACM(page: "ACM"),
+                        ),
+                      );
                     } else if (index == 3) {
                       Navigator.of(context).pushNamed("AllUsers");
                     } else if (index == 4) {

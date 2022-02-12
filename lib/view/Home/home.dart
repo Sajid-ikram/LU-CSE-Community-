@@ -155,7 +155,7 @@ class _HomeState extends State<Home> {
               ),
             ),
           ),
-          buildSearch(context),
+          buildSearch(context,"Home"),
         ],
       ),
     );

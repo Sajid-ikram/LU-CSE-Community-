@@ -6,7 +6,7 @@ import 'package:lu_cse_community/constant/constant.dart';
 import 'package:lu_cse_community/provider/search_provider.dart';
 import 'package:provider/provider.dart';
 
-Align buildSearch(BuildContext context) {
+Align buildSearch(BuildContext context, String page) {
   return Align(
     alignment: const Alignment(0, -0.85),
     child: Container(
@@ -24,8 +24,11 @@ Align buildSearch(BuildContext context) {
         ],
       ),
       child: TextField(
-        onChanged: (value){
-          Provider.of<SearchProvider>(context,listen: false).searchPost(value);
+        onChanged: (value) {
+          if (page == "Home") {
+            Provider.of<SearchProvider>(context, listen: false)
+                .searchPost(value);
+          } else {}
         },
         decoration: InputDecoration(
           contentPadding: EdgeInsets.all(10.7.sp),
@@ -35,11 +38,12 @@ Align buildSearch(BuildContext context) {
             Icons.search,
             size: 24.sp,
           ),
-          hintText: "Search places",
+          hintText: "Search here",
           hintStyle: GoogleFonts.inter(
-              fontSize: 16.sp,
-              fontWeight: FontWeight.w400,
-              color: Colors.grey),
+            fontSize: 16.sp,
+            fontWeight: FontWeight.w400,
+            color: Colors.grey,
+          ),
         ),
       ),
     ),

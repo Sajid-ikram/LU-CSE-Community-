@@ -1,19 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../constant/constant.dart';
 import '../Home/SubPage/add_new_post_page.dart';
+import '../dashboard/LUCC&ACM/add_new_event_or_post.dart';
 
-FloatingActionButton customFloatingActionButton(BuildContext context){
+FloatingActionButton customFloatingActionButton(
+    BuildContext context, String page) {
   return FloatingActionButton(
-
     onPressed: () {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => AddNewPostPage(page: "Notice"),
-        ),
-      );
+      if (page == "Notice") {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => AddNewPostPage(page: "Notice"),
+          ),
+        );
+      }else{
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => AddNewPostOrEvent(pageName: page),
+          ),
+        );
+      }
     },
     child: Container(
       height: 45.h,
