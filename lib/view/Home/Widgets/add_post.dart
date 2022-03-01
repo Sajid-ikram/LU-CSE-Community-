@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 
 Padding addPost(BuildContext context) {
   return Padding(
-    padding: EdgeInsets.fromLTRB(32.w, 20.h, 32.w, 10.h),
+    padding: EdgeInsets.fromLTRB(32.w, 33.h, 32.w, 10.h),
     child: Consumer<ProfileProvider>(
       builder: (context, provider, child) {
         return Row(

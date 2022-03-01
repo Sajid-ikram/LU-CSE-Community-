@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart' as storage;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,14 +10,16 @@ import 'package:lu_cse_community/provider/post_provider.dart';
 import 'package:lu_cse_community/provider/profile_provider.dart';
 import 'package:lu_cse_community/view/sign_in_sign_up/widgets/custom_button.dart';
 import 'package:provider/provider.dart';
-
+import 'package:http/http.dart' as http;
 import '../../../provider/notice_provider.dart';
 import '../../../provider/pdf_provider.dart';
 import '../../public_widget/build_loading.dart';
 
 class AddNewPostPage extends StatefulWidget {
-  AddNewPostPage({Key? key, required this.page}) : super(key: key);
+  AddNewPostPage({Key? key, required this.page, this.documentSnapshot})
+      : super(key: key);
   String page;
+  QueryDocumentSnapshot? documentSnapshot;
 
   @override
   _AddNewPostPageState createState() => _AddNewPostPageState();
@@ -70,6 +73,38 @@ class _AddNewPostPageState extends State<AddNewPostPage> {
     }
   }
 
+  Future updatePost() async {
+    try {
+      buildLoadingIndicator(context);
+      String url = "";
+      if (isSelected) {
+        final ref = storage.FirebaseStorage.instance
+            .ref()
+            .child("postImage/${DateTime.now()}");
+
+        final result = await ref.putFile(_imageFile);
+        url = await result.ref.getDownloadURL();
+      }
+
+      if (!isSelected &&
+          widget.documentSnapshot != null &&
+          widget.documentSnapshot!["imageUrl"] != "") {
+        url = widget.documentSnapshot!["imageUrl"];
+      }
+
+      Provider.of<PostProvider>(context, listen: false).updatePost(
+        postText: postController.text,
+        id: widget.documentSnapshot!.id,
+        imageUrl: url,
+        context: context,
+      );
+      Navigator.of(context, rootNavigator: true).pop();
+      Navigator.pop(context);
+    } catch (e) {
+      Navigator.of(context, rootNavigator: true).pop();
+    }
+  }
+
   Future uploadNotice() async {
     try {
       var pdfPro = Provider.of<PDFProvider>(context, listen: false);
@@ -84,19 +119,21 @@ class _AddNewPostPageState extends State<AddNewPostPage> {
         url = await result.ref.getDownloadURL();
       }
 
-      Provider.of<NoticeProvider>(context, listen: false).addNewNotice(
-        postText: postController.text,
-        imageUrl: url,
-        dateTime: DateTime.now().toString(),
-        context: context,
-      ).then((value) => {
-        pdfPro.sendNotification(
-          ["fab732a6-8371-11ec-9974-d6a81ba95cb1"],
-          "There is a new notice",
-          "CSE Department",
-          "https://firebasestorage.googleapis.com/v0/b/lu-cse-community.appspot.com/o/notification%2Flu.png?alt=media&token=8ba2b183-49af-4673-a519-020fa1f3ca74",
-        )
-      });
+      Provider.of<NoticeProvider>(context, listen: false)
+          .addNewNotice(
+            postText: postController.text,
+            imageUrl: url,
+            dateTime: DateTime.now().toString(),
+            context: context,
+          )
+          .then((value) => {
+                pdfPro.sendNotification(
+                  ["fab732a6-8371-11ec-9974-d6a81ba95cb1"],
+                  "There is a new notice",
+                  "CSE Department",
+                  "https://firebasestorage.googleapis.com/v0/b/lu-cse-community.appspot.com/o/notification%2Flu.png?alt=media&token=8ba2b183-49af-4673-a519-020fa1f3ca74",
+                )
+              });
       Navigator.of(context, rootNavigator: true).pop();
       Navigator.pop(context);
     } catch (e) {
@@ -104,7 +141,50 @@ class _AddNewPostPageState extends State<AddNewPostPage> {
     }
   }
 
-  TextEditingController postController = TextEditingController();
+  Future updateNotice() async {
+    try {
+      buildLoadingIndicator(context);
+      String url = "";
+      if (isSelected) {
+        final ref = storage.FirebaseStorage.instance
+            .ref()
+            .child("noticeImage/${DateTime.now()}");
+
+        final result = await ref.putFile(_imageFile);
+        url = await result.ref.getDownloadURL();
+      }
+
+      if (!isSelected &&
+          widget.documentSnapshot != null &&
+          widget.documentSnapshot!["imageUrl"] != "") {
+        url = widget.documentSnapshot!["imageUrl"];
+      }
+
+      Provider.of<NoticeProvider>(context, listen: false).updateNotice(
+        postText: postController.text,
+        id: widget.documentSnapshot!.id,
+        imageUrl: url,
+        context: context,
+      );
+      Navigator.of(context, rootNavigator: true).pop();
+      Navigator.pop(context);
+    } catch (e) {
+      Navigator.of(context, rootNavigator: true).pop();
+    }
+  }
+
+  late TextEditingController postController;
+
+  @override
+  void initState() {
+    if (widget.documentSnapshot != null) {
+      postController =
+          TextEditingController(text: widget.documentSnapshot!["postText"]);
+    } else {
+      postController = TextEditingController();
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -131,12 +211,25 @@ class _AddNewPostPageState extends State<AddNewPostPage> {
                       highlightColor: Colors.transparent,
                       onTap: () {
                         if (widget.page == "Home") {
-                          uploadPost();
+                          if (widget.documentSnapshot == null) {
+                            uploadPost();
+                          } else {
+                            updatePost();
+                          }
                         } else {
-                          uploadNotice();
+                          if (widget.documentSnapshot == null) {
+                            uploadNotice();
+                          } else {
+                            updateNotice();
+                          }
                         }
                       },
-                      child: buildButton("Post", 85, 16, 40))
+                      child: buildButton(
+                        widget.documentSnapshot == null ? "Post" : "Update",
+                        90,
+                        16,
+                        40,
+                      ))
                 ],
               ),
             ),
@@ -188,9 +281,17 @@ class _AddNewPostPageState extends State<AddNewPostPage> {
                               _imageFile,
                               fit: BoxFit.cover,
                             ))
-                        : const Icon(
-                            FontAwesomeIcons.image,
-                          ),
+                        : widget.documentSnapshot != null &&
+                                widget.documentSnapshot!["imageUrl"] != ""
+                            ? ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: Image.network(
+                                  widget.documentSnapshot!["imageUrl"],
+                                  fit: BoxFit.cover,
+                                ))
+                            : const Icon(
+                                FontAwesomeIcons.image,
+                              ),
                   )
                 ],
               ),

@@ -9,10 +9,14 @@ import 'package:lu_cse_community/provider/post_provider.dart';
 import 'package:lu_cse_community/provider/profile_provider.dart';
 import 'package:lu_cse_community/provider/search_provider.dart';
 import 'package:provider/provider.dart';
+import '../../../provider/notice_provider.dart';
+import '../../Home/SubPage/add_new_post_page.dart';
 import '../../Home/Widgets/user_info_of_a_post.dart';
 import '../../public_widget/build_loading.dart';
 import '../../public_widget/custom_app_bar.dart';
 import '../../public_widget/floating_action_button.dart';
+
+enum WhyFarther { delete, edit }
 
 class Notice extends StatefulWidget {
   const Notice({Key? key}) : super(key: key);
@@ -30,7 +34,7 @@ class _NoticeState extends State<Notice> {
     return Scaffold(
       appBar: customAppBar("Notice", context),
       floatingActionButton: pro.role == "Teacher" || pro.role == "Admin"
-          ? customFloatingActionButton(context,"Notice")
+          ? customFloatingActionButton(context, "Notice")
           : null,
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       body: Align(
@@ -58,8 +62,7 @@ class _NoticeState extends State<Notice> {
                   return Container(
                     width: 350.w,
                     margin: EdgeInsets.fromLTRB(32.w, 10.h, 32.w, 10.h),
-                    padding:
-                        EdgeInsets.symmetric(vertical: 25.h, horizontal: 21.w),
+                    padding: EdgeInsets.fromLTRB(20.w, 21.h, 5, 20.h),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(10),
@@ -68,26 +71,69 @@ class _NoticeState extends State<Notice> {
                     ),
                     child: Column(
                       children: [
-                        UserInfoOfAPost(
-                          uid: data?.docs[index]["ownerUid"],
-                          time: data?.docs[index]["dateTime"],
-                          pageName: "notice",
+                        Stack(
+                          children: [
+                            UserInfoOfAPost(
+                              uid: data?.docs[index]["ownerUid"],
+                              time: data?.docs[index]["dateTime"],
+                              pageName: "notice",
+                            ),
+                            Positioned(
+                              right: 0,
+                              child: PopupMenuButton<WhyFarther>(
+                                icon: const Icon(Icons.more_horiz),
+                                padding: EdgeInsets.zero,
+                                onSelected: (WhyFarther result) {
+                                  if (result == WhyFarther.delete) {
+                                    _showMyDialog(
+                                        context, data?.docs[index].id ?? "");
+                                  } else if (result == WhyFarther.edit) {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => AddNewPostPage(
+                                          page: "Home",
+                                          documentSnapshot: data?.docs[index],
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                },
+                                itemBuilder: (BuildContext context) =>
+                                    <PopupMenuEntry<WhyFarther>>[
+                                  const PopupMenuItem<WhyFarther>(
+                                    value: WhyFarther.delete,
+                                    child: Text('Delete'),
+                                  ),
+                                  const PopupMenuItem<WhyFarther>(
+                                    value: WhyFarther.edit,
+                                    child: Text('Edit'),
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
                         ),
                         SizedBox(height: 18.h),
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            data?.docs[index]["postText"],
-                            style:
-                                GoogleFonts.inter(fontSize: 15.sp, height: 1.4),
+                        Padding(
+                          padding: EdgeInsets.only(right: 15.w),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              data?.docs[index]["postText"],
+                              textAlign: TextAlign.justify,
+                              style: GoogleFonts.inter(
+                                  fontSize: 15.sp, height: 1.4),
+                            ),
                           ),
                         ),
                         if (data?.docs[index]["imageUrl"] != "")
                           SizedBox(height: 15.h),
                         if (data?.docs[index]["imageUrl"] != "")
                           Container(
-                            width: 308.w,
+                            width: double.infinity,
                             height: 226.h,
+                            padding: EdgeInsets.only(right: 15.w),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
                             ),
@@ -111,4 +157,32 @@ class _NoticeState extends State<Notice> {
           )),
     );
   }
+}
+
+Future<void> _showMyDialog(BuildContext context, String id) async {
+  return showDialog<void>(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text('Delete Notice'),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: const <Widget>[
+              Text('Do you want to delete this notice'),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: const Text('Ok'),
+            onPressed: () {
+              Provider.of<NoticeProvider>(context, listen: false)
+                  .deleteNotice(id);
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
 }

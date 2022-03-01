@@ -1,16 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/timezone.dart' as tz;
-import 'package:timezone/data/latest.dart' as tz;
 
-class NotificationService with ChangeNotifier{
+class NotificationService with ChangeNotifier {
   static final NotificationService _notificationService =
       NotificationService._internal();
 
-  changeNotificationButton(){
+  changeNotificationButton() {
     notifyListeners();
   }
-
 
   factory NotificationService() {
     return _notificationService;

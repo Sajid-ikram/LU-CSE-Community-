@@ -2,8 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../../Home/Widgets/search_bar.dart';
 import '../../../Home/Widgets/user_info_of_a_post.dart';
 import '../../../public_widget/build_loading.dart';
+import 'events.dart';
 
 class Posts extends StatefulWidget {
   Posts({Key? key, required this.name}) : super(key: key);
@@ -28,6 +30,7 @@ class _PostsState extends State<Posts> {
           if (snapshot.hasError) {
             return const Center(child: Text("Something went wrong"));
           }
+
           if (snapshot.connectionState == ConnectionState.waiting) {
             return buildLoading();
           }
@@ -43,18 +46,29 @@ class _PostsState extends State<Posts> {
             padding: EdgeInsets.zero,
             itemBuilder: (context, index) {
               if (index == 0) {
-                return Padding(
-                  padding: EdgeInsets.only(left: 32.w,top: 30.h,bottom: 20.h),
-                  child: Text(
-                    "All Post",
-                    style: GoogleFonts.inter(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 18.sp,
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+
+                    SizedBox(height: 15.h),
+                    buildSearch(context, "Home"),
+                    Padding(
+                      padding:
+                          EdgeInsets.only(left: 32.w, top: 30.h, bottom: 20.h),
+                      child: Text(
+                        "All Post",
+                        style: GoogleFonts.inter(
+                          color: Colors.black,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 18.sp,
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 );
               }
+
               return Container(
                 width: 350.w,
                 margin: EdgeInsets.fromLTRB(32.w, 10.h, 32.w, 10.h),

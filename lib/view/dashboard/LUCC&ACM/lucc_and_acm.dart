@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 import '../../public_widget/floating_action_button.dart';
 
 class LUCC_And_ACM extends StatefulWidget {
-   LUCC_And_ACM({Key? key,required this.page}) : super(key: key);
+  LUCC_And_ACM({Key? key, required this.page}) : super(key: key);
   String page;
 
   @override
@@ -23,16 +23,15 @@ class _LUCC_And_ACMState extends State<LUCC_And_ACM> {
 
   @override
   Widget build(BuildContext context) {
-
     var pro = Provider.of<ProfileProvider>(context);
     return Scaffold(
       floatingActionButton: pro.role != "Student"
-          ? customFloatingActionButton(context,widget.page)
+          ? customFloatingActionButton(context, widget.page)
           : null,
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       body: SizedBox(
-        width: 414,
-        height: 837,
+        width: 414.w,
+        height: 837.h,
         child: Stack(
           children: [
             Container(
@@ -52,11 +51,8 @@ class _LUCC_And_ACMState extends State<LUCC_And_ACM> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: 90.h),
-                 Events(page: widget.page),
-                SizedBox(height: 15.h),
-                buildSearch(context, "Home"),
-
-                 Posts(name: widget.page),
+                Events(page: widget.page),
+                Posts(name: widget.page),
               ],
             ),
             Positioned(

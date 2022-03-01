@@ -54,6 +54,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: pageList[_bottomNavIndex],
+      extendBody: true,
       floatingActionButton: Visibility(
         visible: MediaQuery.of(context).viewInsets.bottom == 0.0,
         child: FloatingActionButton(

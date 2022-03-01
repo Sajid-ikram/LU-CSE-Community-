@@ -55,17 +55,19 @@ class _EventsState extends State<Events> {
                 ),
               ),
               child: Center(
-                  child: Text(
-                "No Event Available",
-                style: GoogleFonts.inter(
-                    color: mainColor,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 20.sp),
-              )),
+                child: Text(
+                  "No Event Available",
+                  style: GoogleFonts.inter(
+                      color: mainColor,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 20.sp),
+                ),
+              ),
             );
           }
 
           return ListView.builder(
+
             physics: const BouncingScrollPhysics(),
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {

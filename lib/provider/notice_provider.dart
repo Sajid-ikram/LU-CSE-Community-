@@ -47,6 +47,25 @@ class NoticeProvider with ChangeNotifier {
     }
   }
 
+  Future updateNotice({
+    required String postText,
+    required String id,
+    required String imageUrl,
+    required BuildContext context,
+  }) async {
+    try {
+      FirebaseFirestore.instance.collection("notice").doc(id).update(
+        {
+          "postText": postText,
+          "imageUrl": imageUrl,
+        },
+      );
+      notifyListeners();
+    } catch (e) {
+      return onError(context, "Having problem connecting to the server");
+    }
+  }
+
   Future addEvent({
     required String title,
     required String schedule,
@@ -74,4 +93,7 @@ class NoticeProvider with ChangeNotifier {
     }
   }
 
+  Future deleteNotice(String id) async {
+    await FirebaseFirestore.instance.collection("notice").doc(id).delete();
+  }
 }

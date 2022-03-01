@@ -7,10 +7,14 @@ import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lu_cse_community/provider/post_provider.dart';
+import 'package:lu_cse_community/provider/profile_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../SubPage/add_new_post_page.dart';
 import 'add_new_comment.dart';
+
+enum WhyFarther { delete, edit, report }
 
 class ReactSection extends StatefulWidget {
   ReactSection({Key? key, required this.documentSnapshot}) : super(key: key);
@@ -48,6 +52,7 @@ class _ReactSectionState extends State<ReactSection> {
 
   @override
   Widget build(BuildContext context) {
+    var pro = Provider.of<ProfileProvider>(context, listen: false);
     return isLoading
         ? Shimmer.fromColors(
             baseColor: Colors.grey.withOpacity(0.2),
@@ -61,12 +66,46 @@ class _ReactSectionState extends State<ReactSection> {
               buildText(widget.documentSnapshot!["comments"]),
               buildReactButton("Share", widget.documentSnapshot),
               const Spacer(),
-              InkWell(
-                onTap: () {},
-                child: const Icon(
-                  Icons.more_horiz,
-                  color: Colors.grey,
-                ),
+              PopupMenuButton<WhyFarther>(
+                padding: EdgeInsets.zero,
+                onSelected: (WhyFarther result) {
+                  if (result == WhyFarther.delete) {
+                    _showMyDialog(context, widget.documentSnapshot!.id);
+                  } else if (result == WhyFarther.edit) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AddNewPostPage(
+                          page: "Home",
+                          documentSnapshot: widget.documentSnapshot,
+                        ),
+                      ),
+                    );
+                  } else if (result == WhyFarther.report) {
+                    print(result);
+                  }
+                },
+                itemBuilder: (BuildContext context) =>
+                    <PopupMenuEntry<WhyFarther>>[
+                  if (widget.documentSnapshot!["ownerUid"] ==
+                      pro.currentUserUid)
+                    const PopupMenuItem<WhyFarther>(
+                      value: WhyFarther.delete,
+                      child: Text('Delete'),
+                    ),
+                  if (widget.documentSnapshot!["ownerUid"] ==
+                      pro.currentUserUid)
+                    const PopupMenuItem<WhyFarther>(
+                      value: WhyFarther.edit,
+                      child: Text('Edit'),
+                    ),
+                  if (widget.documentSnapshot!["ownerUid"] !=
+                      pro.currentUserUid)
+                    const PopupMenuItem<WhyFarther>(
+                      value: WhyFarther.report,
+                      child: Text('Report'),
+                    ),
+                ],
               )
             ],
           );
@@ -103,9 +142,11 @@ class _ReactSectionState extends State<ReactSection> {
                     likes: data["likes"] ?? "",
                     context: context,
                   );
-                }
-                else if (name == "Comment" && data != null) {
-                  await addNewComment(context: context,postId: data.id,commentNumber: data["comments"]);
+                } else if (name == "Comment" && data != null) {
+                  await addNewComment(
+                      context: context,
+                      postId: data.id,
+                      commentNumber: data["comments"]);
                 }
               }
             },
@@ -135,4 +176,31 @@ class _ReactSectionState extends State<ReactSection> {
       },
     );
   }
+}
+
+Future<void> _showMyDialog(BuildContext context, String id) async {
+  return showDialog<void>(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text('Delete Post'),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: const <Widget>[
+              Text('Do you want to delete this post'),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: const Text('Ok'),
+            onPressed: () {
+              Provider.of<PostProvider>(context, listen: false).deletePost(id);
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
 }

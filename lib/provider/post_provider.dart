@@ -74,6 +74,26 @@ class PostProvider with ChangeNotifier {
     }
   }
 
+  Future updatePost({
+    required String postText,
+    required String id,
+    required String imageUrl,
+    required BuildContext context,
+  }) async {
+    try {
+      FirebaseFirestore.instance.collection("posts").doc(id).update(
+        {
+          "postText": postText,
+          "imageUrl": imageUrl,
+        },
+      );
+      isNewPostAdded = !isNewPostAdded;
+      notifyListeners();
+    } catch (e) {
+      return onError(context, "Having problem connecting to the server");
+    }
+  }
+
   Future<bool> isAlreadyLiked({
     required String postId,
     required String uid,
@@ -134,5 +154,9 @@ class PostProvider with ChangeNotifier {
     } catch (e) {
       return onError(context, "Having problem connecting to the server");
     }
+  }
+
+  Future deletePost(String id) async {
+    await FirebaseFirestore.instance.collection("posts").doc(id).delete();
   }
 }
