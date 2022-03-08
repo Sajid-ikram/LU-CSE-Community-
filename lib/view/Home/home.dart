@@ -115,6 +115,7 @@ class _HomeState extends State<Home> {
                         uid: data.docs[index - 1]["ownerUid"],
                         time: data.docs[index - 1]["dateTime"],
                         pageName: "home",
+                        postId: data.docs[index - 1].id,
                       ),
                     ),
                     SizedBox(height: 18.h),

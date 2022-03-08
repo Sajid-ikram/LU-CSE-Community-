@@ -155,54 +155,41 @@ class PostProvider with ChangeNotifier {
     }
   }
 
-  Future<bool> isAlreadyLoved({
+
+
+  Future<String> addToFavourite({
     required String postId,
     required String uid,
-  }) async {
-    DocumentSnapshot thoseWhoLike = await FirebaseFirestore.instance
-        .collection('favourite')
-        .doc(postId)
-        .collection("thoseWhoLoved")
-        .doc(uid)
-        .get();
-
-    if (thoseWhoLike.exists) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  addToFavourite({
-    required String postId,
-    required String uid,
+    required bool isExist,
     required BuildContext context,
   }) async {
     try {
       isLoveLoading = true;
       notifyListeners();
-      bool isExist = await isAlreadyLoved(uid: uid, postId: postId);
 
       if (isExist) {
         await FirebaseFirestore.instance
-            .collection('favourite')
-            .doc(postId)
-            .collection("thoseWhoLoved")
+            .collection('users')
             .doc(uid)
+            .collection("favouritePosts")
+            .doc(postId)
             .delete();
+        isLoveLoading = false;
+        notifyListeners();
+        return "Deleted";
       } else {
         await FirebaseFirestore.instance
-            .collection('favourite')
-            .doc(postId)
-            .collection("thoseWhoLoved")
+            .collection('users')
             .doc(uid)
+            .collection("favouritePosts")
+            .doc(postId)
             .set({uid: "1"});
       }
-
       isLoveLoading = false;
       notifyListeners();
+      return "Added";
     } catch (e) {
-      return onError(context, "Having problem connecting to the server");
+      return "Error";
     }
   }
 

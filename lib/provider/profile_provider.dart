@@ -16,6 +16,7 @@ class ProfileProvider extends ChangeNotifier {
   String batch = '';
   String bio = '';
   String currentUserUid = '';
+  List<String> favouritePostIds = [];
 
   getUserInfo(String id) async {
     DocumentSnapshot userInfo =
@@ -28,6 +29,19 @@ class ProfileProvider extends ChangeNotifier {
     batch = userInfo["batch"];
     bio = userInfo["bio"];
     currentUserUid = id;
+
+    final snapShot = await FirebaseFirestore.instance
+        .collection("users")
+        .doc(currentUserUid)
+        .collection("favouritePosts")
+        .get();
+
+    favouritePostIds.clear();
+    if (snapShot.docs.isNotEmpty) {
+      for (int i = 0; i < snapShot.docs.length; i++) {
+        favouritePostIds.add(snapShot.docs[i].id);
+      }
+    }
     notifyListeners();
   }
 

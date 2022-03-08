@@ -2,18 +2,26 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lu_cse_community/provider/post_provider.dart';
 import 'package:lu_cse_community/provider/profile_provider.dart';
 import 'package:lu_cse_community/view/settings/view_profile_page.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../../Contest/SubPage/SubWidgets/error_dialoge.dart';
+
 class UserInfoOfAPost extends StatefulWidget {
   const UserInfoOfAPost(
-      {Key? key, required this.uid, required this.time, required this.pageName})
+      {Key? key,
+      required this.uid,
+      required this.time,
+      required this.pageName,
+      this.postId})
       : super(key: key);
   final String pageName;
   final String uid;
   final String time;
+  final String? postId;
 
   @override
   _UserInfoOfAPostState createState() => _UserInfoOfAPostState();
@@ -52,8 +60,6 @@ class _UserInfoOfAPostState extends State<UserInfoOfAPost> {
     }
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return isLoading
@@ -77,7 +83,9 @@ class _UserInfoOfAPostState extends State<UserInfoOfAPost> {
               ],
             ),
           )
-        : widget.pageName == "home" || widget.pageName == "notice" || widget.pageName == "post"
+        : widget.pageName == "home" ||
+                widget.pageName == "notice" ||
+                widget.pageName == "post"
             ? Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -93,17 +101,67 @@ class _UserInfoOfAPostState extends State<UserInfoOfAPost> {
                     ],
                   ),
                   const Spacer(),
-                  if (widget.pageName != "notice" &&  widget.pageName != "post")
-                    InkWell(
-                      onTap: () async {
+                  if (widget.pageName != "notice" && widget.pageName != "post")
+                    FavouriteButton(
+                        postId: widget.postId ?? "",
+                        pageName: widget.pageName,
+                        uid: widget.uid)
+                  /*Consumer<ProfileProvider>(
+                      builder: (ctx, providerP, _) {
+                        if (widget.pageName == "home") {
+                          contains =
+                              pro.favouritePostIds.contains(widget.postId);
+                        }
+                        return Consumer<PostProvider>(
+                          builder: (context, provider, child) {
+                            print(contains);
+                            print(
+                                "-------------------------------------------ccccc");
+                            return InkWell(
+                              onTap: () async {
+                                if (!provider.isLoveLoading) {
+                                  provider.addToFavourite(
+                                    postId: widget.postId ?? "",
+                                    uid: widget.uid,
+                                    isExist: contains,
+                                    context: context,
+                                  );
+                                  if (contains) {
+                                    setState(() {
+                                      pro.favouritePostIds.remove(widget.uid);
+                                      contains = !contains;
+                                    });
+                                  } else {
+                                    setState(() {
+                                      pro.favouritePostIds.add(widget.uid);
+                                      contains = !contains;
+                                    });
+                                  }
 
+
+                                  */ /*if (result == "Deleted") {
+                                    contains = false;
+                                  } else if (result == "Added") {
+                                    contains = true;
+
+                                  } else {
+                                    return onError(context,
+                                        "Having problem connecting to the server");
+                                  }*/ /*
+                                }
+                              },
+                              child: Icon(
+                                contains
+                                    ? Icons.favorite
+                                    : Icons.favorite_outline,
+                                size: 20.sp,
+                                color: contains ? Colors.red : Colors.grey,
+                              ),
+                            );
+                          },
+                        );
                       },
-                      child: Icon(
-                        Icons.favorite,
-                        size: 20.sp,
-                        color: Colors.red,
-                      ),
-                    ),
+                    ),*/
                 ],
               )
             : Row(
@@ -190,4 +248,74 @@ Widget returnImage(DocumentSnapshot data) {
           radius: 21.sp,
           backgroundImage: const AssetImage("assets/profile.jpg"),
         );
+}
+
+class FavouriteButton extends StatefulWidget {
+  FavouriteButton(
+      {Key? key,
+      required this.postId,
+      required this.pageName,
+      required this.uid})
+      : super(key: key);
+  String pageName;
+  String postId;
+  String uid;
+
+  @override
+  State<FavouriteButton> createState() => _FavouriteButtonState();
+}
+
+class _FavouriteButtonState extends State<FavouriteButton> {
+  bool contains = false;
+
+  @override
+  void initState() {
+    if (widget.pageName == "home") {
+      contains = Provider.of<ProfileProvider>(context, listen: false)
+          .favouritePostIds
+          .contains(widget.postId);
+    }
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<ProfileProvider>(
+      builder: (ctx, providerP, _) {
+        return Consumer<PostProvider>(
+          builder: (context, provider, child) {
+            return InkWell(
+              onTap: () async {
+                if (!provider.isLoveLoading) {
+                  if (contains) {
+                    setState(() {
+                      providerP.favouritePostIds.remove(widget.postId);
+                      contains = !contains;
+                    });
+                  } else {
+                    setState(() {
+                      providerP.favouritePostIds.add(widget.postId);
+                      contains = !contains;
+                    });
+                  }
+
+                  await provider.addToFavourite(
+                    postId: widget.postId,
+                    uid: widget.uid,
+                    isExist: !contains,
+                    context: context,
+                  );
+                }
+              },
+              child: Icon(
+                contains ? Icons.favorite : Icons.favorite_outline,
+                size: 20.sp,
+                color: contains ? Colors.red : Colors.grey,
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
 }

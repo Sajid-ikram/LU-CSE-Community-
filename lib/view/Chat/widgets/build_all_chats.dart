@@ -9,6 +9,8 @@ import 'package:lu_cse_community/provider/profile_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
+import '../../public_widget/build_loading.dart';
+
 Expanded buildAllChats(ProfileProvider pro, String uid) {
   return Expanded(
     child: Consumer<ChatProvider>(
@@ -27,9 +29,7 @@ Expanded buildAllChats(ProfileProvider pro, String uid) {
                     return const Center(child: Text("Something went wrong"));
                   }
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
+                    return buildLoading();
                   }
 
                   final data = snapshot.data;

@@ -9,6 +9,8 @@ import 'package:lu_cse_community/view/Chat/widgets/chat_user_top.dart';
 import 'package:lu_cse_community/view/Chat/widgets/individual_chat_info.dart';
 import 'package:provider/provider.dart';
 
+import '../public_widget/build_loading.dart';
+
 
 class ChatUser extends StatefulWidget {
   const ChatUser({Key? key}) : super(key: key);
@@ -39,9 +41,7 @@ class _ChatUserState extends State<ChatUser> {
                       return const Center(child: Text("Something went wrong"));
                     }
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
+                      return buildLoading();
                     }
 
                     final data = snapshot.data;
