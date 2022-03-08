@@ -4,13 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lu_cse_community/constant/constant.dart';
-import 'package:lu_cse_community/provider/chat_provider.dart';
 import 'package:lu_cse_community/provider/profile_provider.dart';
 import 'package:lu_cse_community/view/Chat/widgets/chat_user_top.dart';
 import 'package:lu_cse_community/view/Chat/widgets/individual_chat_info.dart';
 import 'package:provider/provider.dart';
 
-import 'chat.dart';
 
 class ChatUser extends StatefulWidget {
   const ChatUser({Key? key}) : super(key: key);

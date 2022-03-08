@@ -44,6 +44,7 @@ class ChatProvider with ChangeNotifier {
 
   createChatRoom(String uid1, String uid2, String url1, String url2,
       String name1, String name2) async {
+
     final snapShot = await FirebaseFirestore.instance
         .collection("chatRooms")
         .doc(getChatRoomIdByUsernames(uid1, uid2))

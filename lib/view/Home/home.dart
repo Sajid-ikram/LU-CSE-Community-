@@ -81,7 +81,7 @@ class _HomeState extends State<Home> {
       builder: (context, provider, child) {
         return ListView.builder(
           physics: const BouncingScrollPhysics(),
-          padding: EdgeInsets.zero,
+          padding: EdgeInsets.only(bottom: 65.h),
           itemBuilder: (context, index) {
             if (index == 0) {
               return addPost(context);

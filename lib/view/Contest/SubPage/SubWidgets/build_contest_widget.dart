@@ -113,7 +113,8 @@ Container buildContestWidget({
         ),
         InkWell(
           onTap: () {
-            _launchURL(pro.individualContestList[index].url, context);
+            //_launchURL(pro.individualContestList[index].url, context);
+            openUrl(pro.individualContestList[index].url);
           },
           child: Container(
             height: 38.h,
@@ -216,13 +217,20 @@ class _NotificationButtonState extends State<NotificationButton> {
   }
 }
 
-_launchURL(String link, BuildContext context) async {
-  if (await canLaunch(link)) {
-    await launch(link);
-  } else {
-    return onError(context, "Can not open the link");
+
+ Future<bool> openUrl(String url) async {
+    try {
+      await launch(
+        url,
+        enableJavaScript: true,
+      );
+      return true;
+    } catch (e) {
+      print(e.toString());
+      return false;
+    }
   }
-}
+
 
 Row buildStartAndEnd(ContestProvider pro, int index, String text) {
   return Row(

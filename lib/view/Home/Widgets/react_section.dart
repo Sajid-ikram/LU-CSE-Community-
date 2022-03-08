@@ -40,7 +40,6 @@ class _ReactSectionState extends State<ReactSection> {
           .isAlreadyLiked(
         postId: widget.documentSnapshot?.id ?? "",
         uid: FirebaseAuth.instance.currentUser?.uid ?? "",
-        context: context,
       );
     }
     if (mounted) {
@@ -88,18 +87,18 @@ class _ReactSectionState extends State<ReactSection> {
                 itemBuilder: (BuildContext context) =>
                     <PopupMenuEntry<WhyFarther>>[
                   if (widget.documentSnapshot!["ownerUid"] ==
-                      pro.currentUserUid)
+                      pro.currentUserUid || (pro.role == "Teacher" || pro.role == "Admin"))
                     const PopupMenuItem<WhyFarther>(
                       value: WhyFarther.delete,
                       child: Text('Delete'),
                     ),
                   if (widget.documentSnapshot!["ownerUid"] ==
-                      pro.currentUserUid)
+                      pro.currentUserUid || (pro.role == "Teacher" || pro.role == "Admin"))
                     const PopupMenuItem<WhyFarther>(
                       value: WhyFarther.edit,
                       child: Text('Edit'),
                     ),
-                  if (widget.documentSnapshot!["ownerUid"] !=
+                  if ((pro.role == "Student" || pro.role == "Moderator") && widget.documentSnapshot!["ownerUid"] !=
                       pro.currentUserUid)
                     const PopupMenuItem<WhyFarther>(
                       value: WhyFarther.report,

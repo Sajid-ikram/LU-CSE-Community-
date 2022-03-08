@@ -9,7 +9,7 @@ import 'package:lu_cse_community/view/Contest/SubPage/individual_contest_page.da
 Container individualSiteWidget() {
   return Container(
     margin: EdgeInsets.only(left: 10.w, right: 10.w, top: 20.h),
-    height: 750.h,
+    height: 800.h,
     decoration: BoxDecoration(
       boxShadow: [
         BoxShadow(

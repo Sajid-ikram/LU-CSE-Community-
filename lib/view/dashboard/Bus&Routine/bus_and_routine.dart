@@ -8,6 +8,7 @@ import 'package:http/http.dart';
 import 'package:lu_cse_community/constant/constant.dart';
 import 'package:lu_cse_community/provider/pdf_provider.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:lu_cse_community/provider/profile_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
@@ -41,6 +42,7 @@ class _BusScheduleState extends State<BusSchedule> {
 
   @override
   Widget build(BuildContext context) {
+    var pro = Provider.of<ProfileProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -65,6 +67,7 @@ class _BusScheduleState extends State<BusSchedule> {
           ),
         ),
         actions: [
+          if(pro.role != "Student" && pro.role != "Moderator")
           IconButton(
             onPressed: () {
               pickFile();

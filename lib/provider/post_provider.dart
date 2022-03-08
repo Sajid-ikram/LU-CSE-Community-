@@ -5,6 +5,7 @@ import 'package:lu_cse_community/view/Contest/SubPage/SubWidgets/error_dialoge.d
 
 class PostProvider with ChangeNotifier {
   bool isLoading = false;
+  bool isLoveLoading = false;
   bool loadingComment = false;
   String commentText = '';
   bool isNewPostAdded = false;
@@ -97,7 +98,6 @@ class PostProvider with ChangeNotifier {
   Future<bool> isAlreadyLiked({
     required String postId,
     required String uid,
-    required BuildContext context,
   }) async {
     DocumentSnapshot thoseWhoLike = await FirebaseFirestore.instance
         .collection('posts')
@@ -122,8 +122,7 @@ class PostProvider with ChangeNotifier {
     try {
       isLoading = true;
       notifyListeners();
-      bool isExist =
-          await isAlreadyLiked(uid: uid, context: context, postId: postId);
+      bool isExist = await isAlreadyLiked(uid: uid, postId: postId);
 
       if (isExist) {
         await FirebaseFirestore.instance
@@ -150,6 +149,57 @@ class PostProvider with ChangeNotifier {
       }
 
       isLoading = false;
+      notifyListeners();
+    } catch (e) {
+      return onError(context, "Having problem connecting to the server");
+    }
+  }
+
+  Future<bool> isAlreadyLoved({
+    required String postId,
+    required String uid,
+  }) async {
+    DocumentSnapshot thoseWhoLike = await FirebaseFirestore.instance
+        .collection('favourite')
+        .doc(postId)
+        .collection("thoseWhoLoved")
+        .doc(uid)
+        .get();
+
+    if (thoseWhoLike.exists) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  addToFavourite({
+    required String postId,
+    required String uid,
+    required BuildContext context,
+  }) async {
+    try {
+      isLoveLoading = true;
+      notifyListeners();
+      bool isExist = await isAlreadyLoved(uid: uid, postId: postId);
+
+      if (isExist) {
+        await FirebaseFirestore.instance
+            .collection('favourite')
+            .doc(postId)
+            .collection("thoseWhoLoved")
+            .doc(uid)
+            .delete();
+      } else {
+        await FirebaseFirestore.instance
+            .collection('favourite')
+            .doc(postId)
+            .collection("thoseWhoLoved")
+            .doc(uid)
+            .set({uid: "1"});
+      }
+
+      isLoveLoading = false;
       notifyListeners();
     } catch (e) {
       return onError(context, "Having problem connecting to the server");

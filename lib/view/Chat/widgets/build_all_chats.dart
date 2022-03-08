@@ -21,6 +21,7 @@ Expanded buildAllChats(ProfileProvider pro, String uid) {
                     .collection("chats")
                     .orderBy("ts", descending: true)
                     .snapshots(),
+
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
                     return const Center(child: Text("Something went wrong"));
