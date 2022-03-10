@@ -95,10 +95,15 @@ class _UserListState extends State<UserList> {
                                                 "Approve", 80, 13, 50, true)),
                                       ));
                                 } else if (provider.role == "Admin") {
-                                  return CustomDropDown(
-                                    currentRole: data?.docs[index]["role"],
-                                    uid: data?.docs[index].id ?? "",
-                                  );
+                                  if (pro.selectedFilter == "Student" ||
+                                      pro.selectedFilter == "Moderator" || pro.selectedFilter == "Teacher") {
+                                    return CustomDropDown(
+                                      currentRole: data?.docs[index]["role"],
+                                      uid: data?.docs[index].id ?? "",
+                                    );
+                                  } else {
+                                    return buildNonChangeableRole(data!, index);
+                                  }
                                 } else if (provider.role == "Teacher") {
                                   if (pro.selectedFilter == "Student" ||
                                       pro.selectedFilter == "Moderator") {

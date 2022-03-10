@@ -22,11 +22,16 @@ class _CustomDropDownState extends State<CustomDropDown> {
     String role = Provider.of<ProfileProvider>(context, listen: false).role;
 
     if (role == "Admin") {
-      listOfRole = ['Student', "Moderator", 'Teacher', 'Admin'];
+      if(widget.currentRole == "Teacher"){
+        listOfRole = ['Teacher', 'TeacherP'];
+      }else{
+        listOfRole = ['Student', "Moderator"];
+      }
+
     } else if (role == "Teacher") {
       listOfRole = ['Student', "Moderator"];
     }
-
+    //listOfRole = ['Student', 'Moderator'];
     return Container(
       height: 55.h,
       width: 120.w,

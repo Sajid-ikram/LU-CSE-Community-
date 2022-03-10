@@ -268,20 +268,15 @@ class FavouriteButton extends StatefulWidget {
 class _FavouriteButtonState extends State<FavouriteButton> {
   bool contains = false;
 
-  @override
-  void initState() {
-    if (widget.pageName == "home") {
-      contains = Provider.of<ProfileProvider>(context, listen: false)
-          .favouritePostIds
-          .contains(widget.postId);
-    }
-    super.initState();
-  }
+
 
   @override
   Widget build(BuildContext context) {
     return Consumer<ProfileProvider>(
       builder: (ctx, providerP, _) {
+        contains = Provider.of<ProfileProvider>(context, listen: false)
+            .favouritePostIds
+            .contains(widget.postId);
         return Consumer<PostProvider>(
           builder: (context, provider, child) {
             return InkWell(
@@ -301,7 +296,7 @@ class _FavouriteButtonState extends State<FavouriteButton> {
 
                   await provider.addToFavourite(
                     postId: widget.postId,
-                    uid: widget.uid,
+                    uid: providerP.currentUserUid,
                     isExist: !contains,
                     context: context,
                   );

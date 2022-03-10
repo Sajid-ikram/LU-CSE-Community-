@@ -19,7 +19,7 @@ class _TeacherPendingButtonState extends State<TeacherPendingButton> {
       builder: (context, provider, child) {
         return (provider.selectedFilter == "Teacher" ||
                 provider.selectedFilter == "TeacherP") &&
-                    (profilePro.role == "Teacher" || profilePro.role == "Admin")
+                    (profilePro.role == "Admin")
             ? Padding(
                 padding: const EdgeInsets.only(bottom: 20),
                 child: Row(

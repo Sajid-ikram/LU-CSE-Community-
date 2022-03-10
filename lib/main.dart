@@ -16,7 +16,6 @@ import 'package:lu_cse_community/provider/post_provider.dart';
 import 'package:lu_cse_community/provider/profile_provider.dart';
 import 'package:lu_cse_community/provider/search_provider.dart';
 import 'package:lu_cse_community/provider/sign_up_provider.dart';
-import 'package:lu_cse_community/view/Home/SubPage/add_new_post_page.dart';
 import 'package:lu_cse_community/view/bottom_nav_bar.dart';
 import 'package:lu_cse_community/view/dashboard/AllUsers/all_users.dart';
 import 'package:lu_cse_community/view/dashboard/Notices/notice.dart';
@@ -29,7 +28,7 @@ import 'package:lu_cse_community/view/sign_in_sign_up/sign_up.dart';
 import 'package:lu_cse_community/view/sign_in_sign_up/varification.dart';
 import 'package:provider/provider.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
-
+//import 'package:dcdg/dcdg.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

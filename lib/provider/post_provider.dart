@@ -163,13 +163,13 @@ class PostProvider with ChangeNotifier {
     required bool isExist,
     required BuildContext context,
   }) async {
+
     try {
-      print("-----------------------------------");
+
       isLoveLoading = true;
       notifyListeners();
 
       if (isExist) {
-        print("-----------------------------------1");
         await FirebaseFirestore.instance
             .collection('users')
             .doc(uid)
@@ -180,7 +180,6 @@ class PostProvider with ChangeNotifier {
         notifyListeners();
         return "Deleted";
       } else {
-        print("-----------------------------------2");
         await FirebaseFirestore.instance
             .collection('users')
             .doc(uid)
@@ -188,13 +187,11 @@ class PostProvider with ChangeNotifier {
             .doc(postId)
             .set({uid: "1"});
       }
-      print("-----------------------------------done");
       isLoveLoading = false;
       notifyListeners();
       return "Added";
     } catch (e) {
       print(e);
-      print("-----------------------------------");
       return "Error";
     }
   }

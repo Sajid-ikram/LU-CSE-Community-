@@ -1,0 +1,755 @@
+@startuml
+set namespaceSeparator ::
+
+class "lu_cse_community::main.dart::MyApp" {
+  +State<MyApp> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "lu_cse_community::main.dart::MyApp"
+
+class "lu_cse_community::main.dart::_MyAppState" {
+  -Future<FirebaseApp> _initialization
+  +void initState()
+  +void configOneSignal()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "lu_cse_community::main.dart::_MyAppState"
+
+class "lu_cse_community::main.dart::Exception" {
+  +String massage
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "lu_cse_community::main.dart::Exception"
+
+class "lu_cse_community::main.dart::MiddleOfHomeAndSignIn" {
+  +_MiddleOfHomeAndSignInState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "lu_cse_community::main.dart::MiddleOfHomeAndSignIn"
+
+class "lu_cse_community::main.dart::_MiddleOfHomeAndSignInState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "lu_cse_community::main.dart::_MiddleOfHomeAndSignInState"
+
+class "lu_cse_community::Models::individual_contest_model.dart::IndividualModel" {
+  +String name
+  +String url
+  +String startTime
+  +String duration
+  +String endTime
+  +String site
+}
+
+class "lu_cse_community::Models::pushnotification_model.dart::PushNotificationModel" {
+  +String? title
+  +String? body
+  +String? dataTitle
+  +String? dataBody
+}
+
+class "lu_cse_community::provider::all_users_provider.dart::AllUserProvider" {
+  +String selectedFilter
+  +bool showPendingPage
+  +dynamic getStreamQuerySnapshot()
+  +dynamic changePendingPage()
+  +dynamic changeFilter()
+}
+
+"flutter::src::foundation::change_notifier.dart::ChangeNotifier" <|-- "lu_cse_community::provider::all_users_provider.dart::AllUserProvider"
+
+class "lu_cse_community::provider::authentication.dart::Authentication" {
+  -FirebaseAuth _firebaseAuth
+  +Stream<User?> authStateChange
+  +Future<String> signIn()
+  +Future<String> signUp()
+  +Future<dynamic> signOut()
+  +Future<String> resetPassword()
+  +Future<dynamic> deleteUser()
+}
+
+"lu_cse_community::provider::authentication.dart::Authentication" o-- "firebase_auth::firebase_auth.dart::FirebaseAuth"
+"lu_cse_community::provider::authentication.dart::Authentication" o-- "dart::async::Stream<User>"
+"flutter::src::foundation::change_notifier.dart::ChangeNotifier" <|-- "lu_cse_community::provider::authentication.dart::Authentication"
+
+class "lu_cse_community::provider::chat_provider.dart::ChatProvider" {
+  +String chatId
+  {static} +String encrypt()
+  {static} +String decrypt()
+  {static} +String dataToString()
+  +dynamic getChatRoomIdByUsernames()
+  +dynamic createChatRoom()
+  +Future<dynamic> addMessage()
+}
+
+"flutter::src::foundation::change_notifier.dart::ChangeNotifier" <|-- "lu_cse_community::provider::chat_provider.dart::ChatProvider"
+
+class "lu_cse_community::provider::contest_provider.dart::ContestProvider" {
+  +List<IndividualModel> individualContestList
+  +dynamic getAllContest()
+  +dynamic getIndividualContest()
+}
+
+"flutter::src::foundation::change_notifier.dart::ChangeNotifier" <|-- "lu_cse_community::provider::contest_provider.dart::ContestProvider"
+
+class "lu_cse_community::provider::notice_provider.dart::NoticeProvider" {
+  +Future<dynamic> addNewNotice()
+  +Future<dynamic> addPost()
+  +Future<dynamic> updateNotice()
+  +Future<dynamic> addEvent()
+  +Future<dynamic> deleteNotice()
+}
+
+"flutter::src::foundation::change_notifier.dart::ChangeNotifier" <|-- "lu_cse_community::provider::notice_provider.dart::NoticeProvider"
+
+class "lu_cse_community::provider::notification_services.dart::NotificationService" {
+  {static} -NotificationService _notificationService
+  +FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin
+  +dynamic changeNotificationButton()
+  +Future<void> initNotification()
+  +Future<void> showNotification()
+  +dynamic isPressed()
+  +Future<void> cancelNotifications()
+}
+
+"lu_cse_community::provider::notification_services.dart::NotificationService" o-- "lu_cse_community::provider::notification_services.dart::NotificationService"
+"lu_cse_community::provider::notification_services.dart::NotificationService" o-- "flutter_local_notifications::src::flutter_local_notifications_plugin.dart::FlutterLocalNotificationsPlugin"
+"flutter::src::foundation::change_notifier.dart::ChangeNotifier" <|-- "lu_cse_community::provider::notification_services.dart::NotificationService"
+
+class "lu_cse_community::provider::pdf_provider.dart::PDFProvider" {
+  +Future<dynamic> uploadPDF()
+  +Future<Response> sendNotification()
+}
+
+"flutter::src::foundation::change_notifier.dart::ChangeNotifier" <|-- "lu_cse_community::provider::pdf_provider.dart::PDFProvider"
+
+class "lu_cse_community::provider::post_provider.dart::PostProvider" {
+  +bool isLoading
+  +bool isLoveLoading
+  +bool loadingComment
+  +String commentText
+  +bool isNewPostAdded
+  +dynamic changeCommentText()
+  +Future<dynamic> addNewComment()
+  +Future<dynamic> addNewPost()
+  +Future<dynamic> updatePost()
+  +Future<bool> isAlreadyLiked()
+  +dynamic likeAPost()
+  +Future<String> addToFavourite()
+  +Future<dynamic> deletePost()
+}
+
+"flutter::src::foundation::change_notifier.dart::ChangeNotifier" <|-- "lu_cse_community::provider::post_provider.dart::PostProvider"
+
+class "lu_cse_community::provider::profile_provider.dart::ProfileProvider" {
+  +String profileUrl
+  +String profileName
+  +String role
+  +String email
+  +String section
+  +String batch
+  +String bio
+  +String currentUserUid
+  +List<String> favouritePostIds
+  +dynamic getUserInfo()
+  +Future<DocumentSnapshot<Object?>> getProfileInfoByUID()
+  +Future<dynamic> updateProfileInfo()
+  +Future<dynamic> updateProfileUrl()
+  +Future<dynamic> updateRole()
+}
+
+"flutter::src::foundation::change_notifier.dart::ChangeNotifier" <|-- "lu_cse_community::provider::profile_provider.dart::ProfileProvider"
+
+class "lu_cse_community::provider::search_provider.dart::SearchProvider" {
+  +String searchText
+  +String searchUserNameText
+  +dynamic searchPost()
+  +dynamic searchUser()
+}
+
+"flutter::src::foundation::change_notifier.dart::ChangeNotifier" <|-- "lu_cse_community::provider::search_provider.dart::SearchProvider"
+
+class "lu_cse_community::provider::sign_up_provider.dart::SignUpProvider" {
+  +bool isChecked
+  +bool obscureText
+  +TextEditingController passwordController
+  +dynamic changeCheckBox()
+  +dynamic changeObscure()
+}
+
+"lu_cse_community::provider::sign_up_provider.dart::SignUpProvider" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"flutter::src::foundation::change_notifier.dart::ChangeNotifier" <|-- "lu_cse_community::provider::sign_up_provider.dart::SignUpProvider"
+
+class "lu_cse_community::view::bottom_nav_bar.dart::CustomNavigationBar" {
+  +_CustomNavigationBarState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "lu_cse_community::view::bottom_nav_bar.dart::CustomNavigationBar"
+
+class "lu_cse_community::view::bottom_nav_bar.dart::_CustomNavigationBarState" {
+  -int _bottomNavIndex
+  +List<IconData> iconList
+  +List<Widget> pageList
+  +List<String> pageName
+  +dynamic changeIndex()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "lu_cse_community::view::bottom_nav_bar.dart::_CustomNavigationBarState"
+
+class "lu_cse_community::view::Chat::chat.dart::Chat" {
+  +String name
+  +String url
+  +String uid
+  +State<Chat> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "lu_cse_community::view::Chat::chat.dart::Chat"
+
+class "lu_cse_community::view::Chat::chat.dart::_ChatState" {
+  -TextEditingController _controller
+  +void initState()
+  +Widget build()
+}
+
+"lu_cse_community::view::Chat::chat.dart::_ChatState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"flutter::src::widgets::framework.dart::State" <|-- "lu_cse_community::view::Chat::chat.dart::_ChatState"
+
+class "lu_cse_community::view::Chat::chat_user.dart::ChatUser" {
+  +State<ChatUser> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "lu_cse_community::view::Chat::chat_user.dart::ChatUser"
+
+class "lu_cse_community::view::Chat::chat_user.dart::_ChatUserState" {
+  +int size
+  +Widget build()
+  +ListView buildListOfChat()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "lu_cse_community::view::Chat::chat_user.dart::_ChatUserState"
+
+class "lu_cse_community::view::Chat::widgets::individual_chat_info.dart::IndividualChatInfo" {
+  +String lastMs
+  +String uid
+  +_IndividualChatInfoState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "lu_cse_community::view::Chat::widgets::individual_chat_info.dart::IndividualChatInfo"
+
+class "lu_cse_community::view::Chat::widgets::individual_chat_info.dart::_IndividualChatInfoState" {
+  +DocumentSnapshot<Object?> data
+  +bool isLoading
+  +void initState()
+  +dynamic getInfo()
+  +Widget build()
+  +Text buildNameText()
+  +SizedBox buildLastText()
+}
+
+"lu_cse_community::view::Chat::widgets::individual_chat_info.dart::_IndividualChatInfoState" o-- "cloud_firestore::cloud_firestore.dart::DocumentSnapshot<Object>"
+"flutter::src::widgets::framework.dart::State" <|-- "lu_cse_community::view::Chat::widgets::individual_chat_info.dart::_IndividualChatInfoState"
+
+class "lu_cse_community::view::Contest::contest.dart::Contest" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "lu_cse_community::view::Contest::contest.dart::Contest"
+
+class "lu_cse_community::view::Contest::SubPage::individual_contest_page.dart::IndividualContestPage" {
+  +String site
+  +State<IndividualContestPage> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "lu_cse_community::view::Contest::SubPage::individual_contest_page.dart::IndividualContestPage"
+
+class "lu_cse_community::view::Contest::SubPage::individual_contest_page.dart::_IndividualContestPageState" {
+  +bool isLoading
+  +bool isContestAvailable
+  +dynamic getContestList()
+  +void initState()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "lu_cse_community::view::Contest::SubPage::individual_contest_page.dart::_IndividualContestPageState"
+
+class "lu_cse_community::view::Contest::SubPage::SubWidgets::build_contest_widget.dart::NotificationButton" {
+  +String site
+  +int index
+  +ContestProvider pro
+  +State<NotificationButton> createState()
+}
+
+"lu_cse_community::view::Contest::SubPage::SubWidgets::build_contest_widget.dart::NotificationButton" o-- "lu_cse_community::provider::contest_provider.dart::ContestProvider"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "lu_cse_community::view::Contest::SubPage::SubWidgets::build_contest_widget.dart::NotificationButton"
+
+class "lu_cse_community::view::Contest::SubPage::SubWidgets::build_contest_widget.dart::_NotificationButtonState" {
+  +bool pressed
+  +void initState()
+  +dynamic getData()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "lu_cse_community::view::Contest::SubPage::SubWidgets::build_contest_widget.dart::_NotificationButtonState"
+
+class "lu_cse_community::view::dashboard::AllUsers::all_users.dart::AllUsers" {
+  +_AllUsersState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "lu_cse_community::view::dashboard::AllUsers::all_users.dart::AllUsers"
+
+class "lu_cse_community::view::dashboard::AllUsers::all_users.dart::_AllUsersState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "lu_cse_community::view::dashboard::AllUsers::all_users.dart::_AllUsersState"
+
+class "lu_cse_community::view::dashboard::AllUsers::widgets::drop_down.dart::CustomDropDown" {
+  +String currentRole
+  +String uid
+  +State<CustomDropDown> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "lu_cse_community::view::dashboard::AllUsers::widgets::drop_down.dart::CustomDropDown"
+
+class "lu_cse_community::view::dashboard::AllUsers::widgets::drop_down.dart::_CustomDropDownState" {
+  +List<String> listOfRole
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "lu_cse_community::view::dashboard::AllUsers::widgets::drop_down.dart::_CustomDropDownState"
+
+class "lu_cse_community::view::dashboard::AllUsers::widgets::teacher_pending_button.dart::TeacherPendingButton" {
+  +_TeacherPendingButtonState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "lu_cse_community::view::dashboard::AllUsers::widgets::teacher_pending_button.dart::TeacherPendingButton"
+
+class "lu_cse_community::view::dashboard::AllUsers::widgets::teacher_pending_button.dart::_TeacherPendingButtonState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "lu_cse_community::view::dashboard::AllUsers::widgets::teacher_pending_button.dart::_TeacherPendingButtonState"
+
+class "lu_cse_community::view::dashboard::AllUsers::widgets::users_list.dart::UserList" {
+  +State<UserList> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "lu_cse_community::view::dashboard::AllUsers::widgets::users_list.dart::UserList"
+
+class "lu_cse_community::view::dashboard::AllUsers::widgets::users_list.dart::_UserListState" {
+  +Widget build()
+  +SizedBox buildNonChangeableRole()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "lu_cse_community::view::dashboard::AllUsers::widgets::users_list.dart::_UserListState"
+
+class "lu_cse_community::view::dashboard::Bus&Routine::bus_and_routine.dart::BusSchedule" {
+  +String name
+  +_BusScheduleState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "lu_cse_community::view::dashboard::Bus&Routine::bus_and_routine.dart::BusSchedule"
+
+class "lu_cse_community::view::dashboard::Bus&Routine::bus_and_routine.dart::_BusScheduleState" {
+  +dynamic pickFile()
+  +Widget build()
+  +Center pdfUnavailable()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "lu_cse_community::view::dashboard::Bus&Routine::bus_and_routine.dart::_BusScheduleState"
+
+class "lu_cse_community::view::dashboard::dashboard.dart::Dashboard" {
+  +Widget build()
+  -Container _buildGridView()
+  -Stack _buildTop()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "lu_cse_community::view::dashboard::dashboard.dart::Dashboard"
+
+class "lu_cse_community::view::dashboard::LUCC&ACM::add_new_event_or_post.dart::AddNewPostOrEvent" {
+  +String pageName
+  +_AddNewPostOrEventState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "lu_cse_community::view::dashboard::LUCC&ACM::add_new_event_or_post.dart::AddNewPostOrEvent"
+
+class "lu_cse_community::view::dashboard::LUCC&ACM::add_new_event_or_post.dart::_AddNewPostOrEventState" {
+  +ImagePicker picker
+  -File _imageFile
+  +bool isSelected
+  +String page
+  -GlobalKey<FormState> _postFormKey
+  -GlobalKey<FormState> _eventFormKey
+  +TextEditingController titleController
+  +TextEditingController placeController
+  +TextEditingController descriptionController
+  +TextEditingController postController
+  +TextEditingController temp
+  +DateTime? dateTime
+  +Future<dynamic> pickImage()
+  +Future<dynamic> uploadEvent()
+  +Future<dynamic> uploadPost()
+  +void dispose()
+  +Widget build()
+  +Padding buildImageSection()
+}
+
+"lu_cse_community::view::dashboard::LUCC&ACM::add_new_event_or_post.dart::_AddNewPostOrEventState" o-- "image_picker::image_picker.dart::ImagePicker"
+"lu_cse_community::view::dashboard::LUCC&ACM::add_new_event_or_post.dart::_AddNewPostOrEventState" o-- "dart::io::File"
+"lu_cse_community::view::dashboard::LUCC&ACM::add_new_event_or_post.dart::_AddNewPostOrEventState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"lu_cse_community::view::dashboard::LUCC&ACM::add_new_event_or_post.dart::_AddNewPostOrEventState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"flutter::src::widgets::framework.dart::State" <|-- "lu_cse_community::view::dashboard::LUCC&ACM::add_new_event_or_post.dart::_AddNewPostOrEventState"
+
+class "lu_cse_community::view::dashboard::LUCC&ACM::event_detail.dart::EventDetail" {
+  +QueryDocumentSnapshot<Object?>? data
+  +State<EventDetail> createState()
+}
+
+"lu_cse_community::view::dashboard::LUCC&ACM::event_detail.dart::EventDetail" o-- "cloud_firestore::cloud_firestore.dart::QueryDocumentSnapshot<Object>"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "lu_cse_community::view::dashboard::LUCC&ACM::event_detail.dart::EventDetail"
+
+class "lu_cse_community::view::dashboard::LUCC&ACM::event_detail.dart::_EventDetailState" {
+  +Widget build()
+  +Padding buildInfoRow()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "lu_cse_community::view::dashboard::LUCC&ACM::event_detail.dart::_EventDetailState"
+
+class "lu_cse_community::view::dashboard::LUCC&ACM::lucc_and_acm.dart::LUCC_And_ACM" {
+  +String page
+  +State<LUCC_And_ACM> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "lu_cse_community::view::dashboard::LUCC&ACM::lucc_and_acm.dart::LUCC_And_ACM"
+
+class "lu_cse_community::view::dashboard::LUCC&ACM::lucc_and_acm.dart::_LUCC_And_ACMState" {
+  +int size
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "lu_cse_community::view::dashboard::LUCC&ACM::lucc_and_acm.dart::_LUCC_And_ACMState"
+
+class "lu_cse_community::view::dashboard::LUCC&ACM::widgets::events.dart::Events" {
+  +String page
+  +State<Events> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "lu_cse_community::view::dashboard::LUCC&ACM::widgets::events.dart::Events"
+
+class "lu_cse_community::view::dashboard::LUCC&ACM::widgets::events.dart::_EventsState" {
+  +int size
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "lu_cse_community::view::dashboard::LUCC&ACM::widgets::events.dart::_EventsState"
+
+class "lu_cse_community::view::dashboard::LUCC&ACM::widgets::posts.dart::Posts" {
+  +String name
+  +State<Posts> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "lu_cse_community::view::dashboard::LUCC&ACM::widgets::posts.dart::Posts"
+
+class "lu_cse_community::view::dashboard::LUCC&ACM::widgets::posts.dart::_PostsState" {
+  +int size
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "lu_cse_community::view::dashboard::LUCC&ACM::widgets::posts.dart::_PostsState"
+
+class "lu_cse_community::view::dashboard::Notices::notice.dart::Notice" {
+  +State<Notice> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "lu_cse_community::view::dashboard::Notices::notice.dart::Notice"
+
+class "lu_cse_community::view::dashboard::Notices::notice.dart::_NoticeState" {
+  +int size
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "lu_cse_community::view::dashboard::Notices::notice.dart::_NoticeState"
+
+class "lu_cse_community::view::dashboard::Notices::notice.dart::WhyFarther" {
+  +int index
+  {static} +List<WhyFarther> values
+  {static} +WhyFarther delete
+  {static} +WhyFarther edit
+}
+
+"lu_cse_community::view::dashboard::Notices::notice.dart::WhyFarther" o-- "lu_cse_community::view::dashboard::Notices::notice.dart::WhyFarther"
+"dart::core::Enum" <|-- "lu_cse_community::view::dashboard::Notices::notice.dart::WhyFarther"
+
+class "lu_cse_community::view::Home::home.dart::Home" {
+  +State<Home> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "lu_cse_community::view::Home::home.dart::Home"
+
+class "lu_cse_community::view::Home::home.dart::_HomeState" {
+  +int size
+  +void initState()
+  +Widget build()
+  -Consumer<SearchProvider> _buildConsumer()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "lu_cse_community::view::Home::home.dart::_HomeState"
+
+class "lu_cse_community::view::Home::SubPage::add_new_post_page.dart::AddNewPostPage" {
+  +String page
+  +QueryDocumentSnapshot<Object?>? documentSnapshot
+  +_AddNewPostPageState createState()
+}
+
+"lu_cse_community::view::Home::SubPage::add_new_post_page.dart::AddNewPostPage" o-- "cloud_firestore::cloud_firestore.dart::QueryDocumentSnapshot<Object>"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "lu_cse_community::view::Home::SubPage::add_new_post_page.dart::AddNewPostPage"
+
+class "lu_cse_community::view::Home::SubPage::add_new_post_page.dart::_AddNewPostPageState" {
+  +ImagePicker picker
+  -File _imageFile
+  +bool isSelected
+  +TextEditingController postController
+  +Future<dynamic> pickImage()
+  +Future<dynamic> uploadPost()
+  +Future<dynamic> updatePost()
+  +Future<dynamic> uploadNotice()
+  +Future<dynamic> updateNotice()
+  +void initState()
+  +Widget build()
+}
+
+"lu_cse_community::view::Home::SubPage::add_new_post_page.dart::_AddNewPostPageState" o-- "image_picker::image_picker.dart::ImagePicker"
+"lu_cse_community::view::Home::SubPage::add_new_post_page.dart::_AddNewPostPageState" o-- "dart::io::File"
+"lu_cse_community::view::Home::SubPage::add_new_post_page.dart::_AddNewPostPageState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"flutter::src::widgets::framework.dart::State" <|-- "lu_cse_community::view::Home::SubPage::add_new_post_page.dart::_AddNewPostPageState"
+
+class "lu_cse_community::view::Home::Widgets::react_section.dart::ReactSection" {
+  +QueryDocumentSnapshot<Object?>? documentSnapshot
+  +_ReactSectionState createState()
+}
+
+"lu_cse_community::view::Home::Widgets::react_section.dart::ReactSection" o-- "cloud_firestore::cloud_firestore.dart::QueryDocumentSnapshot<Object>"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "lu_cse_community::view::Home::Widgets::react_section.dart::ReactSection"
+
+class "lu_cse_community::view::Home::Widgets::react_section.dart::_ReactSectionState" {
+  +bool isLiked
+  +bool isLoading
+  +void initState()
+  +dynamic getInfo()
+  +Widget build()
+  +Padding buildText()
+  +Consumer<dynamic> buildReactButton()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "lu_cse_community::view::Home::Widgets::react_section.dart::_ReactSectionState"
+
+class "lu_cse_community::view::Home::Widgets::react_section.dart::WhyFarther" {
+  +int index
+  {static} +List<WhyFarther> values
+  {static} +WhyFarther delete
+  {static} +WhyFarther edit
+  {static} +WhyFarther report
+}
+
+"lu_cse_community::view::Home::Widgets::react_section.dart::WhyFarther" o-- "lu_cse_community::view::Home::Widgets::react_section.dart::WhyFarther"
+"dart::core::Enum" <|-- "lu_cse_community::view::Home::Widgets::react_section.dart::WhyFarther"
+
+class "lu_cse_community::view::Home::Widgets::user_info_of_a_post.dart::UserInfoOfAPost" {
+  +String pageName
+  +String uid
+  +String time
+  +String? postId
+  +_UserInfoOfAPostState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "lu_cse_community::view::Home::Widgets::user_info_of_a_post.dart::UserInfoOfAPost"
+
+class "lu_cse_community::view::Home::Widgets::user_info_of_a_post.dart::_UserInfoOfAPostState" {
+  +DocumentSnapshot<Object?> data
+  +bool isLoading
+  +void initState()
+  +dynamic getInfo()
+  +String daysBetween()
+  +Widget build()
+  +GestureDetector buildNameText()
+  +Text buildTimeText()
+}
+
+"lu_cse_community::view::Home::Widgets::user_info_of_a_post.dart::_UserInfoOfAPostState" o-- "cloud_firestore::cloud_firestore.dart::DocumentSnapshot<Object>"
+"flutter::src::widgets::framework.dart::State" <|-- "lu_cse_community::view::Home::Widgets::user_info_of_a_post.dart::_UserInfoOfAPostState"
+
+class "lu_cse_community::view::Home::Widgets::user_info_of_a_post.dart::FavouriteButton" {
+  +String pageName
+  +String postId
+  +String uid
+  +State<FavouriteButton> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "lu_cse_community::view::Home::Widgets::user_info_of_a_post.dart::FavouriteButton"
+
+class "lu_cse_community::view::Home::Widgets::user_info_of_a_post.dart::_FavouriteButtonState" {
+  +bool contains
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "lu_cse_community::view::Home::Widgets::user_info_of_a_post.dart::_FavouriteButtonState"
+
+class "lu_cse_community::view::settings::edit_profile.dart::EditProfile" {
+  +State<EditProfile> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "lu_cse_community::view::settings::edit_profile.dart::EditProfile"
+
+class "lu_cse_community::view::settings::edit_profile.dart::_EditProfileState" {
+  +TextEditingController changeNameController
+  +TextEditingController changeBatchController
+  +TextEditingController changeSectionController
+  +TextEditingController changeBioController
+  +String role
+  -GlobalKey<FormState> _formKey
+  +void initState()
+  +dynamic validate()
+  +Widget build()
+}
+
+"lu_cse_community::view::settings::edit_profile.dart::_EditProfileState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"lu_cse_community::view::settings::edit_profile.dart::_EditProfileState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"flutter::src::widgets::framework.dart::State" <|-- "lu_cse_community::view::settings::edit_profile.dart::_EditProfileState"
+
+class "lu_cse_community::view::settings::settings.dart::Settings" {
+  +Widget build()
+  -Future<void> _showMyDialog()
+  +Container buildRow()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "lu_cse_community::view::settings::settings.dart::Settings"
+
+class "lu_cse_community::view::settings::view_profile_page.dart::ViewProfile" {
+  +String name
+  +String email
+  +String role
+  +String batch
+  +String section
+  +String bio
+  +String url
+  +String uid
+  +bool isViewer
+  +State<ViewProfile> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "lu_cse_community::view::settings::view_profile_page.dart::ViewProfile"
+
+class "lu_cse_community::view::settings::view_profile_page.dart::_ViewProfileState" {
+  +String getIdAndSection()
+  +Widget build()
+  +SingleChildScrollView buildStackBottom()
+  +Container buildSocialSites()
+  -Container _buildContainer()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "lu_cse_community::view::settings::view_profile_page.dart::_ViewProfileState"
+
+class "lu_cse_community::view::settings::widgets::build_profile_part.dart::BuildProfilePart" {
+  +bool isViewMode
+  +bool isViewer
+  +String name
+  +String email
+  +String url
+  +_BuildProfilePartState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "lu_cse_community::view::settings::widgets::build_profile_part.dart::BuildProfilePart"
+
+class "lu_cse_community::view::settings::widgets::build_profile_part.dart::_BuildProfilePartState" {
+  +ImagePicker picker
+  +Future<dynamic> pickImage()
+  +Widget build()
+}
+
+"lu_cse_community::view::settings::widgets::build_profile_part.dart::_BuildProfilePartState" o-- "image_picker::image_picker.dart::ImagePicker"
+"flutter::src::widgets::framework.dart::State" <|-- "lu_cse_community::view::settings::widgets::build_profile_part.dart::_BuildProfilePartState"
+
+class "lu_cse_community::view::sign_in_sign_up::onboarding.dart::OnBoarding" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "lu_cse_community::view::sign_in_sign_up::onboarding.dart::OnBoarding"
+
+class "lu_cse_community::view::sign_in_sign_up::reset_password.dart::ResetPassword" {
+  +TextEditingController emailController
+  -GlobalKey<FormState> _formKey
+  +void dispose()
+  +dynamic validate()
+  +Widget build()
+}
+
+"lu_cse_community::view::sign_in_sign_up::reset_password.dart::ResetPassword" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"lu_cse_community::view::sign_in_sign_up::reset_password.dart::ResetPassword" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "lu_cse_community::view::sign_in_sign_up::reset_password.dart::ResetPassword"
+
+class "lu_cse_community::view::sign_in_sign_up::sign_in.dart::SignIn" {
+  +State<SignIn> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "lu_cse_community::view::sign_in_sign_up::sign_in.dart::SignIn"
+
+class "lu_cse_community::view::sign_in_sign_up::sign_in.dart::_SignInState" {
+  +TextEditingController emailController
+  +TextEditingController passwordController
+  -GlobalKey<FormState> _formKey
+  +void dispose()
+  +dynamic validate()
+  +Widget build()
+}
+
+"lu_cse_community::view::sign_in_sign_up::sign_in.dart::_SignInState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"lu_cse_community::view::sign_in_sign_up::sign_in.dart::_SignInState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"flutter::src::widgets::framework.dart::State" <|-- "lu_cse_community::view::sign_in_sign_up::sign_in.dart::_SignInState"
+
+class "lu_cse_community::view::sign_in_sign_up::sign_up.dart::SignUp" {
+  +State<SignUp> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "lu_cse_community::view::sign_in_sign_up::sign_up.dart::SignUp"
+
+class "lu_cse_community::view::sign_in_sign_up::sign_up.dart::_SignUpState" {
+  +TextEditingController nameController
+  +TextEditingController emailController
+  +TextEditingController confirmPasswordController
+  +TextEditingController batchController
+  +TextEditingController sectionController
+  +bool isTeacher
+  -GlobalKey<FormState> _formKey
+  +void dispose()
+  +dynamic validate()
+  +Widget build()
+}
+
+"lu_cse_community::view::sign_in_sign_up::sign_up.dart::_SignUpState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"lu_cse_community::view::sign_in_sign_up::sign_up.dart::_SignUpState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"flutter::src::widgets::framework.dart::State" <|-- "lu_cse_community::view::sign_in_sign_up::sign_up.dart::_SignUpState"
+
+class "lu_cse_community::view::sign_in_sign_up::varification.dart::VerificationAndHomeScreen" {
+  +_VerificationAndHomeScreenState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "lu_cse_community::view::sign_in_sign_up::varification.dart::VerificationAndHomeScreen"
+
+class "lu_cse_community::view::sign_in_sign_up::varification.dart::_VerificationAndHomeScreenState" {
+  +bool isVerified
+  +bool isLoading
+  +Future<dynamic> checkVerification()
+  +dynamic sendVerificationLink()
+  +void initState()
+  +Widget build()
+  -SafeArea _buildScaffold()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "lu_cse_community::view::sign_in_sign_up::varification.dart::_VerificationAndHomeScreenState"
+
+
+@enduml
