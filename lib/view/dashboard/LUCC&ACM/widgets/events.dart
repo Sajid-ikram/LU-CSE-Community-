@@ -77,7 +77,7 @@ class _EventsState extends State<Events> {
                     context,
                     MaterialPageRoute(
                       builder: (context) {
-                        return EventDetail(data: data?.docs[index]);
+                        return EventDetail(data: data?.docs[index], pageName: widget.page,);
                       },
                     ),
                   );

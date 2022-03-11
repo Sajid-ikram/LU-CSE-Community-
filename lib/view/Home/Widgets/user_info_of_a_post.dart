@@ -106,62 +106,6 @@ class _UserInfoOfAPostState extends State<UserInfoOfAPost> {
                         postId: widget.postId ?? "",
                         pageName: widget.pageName,
                         uid: widget.uid)
-                  /*Consumer<ProfileProvider>(
-                      builder: (ctx, providerP, _) {
-                        if (widget.pageName == "home") {
-                          contains =
-                              pro.favouritePostIds.contains(widget.postId);
-                        }
-                        return Consumer<PostProvider>(
-                          builder: (context, provider, child) {
-                            print(contains);
-                            print(
-                                "-------------------------------------------ccccc");
-                            return InkWell(
-                              onTap: () async {
-                                if (!provider.isLoveLoading) {
-                                  provider.addToFavourite(
-                                    postId: widget.postId ?? "",
-                                    uid: widget.uid,
-                                    isExist: contains,
-                                    context: context,
-                                  );
-                                  if (contains) {
-                                    setState(() {
-                                      pro.favouritePostIds.remove(widget.uid);
-                                      contains = !contains;
-                                    });
-                                  } else {
-                                    setState(() {
-                                      pro.favouritePostIds.add(widget.uid);
-                                      contains = !contains;
-                                    });
-                                  }
-
-
-                                  */ /*if (result == "Deleted") {
-                                    contains = false;
-                                  } else if (result == "Added") {
-                                    contains = true;
-
-                                  } else {
-                                    return onError(context,
-                                        "Having problem connecting to the server");
-                                  }*/ /*
-                                }
-                              },
-                              child: Icon(
-                                contains
-                                    ? Icons.favorite
-                                    : Icons.favorite_outline,
-                                size: 20.sp,
-                                color: contains ? Colors.red : Colors.grey,
-                              ),
-                            );
-                          },
-                        );
-                      },
-                    ),*/
                 ],
               )
             : Row(
@@ -267,8 +211,6 @@ class FavouriteButton extends StatefulWidget {
 
 class _FavouriteButtonState extends State<FavouriteButton> {
   bool contains = false;
-
-
 
   @override
   Widget build(BuildContext context) {

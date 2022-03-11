@@ -3,12 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lu_cse_community/constant/constant.dart';
+import 'package:provider/provider.dart';
 import '../../../constant/constant.dart';
 import 'package:intl/intl.dart';
+import '../../../provider/notice_provider.dart';
+import '../../../provider/profile_provider.dart';
+import 'add_new_event_or_post.dart';
+
+enum WhyFarther { delete, edit }
 
 class EventDetail extends StatefulWidget {
-  EventDetail({Key? key, required this.data}) : super(key: key);
+  EventDetail({Key? key, required this.data, required this.pageName})
+      : super(key: key);
   QueryDocumentSnapshot? data;
+  String pageName;
 
   @override
   State<EventDetail> createState() => _EventDetailState();
@@ -17,6 +25,7 @@ class EventDetail extends StatefulWidget {
 class _EventDetailState extends State<EventDetail> {
   @override
   Widget build(BuildContext context) {
+    var pro = Provider.of<ProfileProvider>(context, listen: false);
     return Scaffold(
       body: Stack(
         children: [
@@ -106,7 +115,45 @@ class _EventDetailState extends State<EventDetail> {
                     size: 22.sp,
                   ),
                 )),
-          )
+          ),
+          if (pro.currentUserUid == widget.data!["ownerUid"])
+            Positioned(
+              top: 45.h,
+              right: 30.w,
+              child: PopupMenuButton<WhyFarther>(
+                icon: const Icon(Icons.more_horiz),
+                padding: EdgeInsets.zero,
+                onSelected: (WhyFarther result) async {
+                  if (result == WhyFarther.delete) {
+                    await _showMyDialog(
+                        context, widget.data!.id, widget.pageName + "Event");
+                    Navigator.of(context).pop();
+                  } else if (result == WhyFarther.edit) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AddNewPostOrEvent(
+                          pageName: widget.pageName,
+                          type: "Event",
+                          documentSnapshot: widget.data!,
+                        ),
+                      ),
+                    );
+                  }
+                },
+                itemBuilder: (BuildContext context) =>
+                    <PopupMenuEntry<WhyFarther>>[
+                  const PopupMenuItem<WhyFarther>(
+                    value: WhyFarther.delete,
+                    child: Text('Delete'),
+                  ),
+                  const PopupMenuItem<WhyFarther>(
+                    value: WhyFarther.edit,
+                    child: Text('Edit'),
+                  ),
+                ],
+              ),
+            )
         ],
       ),
     );
@@ -148,4 +195,33 @@ String _changeTime(DateTime dt) {
   var utcDate = dateFormat.format(DateTime.parse(dt.toString()));
   var localDate = dateFormat.parse(utcDate, true).toLocal().toString();
   return dateFormat.format(DateTime.parse(localDate));
+}
+
+Future<void> _showMyDialog(
+    BuildContext context, String id, String whichPost) async {
+  return showDialog<void>(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text('Delete Post'),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: const <Widget>[
+              Text('Do you want to delete this event'),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: const Text('Ok'),
+            onPressed: () {
+              Provider.of<NoticeProvider>(context, listen: false)
+                  .deleteEvent(id, whichPost);
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
 }

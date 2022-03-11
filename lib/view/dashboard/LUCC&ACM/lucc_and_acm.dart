@@ -5,9 +5,7 @@ import 'package:lu_cse_community/constant/constant.dart';
 import 'package:lu_cse_community/view/dashboard/LUCC&ACM/widgets/events.dart';
 import 'package:lu_cse_community/view/dashboard/LUCC&ACM/widgets/posts.dart';
 import '../../../provider/profile_provider.dart';
-import '../../Home/Widgets/search_bar.dart';
 import 'package:provider/provider.dart';
-
 import '../../public_widget/floating_action_button.dart';
 
 class LUCC_And_ACM extends StatefulWidget {

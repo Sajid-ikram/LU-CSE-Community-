@@ -47,6 +47,27 @@ class NoticeProvider with ChangeNotifier {
     }
   }
 
+  Future updatePost({
+    required String postText,
+    required String imageUrl,
+    required String name,
+    required String id,
+    required BuildContext context,
+  }) async {
+    try {
+      FirebaseFirestore.instance.collection(name + "Post").doc(id).update(
+        {
+          "postText": postText,
+          "imageUrl": imageUrl,
+          "ownerUid": FirebaseAuth.instance.currentUser!.uid,
+        },
+      );
+      notifyListeners();
+    } catch (e) {
+      return onError(context, "Having problem connecting to the server");
+    }
+  }
+
   Future updateNotice({
     required String postText,
     required String id,
@@ -93,7 +114,41 @@ class NoticeProvider with ChangeNotifier {
     }
   }
 
+  Future updateEvent({
+    required String title,
+    required String schedule,
+    required String id,
+    required String place,
+    required String description,
+    required String url,
+    required String name,
+    required BuildContext context,
+  }) async {
+    try {
+      FirebaseFirestore.instance.collection(name + "Event").doc(id).update(
+        {
+          "title": title,
+          "schedule": schedule,
+          "place": place,
+          "description": description,
+          "url": url,
+        },
+      );
+      notifyListeners();
+    } catch (e) {
+      return onError(context, "Having problem connecting to the server");
+    }
+  }
+
   Future deleteNotice(String id) async {
     await FirebaseFirestore.instance.collection("notice").doc(id).delete();
+  }
+
+  Future deleteEvent(String id,String postFrom) async {
+    await FirebaseFirestore.instance.collection(postFrom).doc(id).delete();
+  }
+
+  Future deletePost(String id,String postFrom) async {
+    await FirebaseFirestore.instance.collection(postFrom).doc(id).delete();
   }
 }

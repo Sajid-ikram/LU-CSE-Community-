@@ -28,7 +28,11 @@ Align buildSearch(BuildContext context, String page) {
           if (page == "Home") {
             Provider.of<SearchProvider>(context, listen: false)
                 .searchPost(value);
-          } else {}
+          } else if(page == "LUCC_ACM"){
+
+            Provider.of<SearchProvider>(context, listen: false)
+                .changeSearchLUCCAndACMPost(value);
+          }
         },
         decoration: InputDecoration(
           contentPadding: EdgeInsets.all(10.7.sp),

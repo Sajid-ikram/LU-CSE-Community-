@@ -42,8 +42,6 @@ class ProfileProvider extends ChangeNotifier {
         favouritePostIds.add(snapShot.docs[i].id);
       }
     }
-    print(favouritePostIds.length);
-    print("favouritePostIds.length ++++++++++++++++++++++++++++++");
     notifyListeners();
   }
 

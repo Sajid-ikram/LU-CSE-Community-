@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart' as storage;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,8 +16,12 @@ import '../../public_widget/build_loading.dart';
 import 'package:intl/intl.dart';
 
 class AddNewPostOrEvent extends StatefulWidget {
-  AddNewPostOrEvent({Key? key, required this.pageName}) : super(key: key);
+  AddNewPostOrEvent(
+      {Key? key, required this.pageName, this.type, this.documentSnapshot})
+      : super(key: key);
   String pageName;
+  String? type;
+  QueryDocumentSnapshot? documentSnapshot;
 
   @override
   _AddNewPostOrEventState createState() => _AddNewPostOrEventState();
@@ -46,7 +51,6 @@ class _AddNewPostOrEventState extends State<AddNewPostOrEvent> {
   }
 
   Future uploadEvent() async {
-
     if (_eventFormKey.currentState!.validate()) {
       try {
         var pdfPro = Provider.of<PDFProvider>(context, listen: false);
@@ -63,30 +67,28 @@ class _AddNewPostOrEventState extends State<AddNewPostOrEvent> {
 
         Provider.of<NoticeProvider>(context, listen: false)
             .addEvent(
-          title: titleController.text,
-          description: descriptionController.text,
-          place: placeController.text,
-          schedule: dateTime.toString(),
-          url: url,
-          context: context,
-          name: widget.pageName,
-        )
+              title: titleController.text,
+              description: descriptionController.text,
+              place: placeController.text,
+              schedule: dateTime.toString(),
+              url: url,
+              context: context,
+              name: widget.pageName,
+            )
             .then((value) => {
-          pdfPro.sendNotification(
-            ["fab732a6-8371-11ec-9974-d6a81ba95cb1"],
-            "There is a new event",
-            widget.pageName,
-            "https://firebasestorage.googleapis.com/v0/b/lu-cse-community.appspot.com/o/notification%2Flu.png?alt=media&token=8ba2b183-49af-4673-a519-020fa1f3ca74",
-          )
-        });
+                  pdfPro.sendNotification(
+                    ["fab732a6-8371-11ec-9974-d6a81ba95cb1"],
+                    "There is a new event",
+                    widget.pageName,
+                    "https://firebasestorage.googleapis.com/v0/b/lu-cse-community.appspot.com/o/notification%2Flu.png?alt=media&token=8ba2b183-49af-4673-a519-020fa1f3ca74",
+                  )
+                });
         Navigator.of(context, rootNavigator: true).pop();
         Navigator.pop(context);
       } catch (e) {
         Navigator.of(context, rootNavigator: true).pop();
       }
     }
-
-
   }
 
   Future uploadPost() async {
@@ -106,27 +108,98 @@ class _AddNewPostOrEventState extends State<AddNewPostOrEvent> {
 
         Provider.of<NoticeProvider>(context, listen: false)
             .addPost(
-          postText: postController.text,
-          imageUrl: url,
-          dateTime: DateTime.now().toString(),
-          context: context,
-          name: widget.pageName,
-        )
+              postText: postController.text,
+              imageUrl: url,
+              dateTime: DateTime.now().toString(),
+              context: context,
+              name: widget.pageName,
+            )
             .then((value) => {
-          pdfPro.sendNotification(
-            ["fab732a6-8371-11ec-9974-d6a81ba95cb1"],
-            "There is a new post",
-            widget.pageName,
-            "https://firebasestorage.googleapis.com/v0/b/lu-cse-community.appspot.com/o/notification%2Flu.png?alt=media&token=8ba2b183-49af-4673-a519-020fa1f3ca74",
-          )
-        });
+                  pdfPro.sendNotification(
+                    ["fab732a6-8371-11ec-9974-d6a81ba95cb1"],
+                    "There is a new post",
+                    widget.pageName,
+                    "https://firebasestorage.googleapis.com/v0/b/lu-cse-community.appspot.com/o/notification%2Flu.png?alt=media&token=8ba2b183-49af-4673-a519-020fa1f3ca74",
+                  )
+                });
         Navigator.of(context, rootNavigator: true).pop();
         Navigator.pop(context);
       } catch (e) {
         Navigator.of(context, rootNavigator: true).pop();
       }
     }
+  }
 
+  Future updatePost() async {
+    try {
+      buildLoadingIndicator(context);
+      String url = "";
+      if (isSelected) {
+        final ref = storage.FirebaseStorage.instance
+            .ref()
+            .child("${widget.pageName}/${DateTime.now()}");
+
+        final result = await ref.putFile(_imageFile);
+        url = await result.ref.getDownloadURL();
+      }
+
+      if (!isSelected &&
+          widget.documentSnapshot != null &&
+          widget.documentSnapshot!["imageUrl"] != "") {
+        url = widget.documentSnapshot!["imageUrl"];
+      }
+
+      await Provider.of<NoticeProvider>(context, listen: false).updatePost(
+        name: widget.pageName,
+        postText: postController.text,
+        id: widget.documentSnapshot!.id,
+        imageUrl: url,
+        context: context,
+      );
+
+      Navigator.of(context, rootNavigator: true).pop();
+      Navigator.pop(context);
+    } catch (e) {
+      Navigator.of(context, rootNavigator: true).pop();
+    }
+  }
+
+  Future updateEvent() async {
+    try {
+      buildLoadingIndicator(context);
+      String url = "";
+      if (isSelected) {
+        final ref = storage.FirebaseStorage.instance
+            .ref()
+            .child("${widget.pageName}/${DateTime.now()}");
+
+        final result = await ref.putFile(_imageFile);
+        url = await result.ref.getDownloadURL();
+      }
+
+      if (!isSelected &&
+          widget.documentSnapshot != null &&
+          widget.documentSnapshot!["url"] != "") {
+        url = widget.documentSnapshot!["url"];
+      }
+
+     await  Provider.of<NoticeProvider>(context, listen: false)
+          .updateEvent(
+        title: titleController.text,
+        id : widget.documentSnapshot!.id,
+        description: descriptionController.text,
+        place: placeController.text,
+        schedule: dateTime.toString(),
+        url: url,
+        context: context,
+        name: widget.pageName,
+      );
+
+      Navigator.of(context, rootNavigator: true).pop();
+      Navigator.pop(context);
+    } catch (e) {
+      Navigator.of(context, rootNavigator: true).pop();
+    }
   }
 
   TextEditingController titleController = TextEditingController();
@@ -144,6 +217,23 @@ class _AddNewPostOrEventState extends State<AddNewPostOrEvent> {
     postController.dispose();
     temp.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    if (widget.type != null) {
+      if (widget.type == "Post") {
+        postController.text = widget.documentSnapshot!["postText"];
+      } else {
+        page = "event";
+        titleController.text = widget.documentSnapshot!["title"];
+        placeController.text = widget.documentSnapshot!["place"];
+        descriptionController.text = widget.documentSnapshot!["description"];
+        dateTime = DateTime.parse(widget.documentSnapshot!["dateTime"]);
+      }
+    }
+
+    super.initState();
   }
 
   @override
@@ -195,14 +285,13 @@ class _AddNewPostOrEventState extends State<AddNewPostOrEvent> {
                 ],
               ),
               SizedBox(height: 40.h),
-              Form(
-                key: _postFormKey,
-                child: Column(
-                  children: [
-                    if (page == "event")
+              if (page == "event")
+                Form(
+                  key: _eventFormKey,
+                  child: Column(
+                    children: [
                       buildCustomTextField("Event Title", "Enter Title.....",
                           titleController, context),
-                    if (page == "event")
                       GestureDetector(
                         onTap: () async {
                           dateTime = await showDatePicker(
@@ -224,20 +313,18 @@ class _AddNewPostOrEventState extends State<AddNewPostOrEvent> {
                             temp,
                             context),
                       ),
-                    if (page == "event")
                       buildCustomTextField("Event Place", "Enter Place.....",
                           placeController, context),
-                    if (page == "event")
                       buildCustomTextField(
                           "Event Description",
                           "Type Description.....",
                           descriptionController,
                           context),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
               Form(
-                key: _eventFormKey,
+                key: _postFormKey,
                 child: Column(
                   children: [
                     if (page == "post")
@@ -249,14 +336,25 @@ class _AddNewPostOrEventState extends State<AddNewPostOrEvent> {
               buildImageSection(),
               SizedBox(height: 30.h),
               InkWell(
-                onTap: () {
+                onTap: () async {
                   if (page == "post") {
-                    uploadPost();
+                    if (widget.type != null) {
+                      updatePost();
+                    } else {
+                      uploadPost();
+                    }
                   } else {
-                    uploadEvent();
+                    if (widget.type != null) {
+                      await updateEvent();
+                      Navigator.of(context).pop();
+                    } else {
+                      uploadEvent();
+                    }
+
                   }
                 },
-                child: buildButton("Post", 350, 18, 56),
+                child: buildButton(
+                    widget.type != null ? "Update" : "Post", 350, 18, 56),
               ),
               SizedBox(height: 30.h),
             ],
@@ -302,9 +400,28 @@ class _AddNewPostOrEventState extends State<AddNewPostOrEvent> {
                       _imageFile,
                       fit: BoxFit.cover,
                     ))
-                : const Icon(
-                    FontAwesomeIcons.image,
-                  ),
+                : widget.documentSnapshot != null &&
+                        widget.type == "Post" &&
+                        widget.documentSnapshot!["imageUrl"] != ""
+                    ? ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.network(
+                          widget.documentSnapshot!["imageUrl"],
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                    : widget.documentSnapshot != null &&
+                            widget.documentSnapshot!["url"] != ""
+                        ? ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Image.network(
+                              widget.documentSnapshot!["url"],
+                              fit: BoxFit.cover,
+                            ),
+                          )
+                        : const Icon(
+                            FontAwesomeIcons.image,
+                          ),
           )
         ],
       ),
