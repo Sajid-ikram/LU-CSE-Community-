@@ -21,6 +21,8 @@ import 'package:lu_cse_community/view/dashboard/AllUsers/all_users.dart';
 import 'package:lu_cse_community/view/dashboard/Notices/notice.dart';
 import 'package:lu_cse_community/view/dashboard/dashboard.dart';
 import 'package:lu_cse_community/view/settings/edit_profile.dart';
+import 'package:lu_cse_community/view/settings/favourite_post.dart';
+import 'package:lu_cse_community/view/settings/privacy_policy.dart';
 import 'package:lu_cse_community/view/sign_in_sign_up/onboarding.dart';
 import 'package:lu_cse_community/view/sign_in_sign_up/reset_password.dart';
 import 'package:lu_cse_community/view/sign_in_sign_up/sign_in.dart';
@@ -37,7 +39,6 @@ void main() {
 }
 
 class MyApp extends StatefulWidget {
-
   MyApp({Key? key}) : super(key: key);
 
   @override
@@ -46,16 +47,15 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+
   @override
   void initState() {
     super.initState();
     configOneSignal();
   }
 
-  void configOneSignal()
-  {
+  void configOneSignal() {
     OneSignal.shared.setAppId(kAppId);
-
   }
 
   @override
@@ -117,7 +117,8 @@ class _MyAppState extends State<MyApp> {
             "Dashboard": (ctx) => const Dashboard(),
             "EditProfile": (ctx) => const EditProfile(),
             "Notice": (ctx) => const Notice(),
-
+            "PrivacyPolicy": (ctx) => const PrivacyPolicy(),
+            "FavouritePost": (ctx) => const FavouritePost(),
           },
         ),
       ),

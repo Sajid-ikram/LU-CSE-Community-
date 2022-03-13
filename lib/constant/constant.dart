@@ -5,7 +5,7 @@ const secondColor = Color(0xffF29263);
 const dashboardColor = Color(0xff294899);
 const nevColor = Color(0xff181c24);
 const insideScaffoldColor = Color(0xffE5E5E5);
-const textColor= Color(0xff79838B);
+const textColor = Color(0xff79838B);
 
 const String kAppId = "06a15094-92a6-48ff-b72a-ff0324a54c6f";
 
@@ -47,3 +47,5 @@ List<String> months = [
   "Dec"
 ];
 
+
+String dummyText = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book";

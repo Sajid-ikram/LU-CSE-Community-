@@ -18,7 +18,7 @@ enum WhyFarther { delete, edit, report }
 
 class ReactSection extends StatefulWidget {
   ReactSection({Key? key, required this.documentSnapshot}) : super(key: key);
-  QueryDocumentSnapshot? documentSnapshot;
+  DocumentSnapshot? documentSnapshot;
 
   @override
   _ReactSectionState createState() => _ReactSectionState();
@@ -124,7 +124,7 @@ class _ReactSectionState extends State<ReactSection> {
     );
   }
 
-  Consumer buildReactButton(String name, QueryDocumentSnapshot? data) {
+  Consumer buildReactButton(String name, DocumentSnapshot? data) {
     var pro = Provider.of<PostProvider>(context, listen: false);
     return Consumer<PostProvider>(
       builder: (context, provider, child) {

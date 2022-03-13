@@ -17,9 +17,63 @@ Container customTextField(TextEditingController controller, String text,
       style: GoogleFonts.inter(color: Colors.black),
       controller: controller,
       validator: (value) {
-        if (value == null || value.isEmpty) {
-          snackBar(context, "Enter an email");
-          return "show error";
+        if (text == "Enter your name") {
+          if (value != null && value.length > 50) {
+            snackBar(context, "Name should be less then 50 character");
+            return "Name should be less then 50 character";
+          } else if (value == null || value.isEmpty) {
+            snackBar(context, "Field can not be empty!");
+            return "Field can not be empty!";
+          } else if (!isNameValid(value)) {
+            snackBar(context, "Name should contain only character");
+            return "Field can not be empty!";
+          }
+        } else if (text == "Email Address") {
+          if (value != null && !value.contains("@lus.ac.bd")) {
+            snackBar(context, "You have to use LU G Suite Email");
+            return "You have to use LU G Suite Email";
+          } else if (value == null || value.isEmpty) {
+            snackBar(context, "Field can not be empty!");
+            return "Field can not be empty!";
+          }
+        } else if (text == "Password") {
+          if (value != null && value.length < 6) {
+            snackBar(context, "Password should be at least 6 character long");
+            return "Password should be at least 6 character long";
+          } else if (value == null || value.isEmpty) {
+            snackBar(context, "Field can not be empty!");
+            return "Field can not be empty!";
+          }
+        } else if (text == "Confirm Password") {
+          if (value != null && value.length < 6) {
+            snackBar(context, "Password should be at least 6 character long");
+            return "Password should be at least 6 character long";
+          } else if (value == null || value.isEmpty) {
+            snackBar(context, "Field can not be empty!");
+            return "Field can not be empty!";
+          } else if (pro.passwordController.text != value) {
+            snackBar(context, "Password does not match");
+            return "Password does not match";
+          }
+        } else if (text == "Batch") {
+          if (value != null && value.length > 5) {
+            snackBar(context, "Batch should be less then 5 character");
+            return "Batch should be less then 5 character";
+          } else if (value == null || value.isEmpty) {
+            snackBar(context, "Field can not be empty!");
+            return "Field can not be empty!";
+          }
+        } else if (text == "Section") {
+          if (value != null && value.length > 1) {
+            snackBar(context, "Section should be 1 character long");
+            return "Section should be 1 character long";
+          } else if (value == null || value.isEmpty) {
+            snackBar(context, "Field can not be empty!");
+            return "Field can not be empty!";
+          }
+        } else if (value == null || value.isEmpty) {
+          snackBar(context, "Field can not be empty!");
+          return "Field can not be empty!";
         }
       },
       keyboardAppearance: Brightness.light,
@@ -67,4 +121,17 @@ InputDecoration inputDecoration(bool isPass, SignUpProvider pro, String text) {
     hintText: text,
     hintStyle: GoogleFonts.inter(color: mainColor, fontSize: 15.sp),
   );
+}
+
+bool isNameValid(String name) {
+  if (name.isEmpty) {
+    return false;
+  }
+  bool hasDigits = name.contains(RegExp(r'[0-9]'));
+  bool hasSpecialCharacters = name.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'));
+    print( hasDigits & hasSpecialCharacters);
+    print( hasDigits);
+    print( hasSpecialCharacters);
+    print( "*********************hasDigits & hasSpecialCharacters");
+  return hasDigits & hasSpecialCharacters;
 }

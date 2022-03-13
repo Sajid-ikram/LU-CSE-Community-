@@ -19,7 +19,7 @@ class AddNewPostPage extends StatefulWidget {
   AddNewPostPage({Key? key, required this.page, this.documentSnapshot})
       : super(key: key);
   String page;
-  QueryDocumentSnapshot? documentSnapshot;
+  DocumentSnapshot? documentSnapshot;
 
   @override
   _AddNewPostPageState createState() => _AddNewPostPageState();

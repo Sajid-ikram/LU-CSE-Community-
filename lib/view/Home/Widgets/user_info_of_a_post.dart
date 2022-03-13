@@ -8,8 +8,6 @@ import 'package:lu_cse_community/view/settings/view_profile_page.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../../Contest/SubPage/SubWidgets/error_dialoge.dart';
-
 class UserInfoOfAPost extends StatefulWidget {
   const UserInfoOfAPost(
       {Key? key,

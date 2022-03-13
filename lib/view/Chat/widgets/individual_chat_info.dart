@@ -33,6 +33,7 @@ class _IndividualChatInfoState extends State<IndividualChatInfo> {
     data = await Provider.of<ProfileProvider>(context, listen: false)
         .getProfileInfoByUID(widget.uid);
 
+
     if (mounted) {
       setState(() {
         isLoading = false;

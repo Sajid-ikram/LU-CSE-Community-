@@ -155,17 +155,13 @@ class PostProvider with ChangeNotifier {
     }
   }
 
-
-
   Future<String> addToFavourite({
     required String postId,
     required String uid,
     required bool isExist,
     required BuildContext context,
   }) async {
-
     try {
-
       isLoveLoading = true;
       notifyListeners();
 
@@ -176,6 +172,7 @@ class PostProvider with ChangeNotifier {
             .collection("favouritePosts")
             .doc(postId)
             .delete();
+
         isLoveLoading = false;
         notifyListeners();
         return "Deleted";

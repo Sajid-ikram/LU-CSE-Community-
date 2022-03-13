@@ -112,11 +112,19 @@ class Settings extends StatelessWidget {
                 ),
                 const Divider(
                     thickness: 1.5, color: Color(0xffF6F6F7), height: 25),
-                buildRow("Post"),
+                GestureDetector(
+                  onTap: (){
+                    Navigator.of(context).pushNamed("FavouritePost");
+                  },
+                  child: buildRow("Favourite Post"),
+                ),
                 const Divider(
                     thickness: 1.5, color: Color(0xffF6F6F7), height: 25),
                 GestureDetector(
-                    onTap: () {}, child: buildRow("Privecy & Policy")),
+                    onTap: () {
+                      Navigator.of(context).pushNamed("PrivacyPolicy");
+                    },
+                    child: buildRow("Privacy & Policy")),
                 const Divider(
                     thickness: 1.5, color: Color(0xffF6F6F7), height: 25),
                 GestureDetector(
@@ -184,7 +192,7 @@ class Settings extends StatelessWidget {
             TextButton(
               child: const Text('Ok'),
               onPressed: () {
-                Provider.of<Authentication>(context,listen: false).signOut();
+                Provider.of<Authentication>(context, listen: false).signOut();
                 Navigator.of(context).pop();
               },
             ),
