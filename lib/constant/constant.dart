@@ -47,5 +47,19 @@ List<String> months = [
   "Dec"
 ];
 
+String dummyText =
+    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book";
 
-String dummyText = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book";
+List<String> termsAndCondition = [
+  "You agree that you are responsible for any content that you submit to our sites, including comments, photographs and other media.",
+  "Stay relevant – stay on topic with relevant information that others may find useful.",
+  "Do not post advertisements.",
+  "Be respectful – maintain a friendly environment.",
+  "Do not post material that is inappropriate or that could reasonably be deemed defamatory, offensive or obscene.",
+  "No investment advice – do not post recommendations and/or advice about specific securities, products, or services.",
+  "Do not use these online spaces for illegal purposes or to breach any laws.",
+  "Do not harass, cause distress or inconvenience to, or infringe the rights of, another person. ",
+  "Do not try to access administrator areas, features or functions of our sites without authorization.",
+  "Do not submit anything to our app that will or may violate the rights of a third party, including but not limited to copyright, trademark, and/or privacy rights.  ",
+  "Do not use our sites or content on them in any way not permitted by these terms.",
+];

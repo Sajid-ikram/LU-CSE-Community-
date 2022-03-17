@@ -27,6 +27,7 @@ import 'package:lu_cse_community/view/sign_in_sign_up/onboarding.dart';
 import 'package:lu_cse_community/view/sign_in_sign_up/reset_password.dart';
 import 'package:lu_cse_community/view/sign_in_sign_up/sign_in.dart';
 import 'package:lu_cse_community/view/sign_in_sign_up/sign_up.dart';
+import 'package:lu_cse_community/view/sign_in_sign_up/terms_and_condition.dart';
 import 'package:lu_cse_community/view/sign_in_sign_up/varification.dart';
 import 'package:provider/provider.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
@@ -119,6 +120,7 @@ class _MyAppState extends State<MyApp> {
             "Notice": (ctx) => const Notice(),
             "PrivacyPolicy": (ctx) => const PrivacyPolicy(),
             "FavouritePost": (ctx) => const FavouritePost(),
+            "TermsAndCondition": (ctx) => const TermsAndCondition(),
           },
         ),
       ),

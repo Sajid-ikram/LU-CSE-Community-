@@ -16,6 +16,10 @@ class ProfileProvider extends ChangeNotifier {
   String batch = '';
   String bio = '';
   String currentUserUid = '';
+  String facebook = '';
+  String twitter = '';
+  String linkedin = '';
+  String github = '';
   List<String> favouritePostIds = [];
 
   getUserInfo(String id) async {
@@ -28,6 +32,10 @@ class ProfileProvider extends ChangeNotifier {
     section = userInfo["section"];
     batch = userInfo["batch"];
     bio = userInfo["bio"];
+    facebook = userInfo["facebook"];
+    twitter = userInfo["twitter"];
+    linkedin = userInfo["linkedin"];
+    github = userInfo["github"];
     currentUserUid = id;
 
     final snapShot = await FirebaseFirestore.instance
@@ -69,6 +77,33 @@ class ProfileProvider extends ChangeNotifier {
       this.section = section;
       this.batch = batch;
       this.bio = bio;
+      notifyListeners();
+    } catch (e) {
+      return onError(context, "Having problem connecting to the server");
+    }
+  }
+
+  Future updateSocialLink({
+    required String link,
+    required String site,
+    required BuildContext context,
+  }) async {
+    try {
+      FirebaseFirestore.instance.collection("users").doc(currentUserUid).update(
+        {
+          site: link,
+        },
+      );
+      if (site == "facebook") {
+        facebook = link;
+      } else if (site == "twitter") {
+        twitter = link;
+      } else if (site == "linkedin") {
+        linkedin = link;
+      } else if (site == "github") {
+        github = link;
+      }
+
       notifyListeners();
     } catch (e) {
       return onError(context, "Having problem connecting to the server");

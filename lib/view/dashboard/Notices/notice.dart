@@ -30,7 +30,7 @@ class _NoticeState extends State<Notice> {
 
   @override
   Widget build(BuildContext context) {
-    var pro = Provider.of<ProfileProvider>(context);
+    var pro = Provider.of<ProfileProvider>(context, listen: false);
     return Scaffold(
       appBar: customAppBar("Notice", context),
       floatingActionButton: pro.role == "Teacher" || pro.role == "Admin"
@@ -78,40 +78,42 @@ class _NoticeState extends State<Notice> {
                               time: data?.docs[index]["dateTime"],
                               pageName: "notice",
                             ),
-                            Positioned(
-                              right: 0,
-                              child: PopupMenuButton<WhyFarther>(
-                                icon: const Icon(Icons.more_horiz),
-                                padding: EdgeInsets.zero,
-                                onSelected: (WhyFarther result) {
-                                  if (result == WhyFarther.delete) {
-                                    _showMyDialog(
-                                        context, data?.docs[index].id ?? "");
-                                  } else if (result == WhyFarther.edit) {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => AddNewPostPage(
-                                          page: "Home",
-                                          documentSnapshot: data?.docs[index],
+                            if (pro.currentUserUid ==
+                                data?.docs[index]["ownerUid"])
+                              Positioned(
+                                right: 0,
+                                child: PopupMenuButton<WhyFarther>(
+                                  icon: const Icon(Icons.more_horiz),
+                                  padding: EdgeInsets.zero,
+                                  onSelected: (WhyFarther result) {
+                                    if (result == WhyFarther.delete) {
+                                      _showMyDialog(
+                                          context, data?.docs[index].id ?? "");
+                                    } else if (result == WhyFarther.edit) {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => AddNewPostPage(
+                                            page: "Home",
+                                            documentSnapshot: data?.docs[index],
+                                          ),
                                         ),
-                                      ),
-                                    );
-                                  }
-                                },
-                                itemBuilder: (BuildContext context) =>
-                                    <PopupMenuEntry<WhyFarther>>[
-                                  const PopupMenuItem<WhyFarther>(
-                                    value: WhyFarther.delete,
-                                    child: Text('Delete'),
-                                  ),
-                                  const PopupMenuItem<WhyFarther>(
-                                    value: WhyFarther.edit,
-                                    child: Text('Edit'),
-                                  ),
-                                ],
-                              ),
-                            )
+                                      );
+                                    }
+                                  },
+                                  itemBuilder: (BuildContext context) =>
+                                      <PopupMenuEntry<WhyFarther>>[
+                                    const PopupMenuItem<WhyFarther>(
+                                      value: WhyFarther.delete,
+                                      child: Text('Delete'),
+                                    ),
+                                    const PopupMenuItem<WhyFarther>(
+                                      value: WhyFarther.edit,
+                                      child: Text('Edit'),
+                                    ),
+                                  ],
+                                ),
+                              )
                           ],
                         ),
                         SizedBox(height: 18.h),
@@ -148,8 +150,6 @@ class _NoticeState extends State<Notice> {
                       ],
                     ),
                   );
-
-                  return const SizedBox();
                 },
                 itemCount: size,
               );

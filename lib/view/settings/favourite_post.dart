@@ -11,7 +11,7 @@ class FavouritePost extends StatelessWidget {
   Widget build(BuildContext context) {
     var pro = Provider.of<ProfileProvider>(context, listen: false);
     return Scaffold(
-      appBar: customAppBar("Privacy Policy", context),
+      appBar: customAppBar("Favourite", context),
       body: ListView.builder(
         itemBuilder: (context, index) {
           return FavouritePostList(id: pro.favouritePostIds[index]);

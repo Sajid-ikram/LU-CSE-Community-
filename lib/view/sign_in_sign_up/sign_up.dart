@@ -159,11 +159,17 @@ class _SignUpState extends State<SignUp> {
                             );
                           },
                         ),
-                        Text(
-                          "I agree to the Terms and Conditions",
-                          style: GoogleFonts.inter(
-                            fontSize: 14.sp,
-                            color: mainColor.withOpacity(0.8),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context)
+                                .pushNamed("TermsAndCondition");
+                          },
+                          child: Text(
+                            "I agree to the Terms and Conditions",
+                            style: GoogleFonts.inter(
+                              fontSize: 14.sp,
+                              color: mainColor.withOpacity(0.8),
+                            ),
                           ),
                         )
                       ],

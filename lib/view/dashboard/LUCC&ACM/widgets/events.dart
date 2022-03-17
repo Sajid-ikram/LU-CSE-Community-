@@ -98,10 +98,13 @@ class _EventsState extends State<Events> {
                         height: 147.h,
                         width: 257.w,
                         child: data?.docs[index]["url"] == ""
-                            ? Image.asset(
-                                "assets/event.png",
-                                fit: BoxFit.fill,
-                              )
+                            ? ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                              child: Image.asset(
+                                  "assets/event.png",
+                                  fit: BoxFit.fill,
+                                ),
+                            )
                             : ClipRRect(
                                 borderRadius: BorderRadius.circular(10),
                                 child: Image.network(

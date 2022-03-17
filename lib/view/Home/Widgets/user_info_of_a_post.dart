@@ -137,6 +137,10 @@ class _UserInfoOfAPostState extends State<UserInfoOfAPost> {
               role: data["role"],
               section: data["section"],
               url: data["url"],
+              facebook: data["facebook"],
+              twitter: data["twitter"],
+              linkedin: data["linkedin"],
+              github: data["github"],
             ),
           ),
         );

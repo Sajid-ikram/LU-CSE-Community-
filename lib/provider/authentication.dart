@@ -69,7 +69,11 @@ class Authentication with ChangeNotifier {
               "section": section,
               "url": "",
               "bio": "",
-              "role": batch.isEmpty ? "TeacherP" :"Student"
+              "role": batch.isEmpty ? "TeacherP" : "Student",
+              "facebook": "",
+              "linkedin": "",
+              "twitter": "",
+              "github": "",
             },
           );
         },
@@ -92,7 +96,6 @@ class Authentication with ChangeNotifier {
           return "An undefined Error happened.";
       }
     } catch (e) {
-
       Navigator.of(context, rootNavigator: true).pop();
       return "An Error occur";
     }
@@ -102,10 +105,9 @@ class Authentication with ChangeNotifier {
     await _firebaseAuth.signOut();
   }
 
-  Future<String> resetPassword(String email,BuildContext context) async {
+  Future<String> resetPassword(String email, BuildContext context) async {
     try {
       await _firebaseAuth.sendPasswordResetEmail(email: email);
-
       return "Success";
     } catch (e) {
       return "Error";

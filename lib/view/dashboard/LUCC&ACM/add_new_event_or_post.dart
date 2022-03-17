@@ -229,7 +229,7 @@ class _AddNewPostOrEventState extends State<AddNewPostOrEvent> {
         titleController.text = widget.documentSnapshot!["title"];
         placeController.text = widget.documentSnapshot!["place"];
         descriptionController.text = widget.documentSnapshot!["description"];
-        dateTime = DateTime.parse(widget.documentSnapshot!["dateTime"]);
+        dateTime = widget.documentSnapshot!["dateTime"].toDate();
       }
     }
 
@@ -262,7 +262,9 @@ class _AddNewPostOrEventState extends State<AddNewPostOrEvent> {
                   ),
                 ),
               ),
+              if(widget.type == null)
               SizedBox(height: 25.h),
+              if(widget.type == null)
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
