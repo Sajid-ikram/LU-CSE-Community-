@@ -77,7 +77,10 @@ class _EventsState extends State<Events> {
                     context,
                     MaterialPageRoute(
                       builder: (context) {
-                        return EventDetail(data: data?.docs[index], pageName: widget.page,);
+                        return EventDetail(
+                          data: data?.docs[index],
+                          pageName: widget.page,
+                        );
                       },
                     ),
                   );
@@ -99,12 +102,12 @@ class _EventsState extends State<Events> {
                         width: 257.w,
                         child: data?.docs[index]["url"] == ""
                             ? ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                              child: Image.asset(
+                                borderRadius: BorderRadius.circular(10),
+                                child: Image.asset(
                                   "assets/event.png",
                                   fit: BoxFit.fill,
                                 ),
-                            )
+                              )
                             : ClipRRect(
                                 borderRadius: BorderRadius.circular(10),
                                 child: Image.network(
@@ -114,69 +117,8 @@ class _EventsState extends State<Events> {
                               ),
                       ),
                       SizedBox(height: 20.h),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            height: 45.w,
-                            width: 45.w,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: const Color(0xffF2F6FF),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  months[date.month - 1],
-                                  style: GoogleFonts.inter(
-                                      color: dashboardColor,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 12.sp),
-                                ),
-                                Text(
-                                  date.day.toString(),
-                                  style: GoogleFonts.inter(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 14.sp),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(width: 15.w),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                " " + data?.docs[index]["title"],
-                                style: GoogleFonts.inter(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 14.sp),
-                              ),
-                              SizedBox(height: 3.h),
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.location_on_outlined,
-                                    size: 18.sp,
-                                    color: dashboardColor,
-                                  ),
-                                  Text(
-                                    data?.docs[index]["place"],
-                                    style: GoogleFonts.inter(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 12.sp),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          )
-                        ],
-                      )
+                      buildRow(date, data?.docs[index]["title"],
+                          data?.docs[index]["place"])
                     ],
                   ),
                 ),
@@ -188,4 +130,70 @@ class _EventsState extends State<Events> {
       ),
     );
   }
+}
+
+Row buildRow(DateTime date, String title, String place) {
+  return Row(
+    crossAxisAlignment: CrossAxisAlignment.center,
+    children: [
+      Container(
+        height: 45.w,
+        width: 45.w,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5),
+          color: const Color(0xffF2F6FF),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              months[date.month - 1],
+              style: GoogleFonts.inter(
+                  color: dashboardColor,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 12.sp),
+            ),
+            Text(
+              date.day.toString(),
+              style: GoogleFonts.inter(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 14.sp),
+            ),
+          ],
+        ),
+      ),
+      SizedBox(width: 15.w),
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            " " + title,
+            style: GoogleFonts.inter(
+                color: Colors.black,
+                fontWeight: FontWeight.w700,
+                fontSize: 14.sp),
+          ),
+          SizedBox(height: 3.h),
+          Row(
+            children: [
+              Icon(
+                Icons.location_on_outlined,
+                size: 18.sp,
+                color: dashboardColor,
+              ),
+              Text(
+                place,
+                style: GoogleFonts.inter(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 12.sp),
+              ),
+            ],
+          ),
+        ],
+      )
+    ],
+  );
 }

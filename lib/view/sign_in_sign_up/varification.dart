@@ -124,7 +124,7 @@ class _VerificationAndHomeScreenState extends State<VerificationAndHomeScreen> {
                     SizedBox(
                       width: 300.w,
                       child: Text(
-                        "We have sent a password recover instructions to your email",
+                        "We have sent a verification link to your email to your email",
                         style: GoogleFonts.inter(
                           fontSize: 14.sp,
                           color: mainColor,

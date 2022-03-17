@@ -47,7 +47,9 @@ class _AddNewPostOrEventState extends State<AddNewPostOrEvent> {
           _imageFile = File(pickedFile.path);
         });
       }
-    } catch (e) {}
+    } catch (e) {
+      Navigator.of(context, rootNavigator: true).pop();
+    }
   }
 
   Future uploadEvent() async {
@@ -94,7 +96,6 @@ class _AddNewPostOrEventState extends State<AddNewPostOrEvent> {
   Future uploadPost() async {
     if (_postFormKey.currentState!.validate()) {
       try {
-        var pdfPro = Provider.of<PDFProvider>(context, listen: false);
         buildLoadingIndicator(context);
         String url = "";
         if (isSelected) {
@@ -106,22 +107,13 @@ class _AddNewPostOrEventState extends State<AddNewPostOrEvent> {
           url = await result.ref.getDownloadURL();
         }
 
-        Provider.of<NoticeProvider>(context, listen: false)
-            .addPost(
-              postText: postController.text,
-              imageUrl: url,
-              dateTime: DateTime.now().toString(),
-              context: context,
-              name: widget.pageName,
-            )
-            .then((value) => {
-                  pdfPro.sendNotification(
-                    ["fab732a6-8371-11ec-9974-d6a81ba95cb1"],
-                    "There is a new post",
-                    widget.pageName,
-                    "https://firebasestorage.googleapis.com/v0/b/lu-cse-community.appspot.com/o/notification%2Flu.png?alt=media&token=8ba2b183-49af-4673-a519-020fa1f3ca74",
-                  )
-                });
+        Provider.of<NoticeProvider>(context, listen: false).addPost(
+          postText: postController.text,
+          imageUrl: url,
+          dateTime: DateTime.now().toString(),
+          context: context,
+          name: widget.pageName,
+        );
         Navigator.of(context, rootNavigator: true).pop();
         Navigator.pop(context);
       } catch (e) {
@@ -183,10 +175,9 @@ class _AddNewPostOrEventState extends State<AddNewPostOrEvent> {
         url = widget.documentSnapshot!["url"];
       }
 
-     await  Provider.of<NoticeProvider>(context, listen: false)
-          .updateEvent(
+      await Provider.of<NoticeProvider>(context, listen: false).updateEvent(
         title: titleController.text,
-        id : widget.documentSnapshot!.id,
+        id: widget.documentSnapshot!.id,
         description: descriptionController.text,
         place: placeController.text,
         schedule: dateTime.toString(),
@@ -262,30 +253,29 @@ class _AddNewPostOrEventState extends State<AddNewPostOrEvent> {
                   ),
                 ),
               ),
-              if(widget.type == null)
-              SizedBox(height: 25.h),
-              if(widget.type == null)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  InkWell(
-                    onTap: () {
-                      setState(() {
-                        page = "post";
-                      });
-                    },
-                    child: _buildButton("Post", page == "post"),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      setState(() {
-                        page = "event";
-                      });
-                    },
-                    child: _buildButton("Event", page == "event"),
-                  ),
-                ],
-              ),
+              if (widget.type == null) SizedBox(height: 25.h),
+              if (widget.type == null)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          page = "post";
+                        });
+                      },
+                      child: _buildButton("Post", page == "post"),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          page = "event";
+                        });
+                      },
+                      child: _buildButton("Event", page == "event"),
+                    ),
+                  ],
+                ),
               SizedBox(height: 40.h),
               if (page == "event")
                 Form(
@@ -352,7 +342,6 @@ class _AddNewPostOrEventState extends State<AddNewPostOrEvent> {
                     } else {
                       uploadEvent();
                     }
-
                   }
                 },
                 child: buildButton(

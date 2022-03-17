@@ -16,16 +16,6 @@ class ContestProvider with ChangeNotifier {
 
     if (response.statusCode == 200) {
       individualContestList.clear();
-      /*individualContestList.add(
-        IndividualModel(
-          name: "name",
-          duration: "12",
-          url: "url",
-          endTime: DateTime.now().add(Duration(seconds: 200)).toString(),
-          startTime: DateTime.now().add(Duration(seconds: 15)).toString(),
-          site: "Toph",
-        ),
-      );*/
 
       if (text == "All future contest") {
         var jsonResponse = convert.jsonDecode(response.body);
@@ -53,17 +43,12 @@ class ContestProvider with ChangeNotifier {
         var jsonResponse = convert.jsonDecode(response.body);
         for (var con in jsonResponse) {
           String result1 = "";
-          String result2 = "";
 
           if (con["start_time"].contains(" UTC")) {
             result1 = con["start_time"]
                 .substring(0, con["start_time"].indexOf(' UTC'));
-
-            result2 =
-                con["end_time"].substring(0, con["end_time"].indexOf(' UTC'));
           } else {
             result1 = con["start_time"];
-            result2 = con["end_time"];
           }
 
           bool isBeforeNow =
@@ -73,7 +58,7 @@ class ContestProvider with ChangeNotifier {
           DateTime oneDaysFromNow = now.add(const Duration(days: 1));
 
           bool isWithin24Hour =
-              oneDaysFromNow.isBefore(DateTime.parse(result2).toLocal());
+              oneDaysFromNow.isBefore(DateTime.parse(result1).toLocal());
 
           bool notCFGym = con["site"] == "CodeForces::Gym" || con["site"] == "";
 

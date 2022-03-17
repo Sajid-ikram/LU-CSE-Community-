@@ -3,8 +3,10 @@ import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lu_cse_community/constant/constant.dart';
+import 'package:lu_cse_community/view/dashboard/LUCC&ACM/widgets/events.dart';
 import 'package:provider/provider.dart';
 import '../../../constant/constant.dart';
 import 'package:intl/intl.dart';
@@ -84,7 +86,6 @@ class _EventDetailState extends State<EventDetail> {
                           ),
                         ),
                       ),
-
                       Divider(
                         indent: 30.w,
                         endIndent: 30.w,
@@ -110,20 +111,28 @@ class _EventDetailState extends State<EventDetail> {
                           widget.data!["description"],
                           textAlign: TextAlign.justify,
                           style: GoogleFonts.inter(
-                            color: Color(0xff555555),
+                            color: const Color(0xff555555),
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
                       ),
                       SizedBox(height: 10.h),
-                      buildInfoRow(
-                          "Time : ",
-                          _changeTime(
-                              DateTime.parse(widget.data!["schedule"]))),
-                      buildInfoRow("Place : ", widget.data!["place"]),
-
-
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 32.w, vertical: 10.h),
+                        child: _buildRow(FontAwesomeIcons.mapMarkerAlt,
+                            widget.data!["place"], "Location"),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 32.w, vertical: 10.h),
+                        child: _buildRow(
+                          FontAwesomeIcons.clock,
+                          _changeTime(DateTime.parse(widget.data!["schedule"])),
+                          "Date",
+                        ),
+                      ),
                     ],
                   ),
                 )
@@ -182,25 +191,64 @@ class _EventDetailState extends State<EventDetail> {
     );
   }
 
+  Row _buildRow(IconData iconData, String title, String place) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+            height: 45.w,
+            width: 45.w,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              color: const Color(0xffFFF1EA),
+            ),
+            child: Icon(
+              iconData,
+              color: const Color(0xffF57739),
+              size: 22.sp,
+            )),
+        SizedBox(width: 15.w),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              place,
+              style: GoogleFonts.inter(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 14.sp),
+            ),
+            SizedBox(height: 3.h),
+            Text(
+              title,
+              style: GoogleFonts.inter(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16.sp),
+            ),
+          ],
+        )
+      ],
+    );
+  }
+
   Container buildContainerIcon(IconData iconData) {
     return Container(
-                  padding: EdgeInsets.all(3.sp),
-                  decoration:  BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.15),
-                        blurRadius: 10,
-                        spreadRadius: 5
-                      )
-                    ]
-                  ),
-                  child: Icon(
-                    iconData,
-                    size: 22.sp,
-                  ),
-                );
+      padding: EdgeInsets.all(3.sp),
+      decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+                color: Colors.black.withOpacity(0.15),
+                blurRadius: 10,
+                spreadRadius: 5)
+          ]),
+      child: Icon(
+        iconData,
+        size: 22.sp,
+      ),
+    );
   }
 
   Padding buildInfoRow(String text1, String text2) {
@@ -235,7 +283,7 @@ class _EventDetailState extends State<EventDetail> {
 }
 
 String _changeTime(DateTime dt) {
-  var dateFormat = DateFormat("dd-MM-yyyy hh:mm aa");
+  var dateFormat = DateFormat("dd-MM-yyyy");
   var utcDate = dateFormat.format(DateTime.parse(dt.toString()));
   var localDate = dateFormat.parse(utcDate, true).toLocal().toString();
   return dateFormat.format(DateTime.parse(localDate));
