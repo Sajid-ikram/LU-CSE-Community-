@@ -39,7 +39,8 @@ class _HomeState extends State<Home> {
         children: [
           Align(
             alignment: Alignment.bottomCenter,
-            child: SizedBox(
+            child: Container(
+              margin: EdgeInsets.only(top: 90.h),
               height: 740.h,
               width: double.infinity,
               child: Selector<PostProvider, bool>(

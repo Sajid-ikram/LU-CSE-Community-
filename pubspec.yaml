@@ -33,7 +33,7 @@ dependencies:
   shimmer: ^2.0.0
   image_cropper: ^1.4.1
   flutter_spinkit: ^5.1.0
-  firebase_messaging: ^11.2.6
+
   onesignal_flutter: ^3.2.8
   file_picker: ^4.3.3
   syncfusion_flutter_pdfviewer: ^19.4.48-beta
