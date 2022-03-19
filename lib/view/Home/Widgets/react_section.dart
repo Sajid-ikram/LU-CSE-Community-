@@ -63,49 +63,53 @@ class _ReactSectionState extends State<ReactSection> {
               buildText(widget.documentSnapshot!["likes"]),
               buildReactButton("Comment", widget.documentSnapshot),
               buildText(widget.documentSnapshot!["comments"]),
-              buildReactButton("Share", widget.documentSnapshot),
+              //buildReactButton("Share", widget.documentSnapshot),
               const Spacer(),
-              PopupMenuButton<WhyFarther>(
-                padding: EdgeInsets.zero,
-                onSelected: (WhyFarther result) {
-                  if (result == WhyFarther.delete) {
-                    _showMyDialog(context, widget.documentSnapshot!.id);
-                  } else if (result == WhyFarther.edit) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => AddNewPostPage(
-                          page: "Home",
-                          documentSnapshot: widget.documentSnapshot,
+              SizedBox(
+                height: 40.h,
+                width: 1,
+              ),
+              if (pro.role == "Teacher" ||
+                  pro.role == "Admin" ||
+                  widget.documentSnapshot!["ownerUid"] == pro.currentUserUid)
+                PopupMenuButton<WhyFarther>(
+                  padding: EdgeInsets.zero,
+                  onSelected: (WhyFarther result) {
+                    if (result == WhyFarther.delete) {
+                      _showMyDialog(context, widget.documentSnapshot!.id);
+                    } else if (result == WhyFarther.edit) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AddNewPostPage(
+                            page: "Home",
+                            documentSnapshot: widget.documentSnapshot,
+                          ),
                         ),
-                      ),
-                    );
-                  } else if (result == WhyFarther.report) {
-                    print(result);
-                  }
-                },
-                itemBuilder: (BuildContext context) =>
-                    <PopupMenuEntry<WhyFarther>>[
-                  if (widget.documentSnapshot!["ownerUid"] ==
-                      pro.currentUserUid || (pro.role == "Teacher" || pro.role == "Admin"))
+                      );
+                    } else if (result == WhyFarther.report) {
+                      print(result);
+                    }
+                  },
+                  itemBuilder: (BuildContext context) =>
+                      <PopupMenuEntry<WhyFarther>>[
                     const PopupMenuItem<WhyFarther>(
                       value: WhyFarther.delete,
                       child: Text('Delete'),
                     ),
-                  if (widget.documentSnapshot!["ownerUid"] ==
-                      pro.currentUserUid || (pro.role == "Teacher" || pro.role == "Admin"))
-                    const PopupMenuItem<WhyFarther>(
-                      value: WhyFarther.edit,
-                      child: Text('Edit'),
-                    ),
-                  if ((pro.role == "Student" || pro.role == "Moderator") && widget.documentSnapshot!["ownerUid"] !=
-                      pro.currentUserUid)
-                    const PopupMenuItem<WhyFarther>(
+                    if (widget.documentSnapshot!["ownerUid"] ==
+                        pro.currentUserUid)
+                      const PopupMenuItem<WhyFarther>(
+                        value: WhyFarther.edit,
+                        child: Text('Edit'),
+                      ),
+
+                    /*const PopupMenuItem<WhyFarther>(
                       value: WhyFarther.report,
                       child: Text('Report'),
-                    ),
-                ],
-              )
+                    ),*/
+                  ],
+                )
             ],
           );
   }

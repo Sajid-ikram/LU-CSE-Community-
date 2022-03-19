@@ -9,6 +9,7 @@ import '../../../../provider/notice_provider.dart';
 import '../../../Home/Widgets/search_bar.dart';
 import '../../../Home/Widgets/user_info_of_a_post.dart';
 import '../../../public_widget/build_loading.dart';
+import '../../../public_widget/photo_view.dart';
 import '../add_new_event_or_post.dart';
 import 'events.dart';
 
@@ -161,17 +162,29 @@ class _PostsState extends State<Posts> {
                               if (data?.docs[index - 1]["imageUrl"] != "")
                                 SizedBox(height: 15.h),
                               if (data?.docs[index - 1]["imageUrl"] != "")
-                                Container(
-                                  width: 308.w,
-                                  height: 226.h,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(20),
-                                    child: Image.network(
-                                      data?.docs[index - 1]["imageUrl"],
-                                      fit: BoxFit.cover,
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) {
+                                        return CustomPhotoView(
+                                          url: data?.docs[index - 1]["imageUrl"],
+                                        );
+                                      }),
+                                    );
+                                  },
+                                  child: Container(
+                                    width: 308.w,
+                                    height: 226.h,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(20),
+                                      child: Image.network(
+                                        data?.docs[index - 1]["imageUrl"],
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
                                   ),
                                 ),

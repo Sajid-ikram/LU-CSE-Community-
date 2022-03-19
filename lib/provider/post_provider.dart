@@ -195,5 +195,6 @@ class PostProvider with ChangeNotifier {
 
   Future deletePost(String id) async {
     await FirebaseFirestore.instance.collection("posts").doc(id).delete();
+    notifyListeners();
   }
 }

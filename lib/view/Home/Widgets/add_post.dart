@@ -5,6 +5,9 @@ import 'package:lu_cse_community/provider/profile_provider.dart';
 import 'package:lu_cse_community/view/Home/SubPage/add_new_post_page.dart';
 import 'package:provider/provider.dart';
 
+import '../../public_widget/photo_view.dart';
+import '../../settings/view_profile_page.dart';
+
 Padding addPost(BuildContext context) {
   return Padding(
     padding: EdgeInsets.fromLTRB(32.w, 43.h, 32.w, 10.h),
@@ -13,11 +16,51 @@ Padding addPost(BuildContext context) {
         return Row(
           children: [
             provider.profileUrl != ""
-                ? CircleAvatar(
-                    backgroundColor: Colors.grey,
-                    radius: 21,
-                    backgroundImage: NetworkImage(
-                      provider.profileUrl,
+                ? GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) {
+                          return ViewProfile(
+                            uid: provider.currentUserUid,
+                            isViewer: false,
+                            batch: provider.batch,
+                            bio: provider.bio,
+                            email: provider.email,
+                            name: provider.profileName,
+                            role: provider.role,
+                            section: provider.section,
+                            url: provider.profileUrl,
+                          );
+                        }),
+                      );
+                    },
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) {
+                            return ViewProfile(
+                              uid: provider.currentUserUid,
+                              isViewer: false,
+                              batch: provider.batch,
+                              bio: provider.bio,
+                              email: provider.email,
+                              name: provider.profileName,
+                              role: provider.role,
+                              section: provider.section,
+                              url: provider.profileUrl,
+                            );
+                          }),
+                        );
+                      },
+                      child: CircleAvatar(
+                        backgroundColor: Colors.grey,
+                        radius: 21,
+                        backgroundImage: NetworkImage(
+                          provider.profileUrl,
+                        ),
+                      ),
                     ),
                   )
                 : const CircleAvatar(

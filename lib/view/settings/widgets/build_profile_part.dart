@@ -8,6 +8,8 @@ import 'dart:io';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../public_widget/photo_view.dart';
+
 class BuildProfilePart extends StatefulWidget {
   BuildProfilePart({
     Key? key,
@@ -102,10 +104,22 @@ class _BuildProfilePartState extends State<BuildProfilePart> {
                           : ClipRRect(
                               borderRadius: BorderRadius.circular(100),
                               child: provider.profileUrl != ""
-                                  ? FadeInImage.assetNetwork(
-                                      fit: BoxFit.cover,
-                                      placeholder: 'assets/profile.jpg',
-                                      image: provider.profileUrl,
+                                  ? GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(builder: (context) {
+                                            return CustomPhotoView(
+                                              url: provider.profileUrl,
+                                            );
+                                          }),
+                                        );
+                                      },
+                                      child: FadeInImage.assetNetwork(
+                                        fit: BoxFit.cover,
+                                        placeholder: 'assets/profile.jpg',
+                                        image: provider.profileUrl,
+                                      ),
                                     )
                                   : Image.asset(
                                       "assets/profile.jpg",
@@ -158,7 +172,7 @@ class _BuildProfilePartState extends State<BuildProfilePart> {
                 widget.isViewMode ? widget.email : provider.email,
                 style: GoogleFonts.inter(
                     color: const Color(0xff666666),
-                    fontSize:  14.sp ,
+                    fontSize: 14.sp,
                     fontWeight: FontWeight.w400),
               ),
             ],

@@ -55,7 +55,7 @@ class _FavouritePostListState extends State<FavouritePostList> {
           )
         : Consumer<PostProvider>(
             builder: (context, provider, child) {
-              return individualPost(2, data);
+              return individualPost(2, data,context);
             },
           );
   }

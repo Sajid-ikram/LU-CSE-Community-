@@ -8,6 +8,8 @@ import 'package:lu_cse_community/view/settings/view_profile_page.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../../public_widget/photo_view.dart';
+
 class UserInfoOfAPost extends StatefulWidget {
   const UserInfoOfAPost(
       {Key? key,
@@ -87,7 +89,17 @@ class _UserInfoOfAPostState extends State<UserInfoOfAPost> {
             ? Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  returnImage(data),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return CustomPhotoView(
+                          url: data["url"],
+                        );
+                      }));
+                    },
+                    child: returnImage(data),
+                  ),
                   SizedBox(width: 15.w),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -109,7 +121,17 @@ class _UserInfoOfAPostState extends State<UserInfoOfAPost> {
             : Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  returnImage(data),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return CustomPhotoView(
+                          url: data["url"],
+                        );
+                      }));
+                    },
+                    child: returnImage(data),
+                  ),
                   SizedBox(width: 12.w),
                   buildNameText(15),
                   SizedBox(width: 10.w),

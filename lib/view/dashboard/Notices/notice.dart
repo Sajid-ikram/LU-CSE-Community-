@@ -15,6 +15,7 @@ import '../../Home/Widgets/user_info_of_a_post.dart';
 import '../../public_widget/build_loading.dart';
 import '../../public_widget/custom_app_bar.dart';
 import '../../public_widget/floating_action_button.dart';
+import '../../public_widget/photo_view.dart';
 
 enum WhyFarther { delete, edit }
 
@@ -137,18 +138,30 @@ class _NoticeState extends State<Notice> {
                             if (data?.docs[index]["imageUrl"] != "")
                               SizedBox(height: 15.h),
                             if (data?.docs[index]["imageUrl"] != "")
-                              Container(
-                                width: double.infinity,
-                                height: 226.h,
-                                padding: EdgeInsets.only(right: 15.w),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(20),
-                                  child: Image.network(
-                                    data?.docs[index]["imageUrl"],
-                                    fit: BoxFit.cover,
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) {
+                                      return CustomPhotoView(
+                                        url: data?.docs[index]["imageUrl"],
+                                      );
+                                    }),
+                                  );
+                                },
+                                child: Container(
+                                  width: double.infinity,
+                                  height: 226.h,
+                                  padding: EdgeInsets.only(right: 15.w),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(20),
+                                    child: Image.network(
+                                      data?.docs[index]["imageUrl"],
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
                                 ),
                               ),

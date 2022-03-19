@@ -10,6 +10,7 @@ import 'package:lu_cse_community/provider/profile_provider.dart';
 import 'package:lu_cse_community/provider/search_provider.dart';
 import 'package:provider/provider.dart';
 import '../public_widget/build_loading.dart';
+import '../public_widget/photo_view.dart';
 import 'Widgets/add_post.dart';
 import 'Widgets/react_section.dart';
 import 'Widgets/user_info_of_a_post.dart';
@@ -91,7 +92,7 @@ class _HomeState extends State<Home> {
             if (name
                 .toLowerCase()
                 .contains(provider.searchText.toLowerCase())) {
-              return individualPost(index, data.docs[index - 1]);
+              return individualPost(index, data.docs[index - 1], context);
             }
             return const SizedBox();
           },
@@ -102,7 +103,8 @@ class _HomeState extends State<Home> {
   }
 }
 
-Container individualPost(int index, DocumentSnapshot data) {
+Container individualPost(
+    int index, DocumentSnapshot data, BuildContext context) {
   return Container(
     width: 350.w,
     margin: EdgeInsets.fromLTRB(32.w, index == 1 ? 15.h : 10.h, 32.w, 10.h),
@@ -143,18 +145,30 @@ Container individualPost(int index, DocumentSnapshot data) {
         ),
         SizedBox(height: 15.h),
         if (data["imageUrl"] != "")
-          Container(
-            width: 308.w,
-            height: 226.h,
-            margin: EdgeInsets.only(bottom: 13.h, right: 21.w),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: Image.network(
-                data["imageUrl"],
-                fit: BoxFit.cover,
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return CustomPhotoView(
+                    url: data["imageUrl"],
+                  );
+                }),
+              );
+            },
+            child: Container(
+              width: 308.w,
+              height: 226.h,
+              margin: EdgeInsets.only(bottom: 13.h, right: 21.w),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Image.network(
+                  data["imageUrl"],
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),
