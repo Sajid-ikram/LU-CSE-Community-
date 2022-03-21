@@ -24,7 +24,7 @@ Container customTextField(TextEditingController controller, String text,
           } else if (value == null || value.isEmpty) {
             snackBar(context, "Field can not be empty!");
             return "Field can not be empty!";
-          } else if (!isNameValid(value)) {
+          } else if (isNameValid(value)) {
             snackBar(context, "Name should contain only character");
             return "Field can not be empty!";
           }
@@ -75,6 +75,7 @@ Container customTextField(TextEditingController controller, String text,
           snackBar(context, "Field can not be empty!");
           return "Field can not be empty!";
         }
+        return null;
       },
       keyboardAppearance: Brightness.light,
       keyboardType: TextInputType.emailAddress,

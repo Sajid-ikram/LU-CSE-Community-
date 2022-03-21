@@ -67,7 +67,7 @@ class _BusScheduleState extends State<BusSchedule> {
           ),
         ),
         actions: [
-          if(pro.role != "Student" && pro.role != "Moderator")
+          if(pro.role != "Student" && pro.role != "Moderator" && pro.role != "TeacherP")
           IconButton(
             onPressed: () {
               pickFile();

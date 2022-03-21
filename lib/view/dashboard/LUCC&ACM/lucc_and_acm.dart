@@ -23,7 +23,7 @@ class _LUCC_And_ACMState extends State<LUCC_And_ACM> {
   Widget build(BuildContext context) {
     var pro = Provider.of<ProfileProvider>(context);
     return Scaffold(
-      floatingActionButton: pro.role != "Student"
+      floatingActionButton: pro.role != "Student" && pro.role != "TeacherP"
           ? customFloatingActionButton(context, widget.page)
           : null,
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,

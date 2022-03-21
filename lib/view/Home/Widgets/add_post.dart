@@ -35,38 +35,38 @@ Padding addPost(BuildContext context) {
                         }),
                       );
                     },
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) {
-                            return ViewProfile(
-                              uid: provider.currentUserUid,
-                              isViewer: false,
-                              batch: provider.batch,
-                              bio: provider.bio,
-                              email: provider.email,
-                              name: provider.profileName,
-                              role: provider.role,
-                              section: provider.section,
-                              url: provider.profileUrl,
-                            );
-                          }),
-                        );
-                      },
-                      child: CircleAvatar(
-                        backgroundColor: Colors.grey,
-                        radius: 21,
-                        backgroundImage: NetworkImage(
-                          provider.profileUrl,
-                        ),
+                    child: CircleAvatar(
+                      backgroundColor: Colors.grey,
+                      radius: 21,
+                      backgroundImage: NetworkImage(
+                        provider.profileUrl,
                       ),
                     ),
                   )
-                : const CircleAvatar(
-                    backgroundColor: Colors.grey,
-                    radius: 21,
-                    backgroundImage: AssetImage("assets/profile.jpg"),
+                : GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) {
+                          return ViewProfile(
+                            uid: provider.currentUserUid,
+                            isViewer: false,
+                            batch: provider.batch,
+                            bio: provider.bio,
+                            email: provider.email,
+                            name: provider.profileName,
+                            role: provider.role,
+                            section: provider.section,
+                            url: provider.profileUrl,
+                          );
+                        }),
+                      );
+                    },
+                    child: const CircleAvatar(
+                      backgroundColor: Colors.grey,
+                      radius: 21,
+                      backgroundImage: AssetImage("assets/profile.jpg"),
+                    ),
                   ),
             Expanded(
               child: GestureDetector(
