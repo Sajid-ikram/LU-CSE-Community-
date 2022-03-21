@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -33,7 +32,7 @@ class Dashboard extends StatelessWidget {
     ];
 
     return Container(
-      height: 780.h,
+      height: 790.h,
       decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.only(
@@ -48,7 +47,7 @@ class Dashboard extends StatelessWidget {
             crossAxisCount: 2,
             crossAxisSpacing: 15.w,
             mainAxisSpacing: 10.h,
-            childAspectRatio: 3 / 4.1,
+            childAspectRatio: 3.h / 4.0.h,
           ),
           itemCount: 6,
           itemBuilder: (BuildContext context, int index) {
@@ -112,7 +111,8 @@ class Dashboard extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: 15.h),
+                //SizedBox(height: 15.h),
+                Spacer(),
                 Text(
                   nameList[index],
                   style: GoogleFonts.inter(
@@ -120,7 +120,8 @@ class Dashboard extends StatelessWidget {
                     fontWeight: FontWeight.w800,
                     color: mainColor,
                   ),
-                )
+                ),
+                Spacer(),
               ],
             );
           }),
@@ -178,7 +179,10 @@ class Dashboard extends StatelessWidget {
             onPressed: () {
               Navigator.of(context).pop();
             },
-            icon: const Icon(Icons.close,color: Colors.white,),
+            icon: const Icon(
+              Icons.close,
+              color: Colors.white,
+            ),
           ),
         ),
       ],

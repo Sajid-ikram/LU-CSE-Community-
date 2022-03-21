@@ -6,10 +6,9 @@ import 'package:http/http.dart';
 import 'package:lu_cse_community/constant/constant.dart';
 import 'package:lu_cse_community/view/Contest/SubPage/SubWidgets/error_dialoge.dart';
 import 'package:firebase_storage/firebase_storage.dart' as storage;
-
 import '../view/public_widget/build_loading.dart';
 
-class PDFProvider extends ChangeNotifier {
+class PDFAndNotificationProvider extends ChangeNotifier {
   Future uploadPDF(File file, BuildContext context, String text) async {
     try {
       buildLoadingIndicator(context);

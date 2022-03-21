@@ -11,7 +11,7 @@ import 'package:lu_cse_community/provider/chat_provider.dart';
 import 'package:lu_cse_community/provider/contest_provider.dart';
 import 'package:lu_cse_community/provider/notice_provider.dart';
 import 'package:lu_cse_community/provider/notification_services.dart';
-import 'package:lu_cse_community/provider/pdf_provider.dart';
+import 'package:lu_cse_community/provider/pdf_and_notification_provider.dart';
 import 'package:lu_cse_community/provider/post_provider.dart';
 import 'package:lu_cse_community/provider/profile_provider.dart';
 import 'package:lu_cse_community/provider/search_provider.dart';
@@ -52,12 +52,8 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    configOneSignal();
   }
 
-  void configOneSignal() {
-    OneSignal.shared.setAppId(kAppId);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +61,10 @@ class _MyAppState extends State<MyApp> {
       statusBarColor: Colors.transparent,
       statusBarIconBrightness: Brightness.dark,
     ));
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown
+    ]);
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => SignUpProvider()),
@@ -76,7 +76,7 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (_) => AllUserProvider()),
         ChangeNotifierProvider(create: (_) => SearchProvider()),
         ChangeNotifierProvider(create: (_) => ChatProvider()),
-        ChangeNotifierProvider(create: (_) => PDFProvider()),
+        ChangeNotifierProvider(create: (_) => PDFAndNotificationProvider()),
         ChangeNotifierProvider(create: (_) => NoticeProvider()),
       ],
       child: ScreenUtilInit(

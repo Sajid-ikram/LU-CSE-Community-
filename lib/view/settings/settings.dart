@@ -135,6 +135,7 @@ class Settings extends StatelessWidget {
                 ),
                 const Divider(
                     thickness: 1.5, color: Color(0xffF6F6F7), height: 30),
+                SizedBox(height: 60.h,),
                 /*Spacer(),
                 Padding(
                   padding: EdgeInsets.only(left: 24.w, right: 24.w),

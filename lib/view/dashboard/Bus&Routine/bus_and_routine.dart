@@ -6,7 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:lu_cse_community/constant/constant.dart';
-import 'package:lu_cse_community/provider/pdf_provider.dart';
+import 'package:lu_cse_community/provider/pdf_and_notification_provider.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:lu_cse_community/provider/profile_provider.dart';
 import 'package:provider/provider.dart';
@@ -26,7 +26,7 @@ class _BusScheduleState extends State<BusSchedule> {
         await FilePicker.platform.pickFiles(allowMultiple: false);
     if (result != null && result.files.single.path != null) {
       File file = File(result.files.single.path!);
-      var pro = Provider.of<PDFProvider>(context, listen: false);
+      var pro = Provider.of<PDFAndNotificationProvider>(context, listen: false);
       pro.uploadPDF(file, context, widget.name).then((value) async{
         await pro.sendNotification(
           ["fab732a6-8371-11ec-9974-d6a81ba95cb1"],

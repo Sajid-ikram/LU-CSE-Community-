@@ -12,7 +12,7 @@ import 'package:lu_cse_community/view/sign_in_sign_up/widgets/custom_button.dart
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 import '../../../provider/notice_provider.dart';
-import '../../../provider/pdf_provider.dart';
+import '../../../provider/pdf_and_notification_provider.dart';
 import '../../public_widget/build_loading.dart';
 
 class AddNewPostPage extends StatefulWidget {
@@ -107,7 +107,7 @@ class _AddNewPostPageState extends State<AddNewPostPage> {
 
   Future uploadNotice() async {
     try {
-      var pdfPro = Provider.of<PDFProvider>(context, listen: false);
+      var pdfPro = Provider.of<PDFAndNotificationProvider>(context, listen: false);
       buildLoadingIndicator(context);
       String url = "";
       if (isSelected) {

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 
-Padding chatTop() {
+Padding chatTop(BuildContext context) {
   return Padding(
     padding:  EdgeInsets.symmetric(horizontal: 30.sp),
     child: SizedBox(
@@ -21,10 +22,16 @@ Padding chatTop() {
                   fontWeight: FontWeight.w600),
             ),
           ),
-          const Align(
+           Align(
             alignment: Alignment.centerRight,
-            child: Icon(
-              Icons.search,
+            child: InkWell(
+              onTap: (){
+                Navigator.of(context).pushNamed("AllUsers");
+              },
+              child: Icon(
+                FontAwesomeIcons.users,
+                size: 18.sp,
+              ),
             ),
           ),
         ],

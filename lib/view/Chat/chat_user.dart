@@ -30,7 +30,7 @@ class _ChatUserState extends State<ChatUser> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(height: 50.h),
-            chatTop(),
+            chatTop(context),
             Expanded(
               child: StreamBuilder<QuerySnapshot>(
                   stream: FirebaseFirestore.instance

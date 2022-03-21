@@ -71,6 +71,7 @@ class _UserListState extends State<UserList> {
                             );
                           }
                         },
+
                         child: Container(
                           height: 30,
                           width: 350,

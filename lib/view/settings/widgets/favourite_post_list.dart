@@ -17,6 +17,7 @@ class FavouritePostList extends StatefulWidget {
 class _FavouritePostListState extends State<FavouritePostList> {
   late DocumentSnapshot data;
   bool isLoading = true;
+  bool isAvailable = true;
 
   @override
   void initState() {
@@ -29,6 +30,10 @@ class _FavouritePostListState extends State<FavouritePostList> {
         .collection('posts')
         .doc(widget.id)
         .get());
+
+    if (!data.exists) {
+      isAvailable = false;
+    }
 
     if (mounted) {
       setState(() {
@@ -53,10 +58,12 @@ class _FavouritePostListState extends State<FavouritePostList> {
               height: 250.h,
             ),
           )
-        : Consumer<PostProvider>(
-            builder: (context, provider, child) {
-              return individualPost(2, data,context);
-            },
-          );
+        : isAvailable
+            ? Consumer<PostProvider>(
+                builder: (context, provider, child) {
+                  return individualPost(2, data, context);
+                },
+              )
+            : const SizedBox();
   }
 }
