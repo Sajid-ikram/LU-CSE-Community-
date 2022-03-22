@@ -1,8 +1,5 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
-
 import '../public_widget/custom_app_bar.dart';
 
 class PrivacyPolicy extends StatelessWidget {

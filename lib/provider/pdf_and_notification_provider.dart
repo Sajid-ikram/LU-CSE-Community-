@@ -33,27 +33,33 @@ class PDFAndNotificationProvider extends ChangeNotifier {
     }
   }
 
-  Future<Response> sendNotification(List<String> tokenIdList, String contents,
+  Future sendNotification(List<String> tokenIdList, String contents,
       String heading, String url) async {
-    return await post(
-      Uri.parse('https://onesignal.com/api/v1/notifications'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization':
-            'Basic \u003cZTg0NDI1YzMtNGU3Mi00MDhmLTkwMTYtMmRhYjZhYTJjNDRl\u003e'
-      },
-      body: jsonEncode(<String, dynamic>{
-        "app_id": kAppId,
-        //kAppId is the App Id that one get from the OneSignal When the application is registered.
+    try{
+      return await post(
+        Uri.parse('https://onesignal.com/api/v1/notifications'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization':
+          'Basic \u003cZTg0NDI1YzMtNGU3Mi00MDhmLTkwMTYtMmRhYjZhYTJjNDRl\u003e'
+        },
+        body: jsonEncode(<String, dynamic>{
+          "app_id": kAppId,
+          //kAppId is the App Id that one get from the OneSignal When the application is registered.
 
-        "included_segments": ["Subscribed Users"],
+          "included_segments": ["Subscribed Users"],
 
-        "large_icon": url,
+          "large_icon": url,
 
-        "headings": {"en": heading},
+          "headings": {"en": heading},
 
-        "contents": {"en": contents},
-      }),
-    );
+          "contents": {"en": contents},
+        }),
+      );
+    }catch(e){
+      print("---------------------------------------------------------");
+      print(e);
+    }
+
   }
 }

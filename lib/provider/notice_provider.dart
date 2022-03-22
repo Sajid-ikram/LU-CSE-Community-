@@ -142,13 +142,16 @@ class NoticeProvider with ChangeNotifier {
 
   Future deleteNotice(String id) async {
     await FirebaseFirestore.instance.collection("notice").doc(id).delete();
+    notifyListeners();
   }
 
   Future deleteEvent(String id,String postFrom) async {
     await FirebaseFirestore.instance.collection(postFrom).doc(id).delete();
+    notifyListeners();
   }
 
   Future deletePost(String id,String postFrom) async {
     await FirebaseFirestore.instance.collection(postFrom).doc(id).delete();
+    notifyListeners();
   }
 }

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -102,6 +101,7 @@ class Settings extends StatelessWidget {
                       Navigator.of(context).pushNamed("EditProfile");
                     },
                     child: buildRow("Edit Profile")),
+
                 const Divider(
                     thickness: 1.5, color: Color(0xffF6F6F7), height: 25),
                 GestureDetector(
@@ -136,38 +136,7 @@ class Settings extends StatelessWidget {
                 const Divider(
                     thickness: 1.5, color: Color(0xffF6F6F7), height: 30),
                 SizedBox(height: 60.h,),
-                /*Spacer(),
-                Padding(
-                  padding: EdgeInsets.only(left: 24.w, right: 24.w),
-                  child: Row(
-                    children: [
-                      Container(
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                          shape: BoxShape.circle,
-                          boxShadow: [
-                            BoxShadow(blurRadius: 10, color: Colors.black12)
-                          ],
-                        ),
-                        height: 30,
-                        width: 30,
-                        child: Icon(
-                          FontAwesomeIcons.reply,
-                          size: 16.sp,
-                        ),
-                      ),
-                      SizedBox(width: 15.w),
-                      Text(
-                        "Logout",
-                        style: GoogleFonts.inter(
-                            color: Colors.black,
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ],
-                  ),
-                ),
-                const Spacer()*/
+
               ],
             );
           },

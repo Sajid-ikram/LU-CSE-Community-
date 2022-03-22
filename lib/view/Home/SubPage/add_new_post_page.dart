@@ -126,13 +126,15 @@ class _AddNewPostPageState extends State<AddNewPostPage> {
             dateTime: DateTime.now().toString(),
             context: context,
           )
-          .then((value) => {
-                pdfPro.sendNotification(
+          .then((value)async{
+                var a  =await  pdfPro.sendNotification(
                   ["fab732a6-8371-11ec-9974-d6a81ba95cb1"],
                   "There is a new notice",
                   "CSE Department",
                   "https://firebasestorage.googleapis.com/v0/b/lu-cse-community.appspot.com/o/notification%2Flu.png?alt=media&token=8ba2b183-49af-4673-a519-020fa1f3ca74",
-                )
+                );
+                print("+++++++++++++++++++++++++++++++++++++++999999999");
+                print(a.body);
               });
       Navigator.of(context, rootNavigator: true).pop();
       Navigator.pop(context);

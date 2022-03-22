@@ -63,7 +63,6 @@ class _BuildProfilePartState extends State<BuildProfilePart> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.isViewer);
     return Consumer<ProfileProvider>(
       builder: (context, provider, child) {
         return Align(
